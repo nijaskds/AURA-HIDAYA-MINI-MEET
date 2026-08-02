@@ -207,7 +207,7 @@ html+=`
 
 <br>
 
-TEAM ${row.SECOND_TEAM}
+${row.SECOND_TEAM}
 
 </div>
 
@@ -217,7 +217,7 @@ TEAM ${row.SECOND_TEAM}
 
 <br>
 
-TEAM ${row.THIRD_TEAM}
+${row.THIRD_TEAM}
 
 </div>
 
