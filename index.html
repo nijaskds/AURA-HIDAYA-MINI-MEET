@@ -1,43 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AURA</title>
-</head>
-<body>
-    <h1 style="text-align:center; background-color:#1E3A8A; color:white; padding:15px;">
-    AURA RESULTS
-</h1>
-    <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AURA RESULTS</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f3f5f7;
+}
+
+h1{
+    background:#1E3A8A;
+    color:white;
+    text-align:center;
+    padding:18px;
+    font-size:32px;
+    letter-spacing:2px;
+}
+
 .menu{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:12px;
-    margin:20px 0;
+    width:90%;
+    max-width:500px;
+    margin:30px auto;
 }
 
 .menu a{
-    background:#000;
-    color:#fff;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
     text-decoration:none;
-    padding:12px 22px;
-    border-radius:6px;
-    font-size:18px;
+    background:#111;
+    color:white;
+    padding:18px 20px;
+    border-bottom:1px solid #444;
+    font-size:20px;
     font-weight:bold;
     transition:0.3s;
 }
 
-.menu a:hover{
-    background:#333;
+.menu a:first-child{
+    border-radius:10px 10px 0 0;
 }
+
+.menu a:last-child{
+    border-radius:0 0 10px 10px;
+    border-bottom:none;
+}
+
+.menu a:hover{
+    background:#1E3A8A;
+    transform:translateX(5px);
+}
+
+.left{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.arrow{
+    font-size:26px;
+    color:#d9d9d9;
+}
+
 </style>
 
+</head>
+
+<body>
+
+<h1>AURA RESULTS</h1>
+
 <div class="menu">
-    <a href=>SUB JUNIOR</a>
-    <a href="senior.html">SENIOR</a>
-    <a href="supersenior.html">SUPER SENIOR</a>
-    <a href="general.html">GENERAL</a>
-    <a href=https://docs.google.com/spreadsheets/d/e/2PACX-1vQz8ipfKh59UBNMTnf6lrU1C_bNky3tUumYpuGAt4-d4G2O7Vs7wOFcBVcnGMDBQuHS5PtftsZ59G8b/pubhtml?gid=371564784&single=true>GRAND TOTAL</a>
+
+<a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vQz8ipfKh59UBNMTnf6lrU1C_bNky3tUumYpuGAt4-d4G2O7Vs7wOFcBVcnGMDBQuHS5PtftsZ59G8b/pubhtml?gid=995525624&single=true" target="_blank">
+    <span class="left">🏆 SUB JUNIOR</span>
+    <span class="arrow">›</span>
+</a>
+
+<a href="senior.html">
+    <span class="left">🏆 SENIOR</span>
+    <span class="arrow">›</span>
+</a>
+
+<a href="supersenior.html">
+    <span class="left">🏆 SUPER SENIOR</span>
+    <span class="arrow">›</span>
+</a>
+
+<a href="general.html">
+    <span class="left">🏆 GENERAL</span>
+    <span class="arrow">›</span>
+</a>
+
+<a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vQz8ipfKh59UBNMTnf6lrU1C_bNky3tUumYpuGAt4-d4G2O7Vs7wOFcBVcnGMDBQuHS5PtftsZ59G8b/pubhtml?gid=371564784&single=true" target="_blank">
+    <span class="left">🏆 GRAND TOTAL</span>
+    <span class="arrow">›</span>
+</a>
+
 </div>
+
+</body>
+</html>
