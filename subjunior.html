@@ -88,6 +88,90 @@ color:#0B5ED7;
 
 }
 
+.section-title{
+
+font-size:30px;
+
+margin:30px 0 20px;
+
+text-align:center;
+
+}
+
+.table-box{
+
+margin-top:35px;
+
+background:#fff;
+
+border-radius:18px;
+
+padding:20px;
+
+overflow-x:auto;
+
+color:#222;
+
+box-shadow:0 8px 20px rgba(0,0,0,.25);
+
+}
+
+.table-box h2{
+
+text-align:center;
+
+margin-bottom:20px;
+
+color:#0B5ED7;
+
+}
+
+.back{
+
+display:inline-flex;
+
+align-items:center;
+
+justify-content:center;
+
+margin-top:35px;
+
+padding:12px 26px;
+
+background:rgba(255,255,255,.12);
+
+border:1px solid rgba(255,255,255,.18);
+
+border-radius:30px;
+
+color:rgba(255,255,255,.9);
+
+text-decoration:none;
+
+font-size:17px;
+
+font-weight:600;
+
+backdrop-filter:blur(8px);
+
+-webkit-backdrop-filter:blur(8px);
+
+transition:.25s;
+
+}
+
+.back:hover{
+
+background:rgba(255,255,255,.20);
+
+color:#fff;
+
+border-color:rgba(255,255,255,.35);
+
+text-decoration:none;
+
+}
+
 .rank{
 
 display:flex;
@@ -107,24 +191,6 @@ font-size:22px;
 .rank:last-child{
 
 border-bottom:none;
-
-}
-
-.rank span:last-child{
-
-font-weight:bold;
-
-font-size:25px;
-
-}
-
-.section-title{
-
-font-size:30px;
-
-margin:30px 0 20px;
-
-text-align:center;
 
 }
 
@@ -214,34 +280,6 @@ font-style:italic;
 
 }
 
-.table-box{
-
-margin-top:35px;
-
-background:#fff;
-
-border-radius:18px;
-
-padding:20px;
-
-overflow-x:auto;
-
-color:#222;
-
-box-shadow:0 8px 20px rgba(0,0,0,.25);
-
-}
-
-.table-box h2{
-
-text-align:center;
-
-margin-bottom:20px;
-
-color:#0B5ED7;
-
-}
-
 table{
 
 width:100%;
@@ -270,46 +308,6 @@ border-bottom:1px solid #ddd;
 
 }
 
-tr:hover{
-
-background:#f5f5f5;
-
-}
-
-.back{
-
-display:block;
-
-margin:35px auto;
-
-width:240px;
-
-text-align:center;
-
-text-decoration:none;
-
-background:#FFD54F;
-
-color:#000;
-
-padding:15px;
-
-font-size:20px;
-
-font-weight:bold;
-
-border-radius:12px;
-
-transition:.3s;
-
-}
-
-.back:hover{
-
-background:#ffc107;
-
-}
-
 @media(max-width:700px){
 
 .header h1{
@@ -318,33 +316,9 @@ font-size:30px;
 
 }
 
-.rank{
-
-font-size:18px;
-
-}
-
-.rank span:last-child{
-
-font-size:22px;
-
-}
-
 .section-title{
 
 font-size:24px;
-
-}
-
-.event summary{
-
-font-size:18px;
-
-}
-
-.result{
-
-font-size:17px;
 
 }
 
@@ -362,7 +336,7 @@ font-size:17px;
 
 <h1>🏆 SUB JUNIOR</h1>
 
-<p>AURA MINI MEET 2026</p>
+<p>HIDAYA MINI MEET 2026</p>
 
 </div>
 
@@ -370,27 +344,13 @@ font-size:17px;
 
 <h2>LIVE TEAM RANKING</h2>
 
-<div class="rank">
+<div id="ranking">
 
-<span>🥇 TEAM A</span>
+<div class="waiting">
 
-<span>145</span>
-
-</div>
-
-<div class="rank">
-
-<span>🥈 TEAM B</span>
-
-<span>130</span>
+Loading ranking...
 
 </div>
-
-<div class="rank">
-
-<span>🥉 TEAM C</span>
-
-<span>121</span>
 
 </div>
 
@@ -402,462 +362,45 @@ EVENT RESULTS
 
 </h2>
 
-<details class="event" open>
-
-<summary>
-
-✍️ Arabic Handwriting
-
-</summary>
-
-<div class="result">
-
-<div class="gold">
-
-🥇 121 BADARUDHEEN - TEAM A
-
-</div>
-
-<div class="silver">
-
-🥈 223 NIJAS - TEAM C
-
-</div>
-
-<div class="bronze">
-
-🥉 124 JABIR - TEAM A
-
-</div>
-
-</div>
-
-</details>
-
-<details class="event">
-
-<summary>
-
-📝 Malayalam Handwriting
-
-</summary>
+<div id="events">
 
 <div class="waiting">
 
-Waiting for Result...
+Loading events...
 
 </div>
 
-</details>
-
-<details class="event">
-
-<summary>
-
-🖋 Urdu Handwriting
-
-</summary>
-
-<div class="waiting">
-
-Waiting for Result...
-
 </div>
 
-</details>
-
-<details class="event">
-
-<summary>
-
-🧠 Memory Test
-
-</summary>
-
-<div class="waiting">
-
-Waiting for Result...
-
-</div>
-
-</details>
-
-<!-- PART 2 STARTS FROM HERE -->
- <details class="event">
-
-<summary>
-
-📖 Translation Ara to Mlm
-
-</summary>
-
-<div class="waiting">
-
-Waiting for Result...
-
-</div>
-
-</details>
-
-<details class="event">
-
-<summary>
-
-📖 Translation Urd to Mlm
-
-</summary>
-
-<div class="waiting">
-
-Waiting for Result...
-
-</div>
-
-</details>
-
-<details class="event">
-
-<summary>
-
-📖 Translation Eng to Mlm
-
-</summary>
-
-<div class="waiting">
-
-Waiting for Result...
-
-</div>
-
-</details>
-
-<details class="event">
-
-<summary>
-
-📝 Malayalam Essay
-
-</summary>
-
-<div class="waiting">
-
-Waiting for Result...
-
-</div>
-
-</details>
-
-<details class="event">
-
-<summary>
-
-🎙 Qira'ath
-
-</summary>
-
-<div class="waiting">
-
-Waiting for Result...
-
-</div>
-
-</details>
-
-<details class="event">
-
-<summary>
-
-🎵 Arabic Song
-
-</summary>
-
-<div class="waiting">
-
-Waiting for Result...
-
-</div>
-
-</details>
-
-<details class="event">
-
-<summary>
-
-📚 Arabic Storytelling
-
-</summary>
-
-<div class="waiting">
-
-Waiting for Result...
-
-</div>
-
-</details>
-
-<details class="event">
-
-<summary>
-
-🗣 Arabic Word Fight
-
-</summary>
-
-<div class="waiting">
-
-Waiting for Result...
-
-</div>
-
-</details>
-
-<details class="event">
-
-<summary>
-
-🎶 Malayalam Song
-
-</summary>
-
-<div class="waiting">
-
-Waiting for Result...
-
-</div>
-
-</details>
-
-<details class="event">
-
-<summary>
-
-🎤 Malayalam Speech
-
-</summary>
-
-<div class="waiting">
-
-Waiting for Result...
-
-</div>
-
-</details>
-
-<details class="event">
-
-<summary>
-
-📖 Malayalam Storytelling
-
-</summary>
-
-<div class="waiting">
-
-Waiting for Result...
-
-</div>
-
-</details>
-
-<details class="event">
-
-<summary>
-
-🌸 Madhuram Malayalam
-
-</summary>
-
-<div class="waiting">
-
-Waiting for Result...
-
-</div>
-
-</details>
-
-<details class="event">
-
-<summary>
-
-📚 English Storytelling
-
-</summary>
-
-<div class="waiting">
-
-Waiting for Result...
-
-</div>
-
-</details>
-
-<details class="event">
-
-<summary>
-
-📖 English Prose Reading
-
-</summary>
-
-<div class="waiting">
-
-Waiting for Result...
-
-</div>
-
-</details>
-
-<details class="event">
-
-<summary>
-
-🗣 English Word Fight
-
-</summary>
-
-<div class="waiting">
-
-Waiting for Result...
-
-</div>
-
-</details>
-
-<details class="event">
-
-<summary>
-
-🎵 Urdu Song
-
-</summary>
-
-<div class="waiting">
-
-Waiting for Result...
-
-</div>
-
-</details>
-
-<details class="event">
-
-<summary>
-
-🎤 Urdu Speech
-
-</summary>
-
-<div class="waiting">
-
-Waiting for Result...
-
-</div>
-
-</details>
-
-<details class="event">
-
-<summary>
-
-📖 Urdu Prose Reading
-
-</summary>
-
-<div class="waiting">
-
-Waiting for Result...
-
-</div>
-
-</details>
-
-<div class="table-box">
+<!-- PART 2 CONTINUES HERE --><div class="table-box">
 
 <h2>POINT TABLE</h2>
 
-<table>
+<div id="pointTable">
 
-<tr>
+<div class="waiting">
 
-<th>Event</th>
-
-<th>TEAM A</th>
-
-<th>TEAM B</th>
-
-<th>TEAM C</th>
-
-</tr>
-
-<tr>
-
-<td>Arabic Handwriting</td>
-
-<td>10</td>
-
-<td>8</td>
-
-<td>6</td>
-
-</tr>
-
-<tr>
-
-<td>Malayalam Handwriting</td>
-
-<td>0</td>
-
-<td>0</td>
-
-<td>0</td>
-
-</tr>
-
-<tr>
-
-<td>Urdu Handwriting</td>
-
-<td>0</td>
-
-<td>0</td>
-
-<td>0</td>
-
-</tr>
-
-<tr>
-
-<td>Memory Test</td>
-
-<td>0</td>
-
-<td>0</td>
-
-<td>0</td>
-
-</tr>
-
-<tr>
-
-<td colspan="4" style="padding:15px;text-align:center;color:#777;font-style:italic;">
-
-Results of the remaining events will be published after official verification.
-
-</td>
-
-</tr>
-
-</table>
+Loading point table...
 
 </div>
 
+</div>
+
+</div>
+
+<div style="text-align:center;">
+
 <a href="scoreboard.html" class="back">
 
-Back to Scoreboard
+⌂ Scoreboard
 
 </a>
 
 </div>
+
+</div>
+
+<script src="subjunior.js"></script>
 
 </body>
 
