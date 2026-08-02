@@ -278,7 +278,7 @@ let html=`
 
 teams.forEach(team=>{
 
-html+=`<th>TEAM ${team}</th>`;
+html+=`<th> ${team}</th>`;
 
 });
 
