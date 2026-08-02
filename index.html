@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>HIDAYA MINI MEET 2026</title>
@@ -9,101 +12,317 @@
 <style>
 
 *{
+
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Segoe UI,sans-serif;
+font-family:'Segoe UI',sans-serif;
+
 }
 
 body{
 
-background:linear-gradient(135deg,#0b1e36,#173d6b);
-color:white;
+background:
+linear-gradient(rgba(7,26,52,.92),rgba(13,59,114,.92)),
+url("background.jpg");
+
+background-size:cover;
+
+background-position:center;
+
+background-attachment:fixed;
+
+min-height:100vh;
+
 display:flex;
+
 justify-content:center;
+
 align-items:center;
-height:100vh;
+
+padding:20px;
+
+color:white;
 
 }
 
 .container{
 
-text-align:center;
-width:90%;
+width:100%;
+
 max-width:700px;
+
+text-align:center;
+
+animation:fadeIn .9s ease;
+
+}
+
+.logo-box{
+
+width:180px;
+
+height:180px;
+
+margin:auto;
+
+border-radius:50%;
+
+background:rgba(255,255,255,.08);
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+backdrop-filter:blur(10px);
+
+box-shadow:0 0 45px rgba(255,215,0,.35);
+
+margin-bottom:25px;
+
+}
+
+.logo{
+
+width:150px;
+
+max-width:100%;
 
 }
 
 h1{
 
-font-size:52px;
-letter-spacing:3px;
+font-size:58px;
+
+letter-spacing:5px;
+
 margin-bottom:10px;
+
+color:#FFD54F;
+
+text-shadow:0 3px 12px rgba(0,0,0,.35);
 
 }
 
 h2{
 
-font-weight:400;
-margin-bottom:10px;
+font-size:30px;
+
+font-weight:500;
+
+margin-bottom:12px;
 
 }
 
-p{
+.location{
 
-color:#d6d6d6;
-margin-bottom:40px;
+color:#dddddd;
+
+font-size:18px;
+
+margin-bottom:35px;
+
+}
+
+.divider{
+
+width:90px;
+
+height:4px;
+
+background:#FFD54F;
+
+margin:0 auto 35px;
+
+border-radius:50px;
 
 }
 
 .button{
 
 display:block;
+
 width:100%;
+
 padding:20px;
+
 margin:18px 0;
-text-decoration:none;
+
+border-radius:18px;
+
 font-size:24px;
+
 font-weight:bold;
-border-radius:15px;
-transition:.3s;
+
+text-decoration:none;
+
 color:white;
+
+transition:.3s;
+
+box-shadow:0 10px 25px rgba(0,0,0,.25);
+
+}
+
+.button:hover{
+
+transform:translateY(-4px);
 
 }
 
 .score{
 
-background:#f4b400;
+background:#F4B400;
 
 }
 
 .score:hover{
 
-background:#ffd54f;
-color:black;
-transform:scale(1.03);
+background:#FFD54F;
+
+color:#000;
+
+}
+
+.kalaprathibha{
+
+background:#8E44AD;
+
+}
+
+.kalaprathibha:hover{
+
+background:#C56CF0;
+
+color:#000;
 
 }
 
 .live{
 
-background:#00b894;
+background:#00B894;
 
 }
 
 .live:hover{
 
-background:#55efc4;
-color:black;
-transform:scale(1.03);
+background:#55EFC4;
+
+color:#000;
+
+}
+
+.schedule{
+
+background:#1565C0;
+
+}
+
+.schedule:hover{
+
+background:#42A5F5;
+
+color:#000;
+
+}
+
+.gallery{
+
+background:#6D4C41;
+
+}
+
+.gallery:hover{
+
+background:#A1887F;
+
+color:#000;
+
+}
+
+.committee{
+
+background:#37474F;
+
+}
+
+.committee:hover{
+
+background:#90A4AE;
+
+color:#000;
 
 }
 
 .footer{
 
 margin-top:40px;
+
 font-size:14px;
-color:#cccccc;
+
+color:#d8d8d8;
+
+letter-spacing:1px;
+
+}
+
+@keyframes fadeIn{
+
+from{
+
+opacity:0;
+
+transform:translateY(30px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+@media(max-width:600px){
+
+.logo-box{
+
+width:145px;
+
+height:145px;
+
+}
+
+.logo{
+
+width:120px;
+
+}
+
+h1{
+
+font-size:44px;
+
+}
+
+h2{
+
+font-size:24px;
+
+}
+
+.button{
+
+font-size:21px;
+
+padding:18px;
+
+}
 
 }
 
@@ -115,23 +334,68 @@ color:#cccccc;
 
 <div class="container">
 
+<div class="logo-box">
+
+<img src="aura-logo.png" class="logo">
+
+</div>
+
 <h1>AURA</h1>
 
-<h2>HIDAYA MINI MEET</h2>
+<h2>HIDAYA MINI MEET 2026</h2>
 
-<p>Darul Hidaya Islamic Academy, Kuttamboor</p>
+<div class="location">
+
+Darul Hidaya Islamic Academy, Kuttamboor
+
+</div>
+
+<div class="divider"></div>
 
 <a href="scoreboard.html" class="button score">
+
 🏆 SCOREBOARD
+
+</a>
+
+<a href="kalaprathibha.html" class="button kalaprathibha">
+
+🏅 KALAPRATHIBHA
+
 </a>
 
 <a href="live.html" class="button live">
+
 📢 LIVE RESULTS
+
+</a>
+
+<!-- PART 2 CONTINUES HERE -->
+  <a href="schedule.html" class="button schedule">
+
+📅 SCHEDULE
+
+</a>
+
+<a href="gallery.html" class="button gallery">
+
+🖼 GALLERY
+
+</a>
+
+<a href="committee.html" class="button committee">
+
+👥 COMMITTEE
+
 </a>
 
 <div class="footer">
 
-Jam'yyathu Thalaba Samajam - JTS
+Jam'yyathu Thalaba Samajam (JTS)
+
+<br><br>
+
+© 2026 HIDAYA MINI MEET
 
 </div>
 
