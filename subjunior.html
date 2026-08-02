@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Sub Junior Scoreboard</title>
@@ -13,16 +15,16 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Segoe UI,sans-serif;
+font-family:'Segoe UI',sans-serif;
 }
 
 body{
 
-background:linear-gradient(135deg,#081B33,#103C73);
+background:linear-gradient(135deg,#081B33,#0D2D54,#17467D);
 
-color:white;
+color:#fff;
 
-padding:20px;
+padding:18px;
 
 }
 
@@ -46,21 +48,23 @@ margin-bottom:25px;
 
 font-size:38px;
 
+letter-spacing:2px;
+
 }
 
-.header h2{
+.header p{
 
 margin-top:8px;
 
-font-weight:400;
-
 color:#dddddd;
+
+font-size:18px;
 
 }
 
 .rank-board{
 
-background:white;
+background:#ffffff;
 
 color:#222;
 
@@ -68,17 +72,19 @@ border-radius:18px;
 
 padding:20px;
 
-box-shadow:0 8px 20px rgba(0,0,0,.25);
-
 margin-bottom:25px;
+
+box-shadow:0 8px 20px rgba(0,0,0,.25);
 
 }
 
-.rank-board h3{
+.rank-board h2{
 
 text-align:center;
 
 margin-bottom:20px;
+
+color:#0B5ED7;
 
 }
 
@@ -88,51 +94,71 @@ display:flex;
 
 justify-content:space-between;
 
-padding:12px;
+align-items:center;
+
+padding:15px;
+
+border-bottom:1px solid #ddd;
 
 font-size:22px;
-
-border-bottom:1px solid #eee;
 
 }
 
 .rank:last-child{
 
-border:none;
+border-bottom:none;
+
+}
+
+.rank span:last-child{
+
+font-weight:bold;
+
+font-size:25px;
+
+}
+
+.section-title{
+
+font-size:30px;
+
+margin:30px 0 20px;
+
+text-align:center;
 
 }
 
 .event{
 
-background:white;
+background:#ffffff;
 
 color:#222;
 
 border-radius:15px;
 
-margin-bottom:15px;
+margin-bottom:18px;
 
 overflow:hidden;
 
-box-shadow:0 6px 15px rgba(0,0,0,.2);
+box-shadow:0 8px 20px rgba(0,0,0,.20);
 
 }
 
 .event summary{
 
+list-style:none;
+
 cursor:pointer;
 
 padding:18px;
 
-font-size:21px;
-
-font-weight:bold;
-
-list-style:none;
-
 background:#0B5ED7;
 
 color:white;
+
+font-size:21px;
+
+font-weight:bold;
 
 }
 
@@ -146,33 +172,73 @@ display:none;
 
 padding:18px;
 
-font-size:19px;
+font-size:18px;
 
 line-height:2;
 
 }
 
+.gold{
+
+color:#d4a017;
+
+font-weight:bold;
+
+}
+
+.silver{
+
+color:#777;
+
+font-weight:bold;
+
+}
+
+.bronze{
+
+color:#9a5a00;
+
+font-weight:bold;
+
+}
+
+.waiting{
+
+text-align:center;
+
+padding:20px;
+
+color:#888;
+
+font-style:italic;
+
+}
+
 .table-box{
 
-background:white;
+margin-top:35px;
 
-color:#222;
+background:#fff;
 
 border-radius:18px;
 
 padding:20px;
 
-margin-top:30px;
-
 overflow-x:auto;
+
+color:#222;
+
+box-shadow:0 8px 20px rgba(0,0,0,.25);
 
 }
 
-.table-box h3{
+.table-box h2{
 
 text-align:center;
 
-margin-bottom:15px;
+margin-bottom:20px;
+
+color:#0B5ED7;
 
 }
 
@@ -188,7 +254,7 @@ th{
 
 background:#0B5ED7;
 
-color:white;
+color:#fff;
 
 padding:12px;
 
@@ -196,7 +262,7 @@ padding:12px;
 
 td{
 
-padding:10px;
+padding:11px;
 
 text-align:center;
 
@@ -204,43 +270,47 @@ border-bottom:1px solid #ddd;
 
 }
 
+tr:hover{
+
+background:#f5f5f5;
+
+}
+
 .back{
 
 display:block;
 
-margin:30px auto;
+margin:35px auto;
 
-width:220px;
+width:240px;
 
 text-align:center;
-
-padding:14px;
-
-background:#FFD54F;
-
-color:black;
-
-font-weight:bold;
 
 text-decoration:none;
 
+background:#FFD54F;
+
+color:#000;
+
+padding:15px;
+
+font-size:20px;
+
+font-weight:bold;
+
 border-radius:12px;
 
-}
-
-.loading{
-
-text-align:center;
-
-margin-top:25px;
-
-font-size:18px;
-
-color:#cccccc;
+transition:.3s;
 
 }
 
-@media(max-width:600px){
+.back:hover{
+
+background:#ffc107;
+
+}
+
+@media(max-width:700px){
 
 .header h1{
 
@@ -250,7 +320,19 @@ font-size:30px;
 
 .rank{
 
-font-size:19px;
+font-size:18px;
+
+}
+
+.rank span:last-child{
+
+font-size:22px;
+
+}
+
+.section-title{
+
+font-size:24px;
 
 }
 
@@ -280,19 +362,19 @@ font-size:17px;
 
 <h1>🏆 SUB JUNIOR</h1>
 
-<h2>Scoreboard</h2>
+<p>AURA DHAC MEET 2026</p>
 
 </div>
 
 <div class="rank-board">
 
-<h3>LIVE TEAM RANKING</h3>
+<h2>LIVE TEAM RANKING</h2>
 
 <div class="rank">
 
 <span>🥇 TEAM A</span>
 
-<b>145</b>
+<span>145</span>
 
 </div>
 
@@ -300,7 +382,7 @@ font-size:17px;
 
 <span>🥈 TEAM B</span>
 
-<b>130</b>
+<span>130</span>
 
 </div>
 
@@ -308,23 +390,45 @@ font-size:17px;
 
 <span>🥉 TEAM C</span>
 
-<b>121</b>
+<span>121</span>
 
 </div>
 
 </div>
+
+<h2 class="section-title">
+
+EVENT RESULTS
+
+</h2>
 
 <details class="event" open>
 
-<summary>✍️ Arabic Handwriting</summary>
+<summary>
+
+✍️ Arabic Handwriting
+
+</summary>
 
 <div class="result">
 
-🥇 121 BADARUDHEEN - TEAM A <br>
+<div class="gold">
 
-🥈 223 NIJAS - TEAM C <br>
+🥇 121 BADARUDHEEN - TEAM A
+
+</div>
+
+<div class="silver">
+
+🥈 223 NIJAS - TEAM C
+
+</div>
+
+<div class="bronze">
 
 🥉 124 JABIR - TEAM A
+
+</div>
 
 </div>
 
@@ -332,9 +436,13 @@ font-size:17px;
 
 <details class="event">
 
-<summary>📝 Malayalam Handwriting</summary>
+<summary>
 
-<div class="result">
+📝 Malayalam Handwriting
+
+</summary>
+
+<div class="waiting">
 
 Waiting for Result...
 
@@ -344,9 +452,318 @@ Waiting for Result...
 
 <details class="event">
 
-<summary>🎤 Urdu Speech</summary>
+<summary>
 
-<div class="result">
+🖋 Urdu Handwriting
+
+</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>
+
+🧠 Memory Test
+
+</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<!-- PART 2 STARTS FROM HERE -->
+ <details class="event">
+
+<summary>
+
+📖 Translation Ara to Mlm
+
+</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>
+
+📖 Translation Urd to Mlm
+
+</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>
+
+📖 Translation Eng to Mlm
+
+</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>
+
+📝 Malayalam Essay
+
+</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>
+
+🎙 Qira'ath
+
+</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>
+
+🎵 Arabic Song
+
+</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>
+
+📚 Arabic Storytelling
+
+</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>
+
+🗣 Arabic Word Fight
+
+</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>
+
+🎶 Malayalam Song
+
+</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>
+
+🎤 Malayalam Speech
+
+</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>
+
+📖 Malayalam Storytelling
+
+</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>
+
+🌸 Madhuram Malayalam
+
+</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>
+
+📚 English Storytelling
+
+</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>
+
+📖 English Prose Reading
+
+</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>
+
+🗣 English Word Fight
+
+</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>
+
+🎵 Urdu Song
+
+</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>
+
+🎤 Urdu Speech
+
+</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>
+
+📖 Urdu Prose Reading
+
+</summary>
+
+<div class="waiting">
 
 Waiting for Result...
 
@@ -356,7 +773,7 @@ Waiting for Result...
 
 <div class="table-box">
 
-<h3>POINT TABLE</h3>
+<h2>POINT TABLE</h2>
 
 <table>
 
@@ -364,11 +781,11 @@ Waiting for Result...
 
 <th>Event</th>
 
-<th>A</th>
+<th>TEAM A</th>
 
-<th>B</th>
+<th>TEAM B</th>
 
-<th>C</th>
+<th>TEAM C</th>
 
 </tr>
 
@@ -408,13 +825,25 @@ Waiting for Result...
 
 </tr>
 
+<tr>
+
+<td>Memory Test</td>
+
+<td>0</td>
+
+<td>0</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td colspan="4"><b>Remaining events will appear automatically from Google Sheet.</b></td>
+
+</tr>
+
 </table>
-
-</div>
-
-<div class="loading">
-
-Google Sheet Live Sync will be added in the next step...
 
 </div>
 
