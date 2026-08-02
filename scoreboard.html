@@ -94,21 +94,57 @@ margin-bottom:8px;
 
 .back{
 
-margin-top:30px;
+display:inline-flex;
 
-display:inline-block;
+align-items:center;
+
+justify-content:center;
+
+margin-top:28px;
+
+padding:12px 26px;
+
+background:rgba(255,255,255,.12);
+
+border:1px solid rgba(255,255,255,.18);
+
+border-radius:30px;
+
+color:rgba(255,255,255,.9);
 
 text-decoration:none;
 
-color:white;
+font-size:17px;
 
-font-size:20px;
+font-weight:600;
+
+backdrop-filter:blur(8px);
+
+-webkit-backdrop-filter:blur(8px);
+
+transition:all .25s ease;
 
 }
 
 .back:hover{
 
-text-decoration:underline;
+background:rgba(255,255,255,.20);
+
+border-color:rgba(255,255,255,.35);
+
+color:#fff;
+
+text-decoration:none;
+
+transform:translateY(-2px);
+
+box-shadow:0 6px 18px rgba(0,0,0,.18);
+
+}
+
+.back:active{
+
+transform:scale(.97);
 
 }
 
@@ -148,9 +184,7 @@ font-size:30px;
 
 <div class="grid">
 
-<a href="https://nijaskds.github.io/AURA-RESULTS/subjunior.html" class="card">
-
-<span></span>
+<a href="subjunior.html" class="card">
 
 SUB JUNIOR
 
@@ -158,23 +192,17 @@ SUB JUNIOR
 
 <a href="senior.html" class="card">
 
-<span></span>
-
 SENIOR
 
 </a>
 
 <a href="supersenior.html" class="card">
 
-<span></span>
-
 SUPER SENIOR
 
 </a>
 
 <a href="general.html" class="card">
-
-<span></span>
 
 GENERAL
 
@@ -189,57 +217,12 @@ GRAND TOTAL
 </a>
 
 </div>
-  .back{
 
-display:inline-flex;
+<a href="index.html" class="back">
 
-align-items:center;
+⌂ Home
 
-justify-content:center;
-
-margin-top:28px;
-
-padding:12px 26px;
-
-background:rgba(255,255,255,0.12);
-
-border:1px solid rgba(255,255,255,0.18);
-
-border-radius:30px;
-
-color:rgba(255,255,255,0.9);
-
-text-decoration:none;
-
-font-size:17px;
-
-font-weight:600;
-
-backdrop-filter:blur(8px);
-
-transition:all .25s ease;
-
-}
-
-.back:hover{
-
-background:rgba(255,255,255,0.20);
-
-border-color:rgba(255,255,255,0.35);
-
-color:#ffffff;
-
-transform:translateY(-2px);
-
-box-shadow:0 6px 18px rgba(0,0,0,.18);
-
-}
-
-.back:active{
-
-transform:scale(.97);
-
-}
+</a>
 
 </div>
 
