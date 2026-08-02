@@ -1,1 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Super Senior Scoreboard</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+
+background:linear-gradient(135deg,#06182E,#0E3A69,#1A5DA3);
+
+color:white;
+
+padding:18px;
+
+}
+
+.container{
+
+max-width:950px;
+
+margin:auto;
+
+}
+
+.header{
+
+text-align:center;
+
+margin-bottom:25px;
+
+}
+
+.header h1{
+
+font-size:38px;
+
+letter-spacing:2px;
+
+}
+
+.header p{
+
+margin-top:8px;
+
+font-size:18px;
+
+color:#dddddd;
+
+}
+
+.rank-board{
+
+background:white;
+
+color:#222;
+
+border-radius:18px;
+
+padding:20px;
+
+margin-bottom:25px;
+
+box-shadow:0 10px 25px rgba(0,0,0,.25);
+
+}
+
+.rank-board h2{
+
+text-align:center;
+
+margin-bottom:20px;
+
+color:#0B5ED7;
+
+}
+
+.rank{
+
+display:flex;
+
+justify-content:space-between;
+
+padding:15px;
+
+font-size:22px;
+
+border-bottom:1px solid #ddd;
+
+}
+
+.rank:last-child{
+
+border-bottom:none;
+
+}
+
+.section-title{
+
+text-align:center;
+
+font-size:30px;
+
+margin:30px 0 20px;
+
+}
+
+.event{
+
+background:white;
+
+color:#222;
+
+border-radius:15px;
+
+margin-bottom:18px;
+
+overflow:hidden;
+
+box-shadow:0 8px 18px rgba(0,0,0,.18);
+
+}
+
+.event summary{
+
+cursor:pointer;
+
+padding:18px;
+
+background:#0B5ED7;
+
+color:white;
+
+font-size:20px;
+
+font-weight:bold;
+
+list-style:none;
+
+}
+
+.event summary::-webkit-details-marker{
+
+display:none;
+
+}
+
+.waiting{
+
+padding:20px;
+
+text-align:center;
+
+color:#888;
+
+font-style:italic;
+
+}
+
+.table-box{
+
+margin-top:35px;
+
+background:white;
+
+color:#222;
+
+border-radius:18px;
+
+padding:20px;
+
+overflow-x:auto;
+
+}
+
+.back{
+
+display:block;
+
+margin:35px auto;
+
+width:220px;
+
+text-align:center;
+
+text-decoration:none;
+
+background:#FFD54F;
+
+color:black;
+
+padding:15px;
+
+font-weight:bold;
+
+font-size:20px;
+
+border-radius:12px;
+
+}
+
+@media(max-width:700px){
+
+.header h1{
+
+font-size:30px;
+
+}
+
+.rank{
+
+font-size:18px;
+
+}
+
+.section-title{
+
+font-size:24px;
+
+}
+
+.event summary{
+
+font-size:18px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+
+<h1>🏆 SUPER SENIOR</h1>
+
+<p>AURA DHAC MEET 2026</p>
+
+</div>
+
+<div class="rank-board">
+
+<h2>LIVE TEAM RANKING</h2>
+
+<div class="rank"><span>🥇 TEAM A</span><b>145</b></div>
+
+<div class="rank"><span>🥈 TEAM B</span><b>132</b></div>
+
+<div class="rank"><span>🥉 TEAM C</span><b>121</b></div>
+
+</div>
+
+<h2 class="section-title">
+
+EVENT RESULTS
+
+</h2>
+
+<details class="event" open>
+
+<summary>🖋 Arabic Calligraphy</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>📖 Arabic Essay</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>🎬 Arabic Video Grasping</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>📚 Dictionary Making Arabic</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>📝 Malayalam Essay</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>✍ Malayalam Poetry</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>📚 English Essay</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>🌐 Translation (Ara → Eng)</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>📝 Urdu Essay</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>🌐 Translation (Eng → Urd)</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>❓ Quiz</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>🎵 Arabic Song</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<!-- PART 2 CONTINUES HERE -->
+  <details class="event">
+
+<summary>🎤 Arabic Speech</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>📡 Arabic Live Reporting</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>🎶 Mappila Song</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>🎙 Malayalam Speech</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>🎵 Paadi Parayal</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>🗣 English Pick and Talk</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>🌐 English Live Translation</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>🎵 Urdu Song</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>📜 Recitation of Urdu Verse</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>🎤 Urdu Speech</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>💻 English Power Point Presentation</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<div class="table-box">
+
+<h2 style="text-align:center;color:#0B5ED7;margin-bottom:20px;">
+
+POINT TABLE
+
+</h2>
+
+<table style="width:100%;border-collapse:collapse;">
+
+<tr style="background:#0B5ED7;color:white;">
+
+<th style="padding:12px;">Event</th>
+
+<th>A</th>
+
+<th>B</th>
+
+<th>C</th>
+
+</tr>
+
+<tr>
+
+<td style="padding:10px;">Arabic Calligraphy</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+</tr>
+
+<tr>
+
+<td style="padding:10px;">Arabic Essay</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+</tr>
+
+<tr>
+
+<td style="padding:10px;">Arabic Video Grasping</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+</tr>
+
+<tr>
+
+<td style="padding:10px;">Dictionary Making Arabic</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+</tr>
+
+<tr>
+
+<td style="padding:10px;">Malayalam Essay</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+</tr>
+
+<tr>
+
+<td style="padding:10px;">Malayalam Poetry</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+</tr>
+
+<tr>
+
+<td style="padding:10px;">English Essay</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+</tr>
+
+<tr>
+
+<td colspan="4" style="padding:15px;text-align:center;color:#777;">
+
+Remaining event points will be loaded automatically from Google Sheets.
+
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+<a href="scoreboard.html" class="back">
+
+⬅ Back to Scoreboard
+
+</a>
+
+</div>
+
+</body>
+
+</html>
