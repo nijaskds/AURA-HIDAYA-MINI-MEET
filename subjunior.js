@@ -246,3 +246,82 @@ html += `
 document.getElementById("ranking").innerHTML = html;
 
 }
+function renderPointTable(rows){
+
+let html = `
+
+<table>
+
+<tr>
+
+<th>Event</th>
+
+<th>TEAM A</th>
+
+<th>TEAM B</th>
+
+<th>TEAM C</th>
+
+</tr>
+
+`;
+
+rows.forEach(row=>{
+
+let teamA = 0;
+let teamB = 0;
+let teamC = 0;
+
+if(row.STATUS === "PUBLISHED"){
+
+if(row.FIRST_TEAM === "A") teamA += Number(row.FIRST_POINT || 0);
+if(row.FIRST_TEAM === "B") teamB += Number(row.FIRST_POINT || 0);
+if(row.FIRST_TEAM === "C") teamC += Number(row.FIRST_POINT || 0);
+
+if(row.SECOND_TEAM === "A") teamA += Number(row.SECOND_POINT || 0);
+if(row.SECOND_TEAM === "B") teamB += Number(row.SECOND_POINT || 0);
+if(row.SECOND_TEAM === "C") teamC += Number(row.SECOND_POINT || 0);
+
+if(row.THIRD_TEAM === "A") teamA += Number(row.THIRD_POINT || 0);
+if(row.THIRD_TEAM === "B") teamB += Number(row.THIRD_POINT || 0);
+if(row.THIRD_TEAM === "C") teamC += Number(row.THIRD_POINT || 0);
+
+}
+
+html += `
+
+<tr>
+
+<td>${row.EVENT_NAME}</td>
+
+<td>${teamA}</td>
+
+<td>${teamB}</td>
+
+<td>${teamC}</td>
+
+</tr>
+
+`;
+
+});
+
+html += `
+
+<tr>
+
+<td colspan="4" style="padding:15px;color:#777;font-style:italic;">
+
+Results of the remaining events will be published after official verification.
+
+</td>
+
+</tr>
+
+</table>
+
+`;
+
+document.getElementById("pointTable").innerHTML = html;
+
+}
