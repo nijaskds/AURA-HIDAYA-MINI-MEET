@@ -1,29 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AURA RESULTS</title>
 
 <style>
-body{
+*{
 margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
 font-family:Arial,sans-serif;
+background:#f4f4f4;
 }
 
 header{
 background:#0B57D0;
-color:#fff;
-padding:15px;
+color:white;
+padding:18px;
 text-align:center;
+font-size:24px;
+font-weight:bold;
 }
 
 nav{
 background:#222;
 display:flex;
 justify-content:center;
-gap:10px;
-padding:10px;
 flex-wrap:wrap;
+gap:10px;
+padding:12px;
 }
 
 nav button{
@@ -31,45 +40,51 @@ background:#0B57D0;
 color:white;
 border:none;
 padding:10px 18px;
+border-radius:6px;
 cursor:pointer;
-border-radius:5px;
+font-size:16px;
+transition:.3s;
+}
+
+nav button:hover{
+background:#0847a6;
 }
 
 iframe{
 width:100%;
 height:90vh;
 border:none;
+background:white;
 }
 </style>
 
 </head>
-
 <body>
 
 <header>
-<h2>AURA RESULTS</h2>
+AURA RESULTS
 </header>
 
 <nav>
 
-<button onclick="loadSheet(https://docs.google.com/spreadsheets/d/e/2PACX-1vQz8ipfKh59UBNMTnf6lrU1C_bNky3tUumYpuGAt4-d4G2O7Vs7wOFcBVcnGMDBQuHS5PtftsZ59G8b/pubhtml?gid=371564784&single=true)">
-Team Points
+<button onclick="loadSheet('https://docs.google.com/spreadsheets/d/e/2PACX-1vQz8ipfKh59UBNMTnf6lrU1C_bNky3tUumYpuGAt4-d4G2O7Vs7wOFcBVcnGMDBQuHS5PtftsZ59G8b/pubhtml?gid=371564784&single=true')">
+🏆 Team Points
 </button>
 
-<button onclick="loadSheet('SHEET4_LINK')">
-Event Results
+<button>
+📋 Event Results
 </button>
 
-<button onclick="loadSheet('SHEET5_LINK')">
-Individual Points
+<button>
+👤 Individual Points
 </button>
 
-<button onclick="loadSheet('SHEET6_LINK')">
-Champions
+<button>
+🥇 Champions
 </button>
 
-<button onclick="loadSheet('SHEET7_LINK')">
-Published Results
+<button>
+📢 Published Results
 </button>
 
 </nav>
@@ -79,10 +94,10 @@ Published Results
 <script>
 
 function loadSheet(link){
-document.getElementById("viewer").src=link;
+document.getElementById("viewer").src = link;
 }
 
-loadSheet(https://docs.google.com/spreadsheets/d/e/2PACX-1vQz8ipfKh59UBNMTnf6lrU1C_bNky3tUumYpuGAt4-d4G2O7Vs7wOFcBVcnGMDBQuHS5PtftsZ59G8b/pubhtml?gid=371564784&single=true);
+loadSheet("https://docs.google.com/spreadsheets/d/e/2PACX-1vQz8ipfKh59UBNMTnf6lrU1C_bNky3tUumYpuGAt4-d4G2O7Vs7wOFcBVcnGMDBQuHS5PtftsZ59G8b/pubhtml?gid=371564784&single=true");
 
 </script>
 
