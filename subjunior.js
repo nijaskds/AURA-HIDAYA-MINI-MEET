@@ -1,42 +1,42 @@
-// ==========================================
+// ======================================================
 // HIDAYA MINI MEET 2026
 // SUB JUNIOR RESULTS
-// ==========================================
+// Version 2.0
+// ======================================================
 
-// Google Sheet CSV Link
+
+// ------------------------------------------------------
+// GOOGLE SHEET CSV
+// ------------------------------------------------------
 
 const CSV_URL =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vQz8ipfKh59UBNMTnf6lrU1C_bNky3tUumYpuGAt4-d4G2O7Vs7wOFcBVcnGMDBQuHS5PtftsZ59G8b/pub?gid=1656570034&single=true&output=csv";
 
 
-
-// ==========================================
+// ------------------------------------------------------
 // START
-// ==========================================
+// ------------------------------------------------------
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded",()=>{
 
-loadData();
+loadResults();
 
 });
 
 
-
-// ==========================================
+// ------------------------------------------------------
 // LOAD CSV
-// ==========================================
+// ------------------------------------------------------
 
-async function loadData(){
+async function loadResults(){
 
 try{
 
-const response = await fetch(CSV_URL);
+const response=await fetch(CSV_URL);
 
-const csv = await response.text();
+const csv=await response.text();
 
-const rows = parseCSV(csv);
-
-console.log(rows);
+const rows=parseCSV(csv);
 
 renderRanking(rows);
 
@@ -53,28 +53,27 @@ console.error(error);
 }
 
 
-
-// ==========================================
-// CSV TO OBJECT
-// ==========================================
+// ------------------------------------------------------
+// CSV PARSER
+// ------------------------------------------------------
 
 function parseCSV(csv){
 
-const lines = csv.trim().split("\n");
+const lines=csv.trim().split("\n");
 
-const headers = lines[0].split(",");
+const headers=lines[0].split(",");
 
-const data = [];
+const data=[];
 
 for(let i=1;i<lines.length;i++){
 
-const values = lines[i].split(",");
+const row={};
 
-let row = {};
+const values=lines[i].split(",");
 
 headers.forEach((header,index)=>{
 
-row[header.trim()] = values[index] ? values[index].trim() : "";
+row[header.trim()]=values[index] ? values[index].trim() : "";
 
 });
 
@@ -87,152 +86,66 @@ return data;
 }
 
 
+// ------------------------------------------------------
+// CALCULATE TEAM POINTS
+// ------------------------------------------------------
 
-// ==========================================
-// FUNCTIONS
-// ==========================================
+function calculateTeams(rows){
 
-function renderRanking(rows){
-
-// Part 2
-
-}
-
-
-
-function renderEvents(rows){
-
-let html = "";
+const teams={};
 
 rows.forEach(row=>{
 
-const status = (row.STATUS || "").trim();
+if(row.STATUS!="PUBLISHED") return;
 
-if(status === "PUBLISHED"){
+addPoint(teams,row.FIRST_TEAM,row.FIRST_POINT);
 
-html += `
+addPoint(teams,row.SECOND_TEAM,row.SECOND_POINT);
 
-<details class="event">
-
-<summary>
-
-${row.EVENT_NAME}
-
-</summary>
-
-<div class="result">
-
-<div class="gold">
-
-🥇 ${row.FIRST_CHEST} ${row.FIRST_NAME} - TEAM ${row.FIRST_TEAM}
-
-</div>
-
-<div class="silver">
-
-🥈 ${row.SECOND_CHEST} ${row.SECOND_NAME} - TEAM ${row.SECOND_TEAM}
-
-</div>
-
-<div class="bronze">
-
-🥉 ${row.THIRD_CHEST} ${row.THIRD_NAME} - TEAM ${row.THIRD_TEAM}
-
-</div>
-
-</div>
-
-</details>
-
-`;
-
-}else{
-
-html += `
-
-<details class="event">
-
-<summary>
-
-${row.EVENT_NAME}
-
-</summary>
-
-<div class="waiting">
-
-Result Awaited
-
-</div>
-
-</details>
-
-`;
-
-}
+addPoint(teams,row.THIRD_TEAM,row.THIRD_POINT);
 
 });
 
-document.getElementById("events").innerHTML = html;
+return teams;
 
 }
 
 
+function addPoint(teams,team,point){
 
-function renderPointTable(rows){
+if(!team) return;
 
-// Part 4
+if(!teams[team]){
+
+teams[team]=0;
 
 }
-// ==========================================
-// PART 2
+
+teams[team]+=Number(point||0);
+
+}
+// ------------------------------------------------------
 // LIVE TEAM RANKING
-// ==========================================
+// ------------------------------------------------------
 
 function renderRanking(rows){
 
-const teams = {
-
-A:0,
-B:0,
-C:0
-
-};
-
-// Published Events മാത്രം Count ചെയ്യുക
-
-rows.forEach(row=>{
-
-if(row.STATUS !== "PUBLISHED") return;
-
-teams[row.FIRST_TEAM] += Number(row.FIRST_POINT || 0);
-
-teams[row.SECOND_TEAM] += Number(row.SECOND_POINT || 0);
-
-teams[row.THIRD_TEAM] += Number(row.THIRD_POINT || 0);
-
-});
-
-
-// Sort Teams
+const teams = calculateTeams(rows);
 
 const ranking = Object.entries(teams)
-
 .sort((a,b)=>b[1]-a[1]);
 
+const medals=["🥇","🥈","🥉"];
 
-// HTML
-
-const medals = ["🥇","🥈","🥉"];
-
-let html = "";
+let html="";
 
 ranking.forEach((team,index)=>{
 
-html += `
+html+=`
 
 <div class="rank">
 
-<span>${medals[index]} TEAM ${team[0]}</span>
+<span>${medals[index] || "🏅"} TEAM ${team[0]}</span>
 
 <span>${team[1]}</span>
 
@@ -242,13 +155,118 @@ html += `
 
 });
 
-
-document.getElementById("ranking").innerHTML = html;
+document.getElementById("ranking").innerHTML=html;
 
 }
+
+
+
+// ------------------------------------------------------
+// EVENT RESULTS
+// ------------------------------------------------------
+
+function renderEvents(rows){
+
+let html="";
+
+rows.forEach(row=>{
+
+const published=(row.STATUS||"").trim()=="PUBLISHED";
+
+html+=`
+
+<details class="event" ${published ? "open" : ""}>
+
+<summary>
+
+${row.EVENT_NAME}
+
+</summary>
+
+`;
+
+if(published){
+
+html+=`
+
+<div class="result">
+
+<div class="gold">
+
+🥇 ${row.FIRST_CHEST} ${row.FIRST_NAME}
+
+<br>
+
+TEAM ${row.FIRST_TEAM}
+
+</div>
+
+<div class="silver">
+
+🥈 ${row.SECOND_CHEST} ${row.SECOND_NAME}
+
+<br>
+
+TEAM ${row.SECOND_TEAM}
+
+</div>
+
+<div class="bronze">
+
+🥉 ${row.THIRD_CHEST} ${row.THIRD_NAME}
+
+<br>
+
+TEAM ${row.THIRD_TEAM}
+
+</div>
+
+</div>
+
+`;
+
+}else{
+
+html+=`
+
+<div class="waiting">
+
+Result Awaited
+
+</div>
+
+`;
+
+}
+
+html+=`
+
+</details>
+
+`;
+
+});
+
+document.getElementById("events").innerHTML=html;
+
+}
+// ------------------------------------------------------
+// POINT TABLE
+// ------------------------------------------------------
+
 function renderPointTable(rows){
 
-let html = `
+const teams = [...new Set(
+
+rows.flatMap(row=>[
+row.FIRST_TEAM,
+row.SECOND_TEAM,
+row.THIRD_TEAM
+]).filter(Boolean)
+
+)].sort();
+
+let html=`
 
 <table>
 
@@ -256,11 +274,15 @@ let html = `
 
 <th>Event</th>
 
-<th>TEAM A</th>
+`;
 
-<th>TEAM B</th>
+teams.forEach(team=>{
 
-<th>TEAM C</th>
+html+=`<th>TEAM ${team}</th>`;
+
+});
+
+html+=`
 
 </tr>
 
@@ -268,37 +290,39 @@ let html = `
 
 rows.forEach(row=>{
 
-let teamA = 0;
-let teamB = 0;
-let teamC = 0;
-
-if(row.STATUS === "PUBLISHED"){
-
-if(row.FIRST_TEAM === "A") teamA += Number(row.FIRST_POINT || 0);
-if(row.FIRST_TEAM === "B") teamB += Number(row.FIRST_POINT || 0);
-if(row.FIRST_TEAM === "C") teamC += Number(row.FIRST_POINT || 0);
-
-if(row.SECOND_TEAM === "A") teamA += Number(row.SECOND_POINT || 0);
-if(row.SECOND_TEAM === "B") teamB += Number(row.SECOND_POINT || 0);
-if(row.SECOND_TEAM === "C") teamC += Number(row.SECOND_POINT || 0);
-
-if(row.THIRD_TEAM === "A") teamA += Number(row.THIRD_POINT || 0);
-if(row.THIRD_TEAM === "B") teamB += Number(row.THIRD_POINT || 0);
-if(row.THIRD_TEAM === "C") teamC += Number(row.THIRD_POINT || 0);
-
-}
-
-html += `
+html+=`
 
 <tr>
 
 <td>${row.EVENT_NAME}</td>
 
-<td>${teamA}</td>
+`;
 
-<td>${teamB}</td>
+const points={};
 
-<td>${teamC}</td>
+teams.forEach(team=>points[team]=0);
+
+if((row.STATUS||"").trim()=="PUBLISHED"){
+
+points[row.FIRST_TEAM]=Number(row.FIRST_POINT||0);
+
+points[row.SECOND_TEAM]=Number(row.SECOND_POINT||0);
+
+points[row.THIRD_TEAM]=Number(row.THIRD_POINT||0);
+
+}
+
+teams.forEach(team=>{
+
+html+=`
+
+<td>${points[team]}</td>
+
+`;
+
+});
+
+html+=`
 
 </tr>
 
@@ -306,11 +330,16 @@ html += `
 
 });
 
-html += `
+html+=`
 
 <tr>
 
-<td colspan="4" style="padding:15px;color:#777;font-style:italic;">
+<td colspan="${teams.length+1}"
+
+style="padding:15px;
+text-align:center;
+color:#777;
+font-style:italic;">
 
 Results of the remaining events will be published after official verification.
 
@@ -322,6 +351,16 @@ Results of the remaining events will be published after official verification.
 
 `;
 
-document.getElementById("pointTable").innerHTML = html;
+document.getElementById("pointTable").innerHTML=html;
 
 }
+
+
+
+// ------------------------------------------------------
+// AUTO REFRESH
+// ------------------------------------------------------
+
+// Uncomment this if you want automatic refresh every 30 seconds.
+
+// setInterval(loadResults,30000);
