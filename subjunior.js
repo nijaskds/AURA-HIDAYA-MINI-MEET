@@ -145,7 +145,7 @@ html+=`
 
 <div class="rank">
 
-<span>${medals[index] || "🏅"} TEAM ${team[0]}</span>
+<span>${medals[index] || "🏅"} ${team[0]}</span>
 
 <span>${team[1]}</span>
 
@@ -197,7 +197,7 @@ html+=`
 
 <br>
 
-TEAM ${row.FIRST_TEAM}
+ ${row.FIRST_TEAM}
 
 </div>
 
