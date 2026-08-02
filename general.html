@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>General Championship</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+
+background:linear-gradient(135deg,#091E42,#143B75,#C59D2A);
+
+color:white;
+
+padding:18px;
+
+}
+
+.container{
+
+max-width:950px;
+
+margin:auto;
+
+}
+
+.header{
+
+text-align:center;
+
+margin-bottom:30px;
+
+}
+
+.header h1{
+
+font-size:40px;
+
+letter-spacing:2px;
+
+color:#FFD54F;
+
+}
+
+.header p{
+
+margin-top:10px;
+
+font-size:18px;
+
+color:#eeeeee;
+
+}
+
+.champion{
+
+background:linear-gradient(135deg,#FFD54F,#F5C518);
+
+color:#222;
+
+padding:16px;
+
+border-radius:16px;
+
+text-align:center;
+
+font-size:22px;
+
+font-weight:bold;
+
+margin-bottom:25px;
+
+box-shadow:0 10px 25px rgba(0,0,0,.25);
+
+}
+
+.rank-board{
+
+background:white;
+
+color:#222;
+
+border-radius:18px;
+
+padding:20px;
+
+margin-bottom:25px;
+
+box-shadow:0 10px 25px rgba(0,0,0,.25);
+
+}
+
+.rank-board h2{
+
+text-align:center;
+
+color:#B8860B;
+
+margin-bottom:18px;
+
+}
+
+.rank{
+
+display:flex;
+
+justify-content:space-between;
+
+padding:16px;
+
+font-size:22px;
+
+border-bottom:1px solid #ddd;
+
+}
+
+.rank:last-child{
+
+border-bottom:none;
+
+}
+
+.section-title{
+
+text-align:center;
+
+font-size:30px;
+
+margin:30px 0 20px;
+
+color:#FFD54F;
+
+}
+
+.event{
+
+background:white;
+
+color:#222;
+
+border-radius:16px;
+
+margin-bottom:18px;
+
+overflow:hidden;
+
+box-shadow:0 8px 18px rgba(0,0,0,.2);
+
+border-left:8px solid #FFD54F;
+
+}
+
+.event summary{
+
+cursor:pointer;
+
+padding:18px;
+
+background:#143B75;
+
+color:white;
+
+font-size:20px;
+
+font-weight:bold;
+
+list-style:none;
+
+}
+
+.event summary::-webkit-details-marker{
+
+display:none;
+
+}
+
+.waiting{
+
+padding:22px;
+
+text-align:center;
+
+color:#888;
+
+font-style:italic;
+
+font-size:18px;
+
+}
+
+.table-box{
+
+margin-top:35px;
+
+background:white;
+
+color:#222;
+
+border-radius:18px;
+
+padding:20px;
+
+overflow-x:auto;
+
+}
+
+.back{
+
+display:block;
+
+margin:35px auto;
+
+width:240px;
+
+text-align:center;
+
+text-decoration:none;
+
+background:#FFD54F;
+
+color:#000;
+
+padding:15px;
+
+font-size:20px;
+
+font-weight:bold;
+
+border-radius:12px;
+
+}
+
+@media(max-width:700px){
+
+.header h1{
+
+font-size:32px;
+
+}
+
+.rank{
+
+font-size:18px;
+
+}
+
+.section-title{
+
+font-size:24px;
+
+}
+
+.event summary{
+
+font-size:18px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+
+<h1>🏆 GENERAL CHAMPIONSHIP</h1>
+
+<p>AURA DHAC MEET 2026</p>
+
+</div>
+
+<div class="champion">
+
+⭐ HIGHEST SCORING CATEGORY ⭐
+
+</div>
+
+<div class="rank-board">
+
+<h2>LIVE CHAMPIONSHIP RANKING</h2>
+
+<div class="rank">
+
+<span>🥇 TEAM A</span>
+
+<b>250</b>
+
+</div>
+
+<div class="rank">
+
+<span>🥈 TEAM B</span>
+
+<b>225</b>
+
+</div>
+
+<div class="rank">
+
+<span>🥉 TEAM C</span>
+
+<b>205</b>
+
+</div>
+
+</div>
+
+<h2 class="section-title">
+
+GENERAL EVENTS
+
+</h2>
+
+<details class="event" open>
+
+<summary>
+
+📰 Newspaper Making (Mal)
+
+</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>
+
+📰 Newspaper Making (Arb)
+
+</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>
+
+📰 Newspaper Making (Eng)
+
+</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>
+
+📰 Newspaper Making (Urd)
+
+</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<!-- PART 2 CONTINUES HERE -->
+  <details class="event">
+
+<summary>
+
+🎶 Mala Song
+
+</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>
+
+🎼 Burda & Qawwali Recitation
+
+</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>
+
+📝 Musha'ara
+
+</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>
+
+🎙 Debate (Arb)</summary>
+
+<div class="waiting">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<div class="table-box">
+
+<h2 style="text-align:center;color:#B8860B;margin-bottom:20px;">
+
+GENERAL POINT TABLE
+
+</h2>
+
+<table style="width:100%;border-collapse:collapse;">
+
+<tr style="background:#143B75;color:white;">
+
+<th style="padding:12px;">Event</th>
+
+<th>A</th>
+
+<th>B</th>
+
+<th>C</th>
+
+</tr>
+
+<tr>
+
+<td style="padding:10px;">Newspaper Making (Mal)</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+</tr>
+
+<tr>
+
+<td style="padding:10px;">Newspaper Making (Arb)</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+</tr>
+
+<tr>
+
+<td style="padding:10px;">Newspaper Making (Eng)</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+</tr>
+
+<tr>
+
+<td style="padding:10px;">Newspaper Making (Urd)</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+</tr>
+
+<tr>
+
+<td style="padding:10px;">Mala Song</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+</tr>
+
+<tr>
+
+<td style="padding:10px;">Burda & Qawwali Recitation</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+</tr>
+
+<tr>
+
+<td style="padding:10px;">Musha'ara</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+</tr>
+
+<tr>
+
+<td style="padding:10px;">Debate (Arb)</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+</tr>
+
+<tr style="background:#FFF8E1;font-weight:bold;">
+
+<td>TOTAL</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+<td align="center">0</td>
+
+</tr>
+
+</table>
+
+</div>
+
+<a href="scoreboard.html" class="back">
+
+⬅ Back to Scoreboard
+
+</a>
+
+</div>
+
+</body>
+
+</html>
