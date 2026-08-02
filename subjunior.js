@@ -102,7 +102,77 @@ function renderRanking(rows){
 
 function renderEvents(rows){
 
-// Part 3
+let html = "";
+
+rows.forEach(row=>{
+
+const status = (row.STATUS || "").trim();
+
+if(status === "PUBLISHED"){
+
+html += `
+
+<details class="event">
+
+<summary>
+
+${row.EVENT_NAME}
+
+</summary>
+
+<div class="result">
+
+<div class="gold">
+
+🥇 ${row.FIRST_CHEST} ${row.FIRST_NAME} - TEAM ${row.FIRST_TEAM}
+
+</div>
+
+<div class="silver">
+
+🥈 ${row.SECOND_CHEST} ${row.SECOND_NAME} - TEAM ${row.SECOND_TEAM}
+
+</div>
+
+<div class="bronze">
+
+🥉 ${row.THIRD_CHEST} ${row.THIRD_NAME} - TEAM ${row.THIRD_TEAM}
+
+</div>
+
+</div>
+
+</details>
+
+`;
+
+}else{
+
+html += `
+
+<details class="event">
+
+<summary>
+
+${row.EVENT_NAME}
+
+</summary>
+
+<div class="waiting">
+
+Result Awaited
+
+</div>
+
+</details>
+
+`;
+
+}
+
+});
+
+document.getElementById("events").innerHTML = html;
 
 }
 
