@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sub Junior Scoreboard</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI,sans-serif;
+}
+
+body{
+
+background:linear-gradient(135deg,#081B33,#103C73);
+
+color:white;
+
+padding:20px;
+
+}
+
+.container{
+
+max-width:900px;
+
+margin:auto;
+
+}
+
+.header{
+
+text-align:center;
+
+margin-bottom:25px;
+
+}
+
+.header h1{
+
+font-size:38px;
+
+}
+
+.header h2{
+
+margin-top:8px;
+
+font-weight:400;
+
+color:#dddddd;
+
+}
+
+.rank-board{
+
+background:white;
+
+color:#222;
+
+border-radius:18px;
+
+padding:20px;
+
+box-shadow:0 8px 20px rgba(0,0,0,.25);
+
+margin-bottom:25px;
+
+}
+
+.rank-board h3{
+
+text-align:center;
+
+margin-bottom:20px;
+
+}
+
+.rank{
+
+display:flex;
+
+justify-content:space-between;
+
+padding:12px;
+
+font-size:22px;
+
+border-bottom:1px solid #eee;
+
+}
+
+.rank:last-child{
+
+border:none;
+
+}
+
+.event{
+
+background:white;
+
+color:#222;
+
+border-radius:15px;
+
+margin-bottom:15px;
+
+overflow:hidden;
+
+box-shadow:0 6px 15px rgba(0,0,0,.2);
+
+}
+
+.event summary{
+
+cursor:pointer;
+
+padding:18px;
+
+font-size:21px;
+
+font-weight:bold;
+
+list-style:none;
+
+background:#0B5ED7;
+
+color:white;
+
+}
+
+.event summary::-webkit-details-marker{
+
+display:none;
+
+}
+
+.result{
+
+padding:18px;
+
+font-size:19px;
+
+line-height:2;
+
+}
+
+.table-box{
+
+background:white;
+
+color:#222;
+
+border-radius:18px;
+
+padding:20px;
+
+margin-top:30px;
+
+overflow-x:auto;
+
+}
+
+.table-box h3{
+
+text-align:center;
+
+margin-bottom:15px;
+
+}
+
+table{
+
+width:100%;
+
+border-collapse:collapse;
+
+}
+
+th{
+
+background:#0B5ED7;
+
+color:white;
+
+padding:12px;
+
+}
+
+td{
+
+padding:10px;
+
+text-align:center;
+
+border-bottom:1px solid #ddd;
+
+}
+
+.back{
+
+display:block;
+
+margin:30px auto;
+
+width:220px;
+
+text-align:center;
+
+padding:14px;
+
+background:#FFD54F;
+
+color:black;
+
+font-weight:bold;
+
+text-decoration:none;
+
+border-radius:12px;
+
+}
+
+.loading{
+
+text-align:center;
+
+margin-top:25px;
+
+font-size:18px;
+
+color:#cccccc;
+
+}
+
+@media(max-width:600px){
+
+.header h1{
+
+font-size:30px;
+
+}
+
+.rank{
+
+font-size:19px;
+
+}
+
+.event summary{
+
+font-size:18px;
+
+}
+
+.result{
+
+font-size:17px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+
+<h1>🏆 SUB JUNIOR</h1>
+
+<h2>Scoreboard</h2>
+
+</div>
+
+<div class="rank-board">
+
+<h3>LIVE TEAM RANKING</h3>
+
+<div class="rank">
+
+<span>🥇 TEAM A</span>
+
+<b>145</b>
+
+</div>
+
+<div class="rank">
+
+<span>🥈 TEAM B</span>
+
+<b>130</b>
+
+</div>
+
+<div class="rank">
+
+<span>🥉 TEAM C</span>
+
+<b>121</b>
+
+</div>
+
+</div>
+
+<details class="event" open>
+
+<summary>✍️ Arabic Handwriting</summary>
+
+<div class="result">
+
+🥇 121 BADARUDHEEN - TEAM A <br>
+
+🥈 223 NIJAS - TEAM C <br>
+
+🥉 124 JABIR - TEAM A
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>📝 Malayalam Handwriting</summary>
+
+<div class="result">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<details class="event">
+
+<summary>🎤 Urdu Speech</summary>
+
+<div class="result">
+
+Waiting for Result...
+
+</div>
+
+</details>
+
+<div class="table-box">
+
+<h3>POINT TABLE</h3>
+
+<table>
+
+<tr>
+
+<th>Event</th>
+
+<th>A</th>
+
+<th>B</th>
+
+<th>C</th>
+
+</tr>
+
+<tr>
+
+<td>Arabic Handwriting</td>
+
+<td>10</td>
+
+<td>8</td>
+
+<td>6</td>
+
+</tr>
+
+<tr>
+
+<td>Malayalam Handwriting</td>
+
+<td>0</td>
+
+<td>0</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td>Urdu Handwriting</td>
+
+<td>0</td>
+
+<td>0</td>
+
+<td>0</td>
+
+</tr>
+
+</table>
+
+</div>
+
+<div class="loading">
+
+Google Sheet Live Sync will be added in the next step...
+
+</div>
+
+<a href="scoreboard.html" class="back">
+
+⬅ Back to Scoreboard
+
+</a>
+
+</div>
+
+</body>
+
+</html>
