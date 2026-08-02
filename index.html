@@ -3,73 +3,108 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AURA RESULTS</title>
+
+<title>HIDAYA MINI MEET 2026</title>
 
 <style>
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI,sans-serif;
 }
 
 body{
-    font-family:Arial, Helvetica, sans-serif;
-    background:#f3f5f7;
+
+background:linear-gradient(135deg,#0b1e36,#173d6b);
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+
+}
+
+.container{
+
+text-align:center;
+width:90%;
+max-width:700px;
+
 }
 
 h1{
-    background:#1E3A8A;
-    color:white;
-    text-align:center;
-    padding:18px;
-    font-size:32px;
-    letter-spacing:2px;
+
+font-size:52px;
+letter-spacing:3px;
+margin-bottom:10px;
+
 }
 
-.menu{
-    width:90%;
-    max-width:500px;
-    margin:30px auto;
+h2{
+
+font-weight:400;
+margin-bottom:10px;
+
 }
 
-.menu a{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    text-decoration:none;
-    background:#111;
-    color:white;
-    padding:18px 20px;
-    border-bottom:1px solid #444;
-    font-size:20px;
-    font-weight:bold;
-    transition:0.3s;
+p{
+
+color:#d6d6d6;
+margin-bottom:40px;
+
 }
 
-.menu a:first-child{
-    border-radius:10px 10px 0 0;
+.button{
+
+display:block;
+width:100%;
+padding:20px;
+margin:18px 0;
+text-decoration:none;
+font-size:24px;
+font-weight:bold;
+border-radius:15px;
+transition:.3s;
+color:white;
+
 }
 
-.menu a:last-child{
-    border-radius:0 0 10px 10px;
-    border-bottom:none;
+.score{
+
+background:#f4b400;
+
 }
 
-.menu a:hover{
-    background:#1E3A8A;
-    transform:translateX(5px);
+.score:hover{
+
+background:#ffd54f;
+color:black;
+transform:scale(1.03);
+
 }
 
-.left{
-    display:flex;
-    align-items:center;
-    gap:12px;
+.live{
+
+background:#00b894;
+
 }
 
-.arrow{
-    font-size:26px;
-    color:#d9d9d9;
+.live:hover{
+
+background:#55efc4;
+color:black;
+transform:scale(1.03);
+
+}
+
+.footer{
+
+margin-top:40px;
+font-size:14px;
+color:#cccccc;
+
 }
 
 </style>
@@ -78,36 +113,30 @@ h1{
 
 <body>
 
-<h1>AURA RESULTS</h1>
+<div class="container">
 
-<div class="menu">
+<h1>AURA</h1>
 
-<a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vQz8ipfKh59UBNMTnf6lrU1C_bNky3tUumYpuGAt4-d4G2O7Vs7wOFcBVcnGMDBQuHS5PtftsZ59G8b/pubhtml?gid=995525624&single=true" target="_blank">
-    <span class="left">🏆 SUB JUNIOR</span>
-    <span class="arrow">›</span>
+<h2>HIDAYA MINI MEET</h2>
+
+<p>Darul Hidaya Islamic Academy, Kuttamboor</p>
+
+<a href="scoreboard.html" class="button score">
+🏆 SCOREBOARD
 </a>
 
-<a href="senior.html">
-    <span class="left">🏆 SENIOR</span>
-    <span class="arrow">›</span>
+<a href="live.html" class="button live">
+📢 LIVE RESULTS
 </a>
 
-<a href="supersenior.html">
-    <span class="left">🏆 SUPER SENIOR</span>
-    <span class="arrow">›</span>
-</a>
+<div class="footer">
 
-<a href="general.html">
-    <span class="left">🏆 GENERAL</span>
-    <span class="arrow">›</span>
-</a>
+Jam'yyathu Thalaba Samajam - JTS
 
-<a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vQz8ipfKh59UBNMTnf6lrU1C_bNky3tUumYpuGAt4-d4G2O7Vs7wOFcBVcnGMDBQuHS5PtftsZ59G8b/pubhtml?gid=371564784&single=true" target="_blank">
-    <span class="left">🏆 GRAND TOTAL</span>
-    <span class="arrow">›</span>
-</a>
+</div>
 
 </div>
 
 </body>
+
 </html>
