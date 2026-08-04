@@ -1,7 +1,7 @@
 // ======================================================
 // HIDAYA MINI MEET 2026
 // GRAND TOTAL
-// FINAL VERSION
+// FINAL VERSION 2.0
 // ======================================================
 
 
@@ -34,7 +34,17 @@ async function loadResults(){
 
 try{
 
-const response = await fetch(CSV_URL);
+const response = await fetch(
+
+CSV_URL + "&t=" + Date.now(),
+
+{
+
+cache:"no-store"
+
+}
+
+);
 
 const csv = await response.text();
 
@@ -66,17 +76,19 @@ const lines = csv.trim().split(/\r?\n/);
 
 const headers = lines[0].split(",");
 
-const data = [];
+const data=[];
 
 for(let i=1;i<lines.length;i++){
 
 const values = lines[i].split(",");
 
-let row = {};
+let row={};
 
 headers.forEach((header,index)=>{
 
-row[header.trim()] = values[index] ? values[index].trim() : "";
+row[header.trim()] = values[index]
+? values[index].trim()
+: "";
 
 });
 
@@ -93,7 +105,7 @@ return data;
 
 function renderChampion(rows){
 
-const champion = [...rows].sort((a,b)=>
+const champion=[...rows].sort((a,b)=>
 
 Number(b.TOTAL)-Number(a.TOTAL)
 
@@ -139,7 +151,7 @@ html+=`
 
 <div class="rank">
 
-<span>${medals[index]} ${team.TEAM}</span>
+<span>${medals[index] || "🏅"} ${team.TEAM}</span>
 
 <span>${team.TOTAL}</span>
 
@@ -217,10 +229,9 @@ document.getElementById("pointTable").innerHTML=html;
 
 
 // ------------------------------------------------------
-// AUTO REFRESH (OPTIONAL)
+// AUTO REFRESH
 // ------------------------------------------------------
 
-// Auto refresh every 30 seconds
-// Remove // below if needed
+// Auto refresh every 10 seconds
 
-// setInterval(loadResults,30000);
+setInterval(loadResults,10000);
