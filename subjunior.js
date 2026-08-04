@@ -309,3 +309,138 @@ html+=`
 document.getElementById("events").innerHTML=html;
 
 }
+// ------------------------------------------------------
+// POINT TABLE
+// ------------------------------------------------------
+
+function renderPointTable(rows){
+
+const teams = [...new Set(
+rows.flatMap(row=>[
+(row.FIRST_TEAM||"").trim(),
+(row.SECOND_TEAM||"").trim(),
+(row.THIRD_TEAM||"").trim()
+]).filter(Boolean)
+)].sort();
+
+let totalPoints={};
+
+teams.forEach(team=>{
+
+totalPoints[team]=0;
+
+});
+
+let html=`
+
+<table>
+
+<tr>
+
+<th>Event</th>
+
+`;
+
+teams.forEach(team=>{
+
+html+=`<th>${team}</th>`;
+
+});
+
+html+=`
+
+</tr>
+
+`;
+
+rows.forEach(row=>{
+
+const points={};
+
+teams.forEach(team=>points[team]=0);
+
+if((row.STATUS||"").trim()=="PUBLISHED"){
+
+if(row.FIRST_TEAM)
+points[row.FIRST_TEAM.trim()]+=Number(row.FIRST_POINT||0);
+
+if(row.SECOND_TEAM)
+points[row.SECOND_TEAM.trim()]+=Number(row.SECOND_POINT||0);
+
+if(row.THIRD_TEAM)
+points[row.THIRD_TEAM.trim()]+=Number(row.THIRD_POINT||0);
+
+}
+
+html+=`
+
+<tr>
+
+<td>${row.EVENT_NAME}</td>
+
+`;
+
+teams.forEach(team=>{
+
+html+=`<td>${points[team]}</td>`;
+
+totalPoints[team]+=points[team];
+
+});
+
+html+=`
+
+</tr>
+
+`;
+
+});
+
+html+=`
+
+<tr style="background:#f3f7ff;font-weight:bold;">
+
+<td>TOTAL</td>
+
+`;
+
+teams.forEach(team=>{
+
+html+=`<td>${totalPoints[team]}</td>`;
+
+});
+
+html+=`
+
+</tr>
+
+<tr>
+
+<td colspan="${teams.length+1}"
+
+style="padding:15px;
+text-align:center;
+color:#777;
+font-style:italic;">
+
+Results of the remaining events will be published after official verification.
+
+</td>
+
+</tr>
+
+</table>
+
+`;
+
+document.getElementById("pointTable").innerHTML=html;
+
+}
+
+
+
+// ------------------------------------------------------
+// AUTO REFRESH (OPTIONAL)
+// ------------------------------------------------------
+
+// setInterval(loadResults,30000);
