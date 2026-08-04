@@ -30,7 +30,7 @@ padding:18px;
 
 .container{
 
-max-width:950px;
+max-width:900px;
 
 margin:auto;
 
@@ -40,13 +40,13 @@ margin:auto;
 
 text-align:center;
 
-margin-bottom:30px;
+margin-bottom:25px;
 
 }
 
 .header h1{
 
-font-size:40px;
+font-size:38px;
 
 letter-spacing:2px;
 
@@ -56,11 +56,11 @@ color:#FFD54F;
 
 .header p{
 
-margin-top:10px;
-
-font-size:18px;
+margin-top:8px;
 
 color:#eeeeee;
+
+font-size:18px;
 
 }
 
@@ -82,13 +82,13 @@ font-weight:bold;
 
 margin-bottom:25px;
 
-box-shadow:0 10px 25px rgba(0,0,0,.25);
+box-shadow:0 8px 20px rgba(0,0,0,.25);
 
 }
 
 .rank-board{
 
-background:white;
+background:#ffffff;
 
 color:#222;
 
@@ -98,7 +98,7 @@ padding:20px;
 
 margin-bottom:25px;
 
-box-shadow:0 10px 25px rgba(0,0,0,.25);
+box-shadow:0 8px 20px rgba(0,0,0,.25);
 
 }
 
@@ -106,9 +106,85 @@ box-shadow:0 10px 25px rgba(0,0,0,.25);
 
 text-align:center;
 
+margin-bottom:20px;
+
 color:#B8860B;
 
-margin-bottom:18px;
+}
+
+.section-title{
+
+font-size:30px;
+
+margin:30px 0 20px;
+
+text-align:center;
+
+color:#FFD54F;
+
+}
+
+.table-box{
+
+margin-top:35px;
+
+background:#fff;
+
+border-radius:18px;
+
+padding:20px;
+
+overflow-x:auto;
+
+color:#222;
+
+box-shadow:0 8px 20px rgba(0,0,0,.25);
+
+}
+
+.table-box h2{
+
+text-align:center;
+
+margin-bottom:20px;
+
+color:#B8860B;
+
+}
+
+.back{
+
+display:inline-flex;
+
+align-items:center;
+
+justify-content:center;
+
+margin-top:35px;
+
+padding:12px 26px;
+
+background:rgba(255,255,255,.12);
+
+border:1px solid rgba(255,255,255,.18);
+
+border-radius:30px;
+
+color:white;
+
+text-decoration:none;
+
+font-size:17px;
+
+font-weight:600;
+
+transition:.25s;
+
+}
+
+.back:hover{
+
+background:rgba(255,255,255,.20);
 
 }
 
@@ -118,11 +194,13 @@ display:flex;
 
 justify-content:space-between;
 
-padding:16px;
+align-items:center;
 
-font-size:22px;
+padding:15px;
 
 border-bottom:1px solid #ddd;
+
+font-size:22px;
 
 }
 
@@ -132,37 +210,27 @@ border-bottom:none;
 
 }
 
-.section-title{
-
-text-align:center;
-
-font-size:30px;
-
-margin:30px 0 20px;
-
-color:#FFD54F;
-
-}
-
 .event{
 
-background:white;
+background:#ffffff;
 
 color:#222;
 
-border-radius:16px;
+border-radius:15px;
 
 margin-bottom:18px;
 
 overflow:hidden;
 
-box-shadow:0 8px 18px rgba(0,0,0,.2);
+box-shadow:0 8px 20px rgba(0,0,0,.20);
 
 border-left:8px solid #FFD54F;
 
 }
 
 .event summary{
+
+list-style:none;
 
 cursor:pointer;
 
@@ -172,11 +240,9 @@ background:#143B75;
 
 color:white;
 
-font-size:20px;
+font-size:21px;
 
 font-weight:bold;
-
-list-style:none;
 
 }
 
@@ -186,59 +252,77 @@ display:none;
 
 }
 
+.result{
+
+padding:18px;
+
+font-size:18px;
+
+line-height:2;
+
+}
+
+.gold{
+
+color:#d4a017;
+
+font-weight:bold;
+
+}
+
+.silver{
+
+color:#777;
+
+font-weight:bold;
+
+}
+
+.bronze{
+
+color:#9a5a00;
+
+font-weight:bold;
+
+}
+
 .waiting{
 
-padding:22px;
-
 text-align:center;
+
+padding:20px;
 
 color:#888;
 
 font-style:italic;
 
-font-size:18px;
+}
+
+table{
+
+width:100%;
+
+border-collapse:collapse;
 
 }
 
-.table-box{
+th{
 
-margin-top:35px;
+background:#143B75;
 
-background:white;
+color:#fff;
 
-color:#222;
-
-border-radius:18px;
-
-padding:20px;
-
-overflow-x:auto;
+padding:12px;
 
 }
 
-.back{
+td{
 
-display:block;
-
-margin:35px auto;
-
-width:240px;
+padding:11px;
 
 text-align:center;
 
-text-decoration:none;
-
-background:#FFD54F;
-
-color:#000;
-
-padding:15px;
-
-font-size:20px;
-
-font-weight:bold;
-
-border-radius:12px;
+border-bottom:1px solid #ddd;
 
 }
 
@@ -246,25 +330,13 @@ border-radius:12px;
 
 .header h1{
 
-font-size:32px;
-
-}
-
-.rank{
-
-font-size:18px;
+font-size:30px;
 
 }
 
 .section-title{
 
 font-size:24px;
-
-}
-
-.event summary{
-
-font-size:18px;
 
 }
 
@@ -288,7 +360,7 @@ font-size:18px;
 
 <div class="champion">
 
-⭐ HIGHEST SCORING CATEGORY ⭐
+⭐ GENERAL EVENTS ⭐
 
 </div>
 
@@ -296,27 +368,13 @@ font-size:18px;
 
 <h2>LIVE CHAMPIONSHIP RANKING</h2>
 
-<div class="rank">
+<div id="ranking">
 
-<span>🥇 TEAM A</span>
+<div class="waiting">
 
-<b>250</b>
-
-</div>
-
-<div class="rank">
-
-<span>🥈 TEAM B</span>
-
-<b>225</b>
+Loading ranking...
 
 </div>
-
-<div class="rank">
-
-<span>🥉 TEAM C</span>
-
-<b>205</b>
 
 </div>
 
@@ -328,274 +386,44 @@ GENERAL EVENTS
 
 </h2>
 
-<details class="event" open>
-
-<summary>
-
-📰 Newspaper Making (Mal)
-
-</summary>
+<div id="events">
 
 <div class="waiting">
 
-Waiting for Result...
+Loading events...
 
 </div>
 
-</details>
-
-<details class="event">
-
-<summary>
-
-📰 Newspaper Making (Arb)
-
-</summary>
-
-<div class="waiting">
-
-Waiting for Result...
-
 </div>
-
-</details>
-
-<details class="event">
-
-<summary>
-
-📰 Newspaper Making (Eng)
-
-</summary>
-
-<div class="waiting">
-
-Waiting for Result...
-
-</div>
-
-</details>
-
-<details class="event">
-
-<summary>
-
-📰 Newspaper Making (Urd)
-
-</summary>
-
-<div class="waiting">
-
-Waiting for Result...
-
-</div>
-
-</details>
-
-<!-- PART 2 CONTINUES HERE -->
-  <details class="event">
-
-<summary>
-
-🎶 Mala Song
-
-</summary>
-
-<div class="waiting">
-
-Waiting for Result...
-
-</div>
-
-</details>
-
-<details class="event">
-
-<summary>
-
-🎼 Burda & Qawwali Recitation
-
-</summary>
-
-<div class="waiting">
-
-Waiting for Result...
-
-</div>
-
-</details>
-
-<details class="event">
-
-<summary>
-
-📝 Musha'ara
-
-</summary>
-
-<div class="waiting">
-
-Waiting for Result...
-
-</div>
-
-</details>
-
-<details class="event">
-
-<summary>
-
-🎙 Debate (Arb)</summary>
-
-<div class="waiting">
-
-Waiting for Result...
-
-</div>
-
-</details>
-
 <div class="table-box">
 
-<h2 style="text-align:center;color:#B8860B;margin-bottom:20px;">
+<h2>GENERAL POINT TABLE</h2>
 
-GENERAL POINT TABLE
+<div id="pointTable">
 
-</h2>
+<div class="waiting">
 
-<table style="width:100%;border-collapse:collapse;">
-
-<tr style="background:#143B75;color:white;">
-
-<th style="padding:12px;">Event</th>
-
-<th>A</th>
-
-<th>B</th>
-
-<th>C</th>
-
-</tr>
-
-<tr>
-
-<td style="padding:10px;">Newspaper Making (Mal)</td>
-
-<td align="center">0</td>
-
-<td align="center">0</td>
-
-<td align="center">0</td>
-
-</tr>
-
-<tr>
-
-<td style="padding:10px;">Newspaper Making (Arb)</td>
-
-<td align="center">0</td>
-
-<td align="center">0</td>
-
-<td align="center">0</td>
-
-</tr>
-
-<tr>
-
-<td style="padding:10px;">Newspaper Making (Eng)</td>
-
-<td align="center">0</td>
-
-<td align="center">0</td>
-
-<td align="center">0</td>
-
-</tr>
-
-<tr>
-
-<td style="padding:10px;">Newspaper Making (Urd)</td>
-
-<td align="center">0</td>
-
-<td align="center">0</td>
-
-<td align="center">0</td>
-
-</tr>
-
-<tr>
-
-<td style="padding:10px;">Mala Song</td>
-
-<td align="center">0</td>
-
-<td align="center">0</td>
-
-<td align="center">0</td>
-
-</tr>
-
-<tr>
-
-<td style="padding:10px;">Burda & Qawwali Recitation</td>
-
-<td align="center">0</td>
-
-<td align="center">0</td>
-
-<td align="center">0</td>
-
-</tr>
-
-<tr>
-
-<td style="padding:10px;">Musha'ara</td>
-
-<td align="center">0</td>
-
-<td align="center">0</td>
-
-<td align="center">0</td>
-
-</tr>
-
-<tr>
-
-<td style="padding:10px;">Debate (Arb)</td>
-
-<td align="center">0</td>
-
-<td align="center">0</td>
-
-<td align="center">0</td>
-
-</tr>
-
-<tr style="background:#FFF8E1;font-weight:bold;">
-
-<td>TOTAL</td>
-
-<td align="center">0</td>
-
-<td align="center">0</td>
-
-<td align="center">0</td>
-
-</tr>
-
-</table>
+Loading point table...
 
 </div>
+
+</div>
+
+</div>
+
+<div style="text-align:center;">
 
 <a href="scoreboard.html" class="back">
 
-Back to Scoreboard
+⌂ Scoreboard
 
 </a>
 
 </div>
+
+</div>
+
+<script src="general.js"></script>
 
 </body>
 
