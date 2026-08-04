@@ -1,7 +1,7 @@
 // ======================================================
 // HIDAYA MINI MEET 2026
 // SUB JUNIOR RESULTS
-// FINAL VERSION
+// FINAL VERSION 2.0
 // ======================================================
 
 
@@ -34,7 +34,17 @@ async function loadResults(){
 
 try{
 
-const response = await fetch(CSV_URL);
+const response = await fetch(
+
+CSV_URL + "&t=" + Date.now(),
+
+{
+
+cache:"no-store"
+
+}
+
+);
 
 const csv = await response.text();
 
@@ -66,17 +76,19 @@ const lines = csv.trim().split(/\r?\n/);
 
 const headers = splitCSV(lines[0]);
 
-const data = [];
+const data=[];
 
 for(let i=1;i<lines.length;i++){
 
 const values = splitCSV(lines[i]);
 
-let row = {};
+let row={};
 
 headers.forEach((header,index)=>{
 
-row[header.trim()] = values[index] ? values[index].trim() : "";
+row[header.trim()] = values[index]
+? values[index].trim()
+: "";
 
 });
 
@@ -92,7 +104,6 @@ return data;
 
 // ------------------------------------------------------
 // SPLIT CSV
-// Handles commas inside quotes
 // ------------------------------------------------------
 
 function splitCSV(line){
@@ -316,11 +327,13 @@ document.getElementById("events").innerHTML=html;
 function renderPointTable(rows){
 
 const teams = [...new Set(
+
 rows.flatMap(row=>[
 (row.FIRST_TEAM||"").trim(),
 (row.SECOND_TEAM||"").trim(),
 (row.THIRD_TEAM||"").trim()
 ]).filter(Boolean)
+
 )].sort();
 
 let totalPoints={};
@@ -357,7 +370,11 @@ rows.forEach(row=>{
 
 const points={};
 
-teams.forEach(team=>points[team]=0);
+teams.forEach(team=>{
+
+points[team]=0;
+
+});
 
 if((row.STATUS||"").trim()=="PUBLISHED"){
 
@@ -440,7 +457,9 @@ document.getElementById("pointTable").innerHTML=html;
 
 
 // ------------------------------------------------------
-// AUTO REFRESH (OPTIONAL)
+// AUTO REFRESH
 // ------------------------------------------------------
 
-// setInterval(loadResults,30000);
+// Auto refresh every 10 seconds
+
+setInterval(loadResults,10000);
