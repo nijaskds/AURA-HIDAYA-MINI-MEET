@@ -7,32 +7,44 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Kalaprathibha</title>
+<title>Kalaprathibha | AURA MINI MEET 2026</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 
 *{
-
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:'Segoe UI',sans-serif;
+}
 
+html{
+scroll-behavior:smooth;
 }
 
 body{
 
-background:linear-gradient(135deg,#05070F,#111827,#1E293B);
+font-family:'Poppins',sans-serif;
 
-color:white;
+background:
+linear-gradient(135deg,#05070F,#101827,#17263F);
+
+color:#fff;
 
 padding:20px;
+
+min-height:100vh;
 
 }
 
 .container{
 
-max-width:950px;
+max-width:1200px;
 
 margin:auto;
 
@@ -42,13 +54,15 @@ margin:auto;
 
 text-align:center;
 
-margin-bottom:35px;
+margin-bottom:40px;
 
 }
 
 .header h1{
 
-font-size:46px;
+font-size:48px;
+
+font-weight:800;
 
 color:#FFD700;
 
@@ -60,9 +74,9 @@ margin-bottom:8px;
 
 .header p{
 
-color:#d7d7d7;
-
 font-size:18px;
+
+color:#D6D6D6;
 
 }
 
@@ -70,81 +84,173 @@ font-size:18px;
 
 width:120px;
 
-height:4px;
+height:5px;
 
 background:#FFD700;
 
-margin:22px auto;
-
 border-radius:50px;
+
+margin:22px auto;
 
 }
 
 .hero{
 
-background:linear-gradient(135deg,#FFD54F,#E6B800);
+background:
+
+linear-gradient(135deg,#FFE48A,#FFD54F,#E6B800);
 
 color:#222;
 
-border-radius:25px;
+border-radius:30px;
 
-padding:30px;
+padding:45px 35px;
 
 text-align:center;
 
-box-shadow:0 12px 35px rgba(255,215,0,.25);
+box-shadow:
 
-margin-bottom:35px;
+0 15px 45px rgba(255,215,0,.30);
+
+position:relative;
+
+overflow:hidden;
+
+margin-bottom:45px;
 
 }
 
-.hero h2{
+.hero::before{
 
-font-size:30px;
+content:"";
 
-margin-bottom:15px;
+position:absolute;
+
+width:350px;
+
+height:350px;
+
+border-radius:50%;
+
+background:rgba(255,255,255,.12);
+
+top:-180px;
+
+right:-120px;
+
+}
+
+.hero::after{
+
+content:"";
+
+position:absolute;
+
+width:220px;
+
+height:220px;
+
+border-radius:50%;
+
+background:rgba(255,255,255,.10);
+
+bottom:-120px;
+
+left:-80px;
 
 }
 
 .hero .icon{
 
-font-size:70px;
+position:relative;
+
+z-index:2;
+
+font-size:80px;
 
 margin-bottom:15px;
 
 }
 
-.hero .name{
+.hero h2{
+
+position:relative;
+
+z-index:2;
 
 font-size:34px;
 
-font-weight:bold;
+font-weight:800;
 
-margin-bottom:10px;
+margin-bottom:18px;
+
+}
+
+.hero .name{
+
+position:relative;
+
+z-index:2;
+
+font-size:40px;
+
+font-weight:800;
+
+margin-bottom:15px;
 
 }
 
 .hero .team{
 
-font-size:22px;
+position:relative;
 
-margin-bottom:12px;
+z-index:2;
+
+display:inline-block;
+
+padding:8px 20px;
+
+border-radius:30px;
+
+background:#ffffff;
+
+font-weight:700;
+
+margin-bottom:18px;
 
 }
 
 .hero .points{
 
-font-size:26px;
+position:relative;
 
-font-weight:bold;
+z-index:2;
+
+font-size:30px;
+
+font-weight:800;
+
+margin-bottom:20px;
 
 }
 
 .hero .medals{
 
-margin-top:18px;
+position:relative;
 
-font-size:24px;
+z-index:2;
+
+display:flex;
+
+justify-content:center;
+
+gap:30px;
+
+font-size:26px;
+
+font-weight:700;
+
+flex-wrap:wrap;
 
 }
 
@@ -152,11 +258,13 @@ font-size:24px;
 
 text-align:center;
 
-font-size:30px;
+font-size:32px;
+
+font-weight:700;
+
+margin:50px 0 25px;
 
 color:#FFD700;
-
-margin:40px 0 25px;
 
 }
 
@@ -164,75 +272,278 @@ margin:40px 0 25px;
 
 display:grid;
 
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+
+gap:25px;
+
+}
+  .category-card{
+
+background:#152238;
+
+border-radius:22px;
+
+padding:25px;
+
+border:2px solid rgba(255,215,0,.15);
+
+box-shadow:0 10px 25px rgba(0,0,0,.25);
+
+transition:.35s;
+
+overflow:hidden;
+
+position:relative;
+
+}
+
+.category-card:hover{
+
+transform:translateY(-6px);
+
+border-color:#FFD700;
+
+box-shadow:0 15px 35px rgba(255,215,0,.18);
+
+}
+
+.category-title{
+
+font-size:26px;
+
+font-weight:700;
+
+color:#FFD700;
+
+text-align:center;
+
+margin-bottom:22px;
+
+}
+
+.winner-name{
+
+font-size:28px;
+
+font-weight:700;
+
+text-align:center;
+
+margin-bottom:10px;
+
+}
+
+.team-badge{
+
+display:inline-block;
+
+padding:7px 18px;
+
+border-radius:30px;
+
+background:#20395D;
+
+font-weight:600;
+
+margin:10px auto;
+
+}
+
+.total-points{
+
+font-size:24px;
+
+font-weight:700;
+
+color:#FFD700;
+
+margin-top:12px;
+
+margin-bottom:18px;
+
+text-align:center;
+
+}
+
+.medal-count{
+
+display:flex;
+
+justify-content:center;
+
+gap:25px;
+
+font-size:22px;
+
+font-weight:700;
+
+margin-bottom:22px;
+
+}
+
+.top3{
+
+border-top:1px solid rgba(255,255,255,.15);
+
+padding-top:18px;
+
+display:flex;
+
+flex-direction:column;
+
+gap:12px;
+
+}
+
+.top3-row{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:10px 14px;
+
+background:rgba(255,255,255,.05);
+
+border-radius:10px;
+
+font-size:17px;
+
+}
+
+.top3-row:nth-child(1){
+
+background:rgba(255,215,0,.15);
+
+}
+
+.top3-row:nth-child(2){
+
+background:rgba(200,200,200,.10);
+
+}
+
+.top3-row:nth-child(3){
+
+background:rgba(205,127,50,.10);
+
+}
+
+.rank-name{
+
+display:flex;
+
+align-items:center;
+
+gap:8px;
+
+font-weight:600;
+
+}
+
+.rank-points{
+
+font-weight:700;
+
+color:#FFD700;
+
+}
+
+.top10-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
 
 gap:20px;
 
 }
 
-.card{
+.top10-card{
 
-background:#152238;
-
-border:2px solid rgba(255,215,0,.25);
+background:#162742;
 
 border-radius:18px;
 
-padding:22px;
+padding:18px;
 
-text-align:center;
+border:1px solid rgba(255,255,255,.10);
 
 transition:.3s;
 
-box-shadow:0 8px 20px rgba(0,0,0,.25);
-
 }
 
-.card:hover{
+.top10-card:hover{
 
-transform:translateY(-5px);
+transform:translateY(-4px);
 
 border-color:#FFD700;
 
 }
 
-.card h3{
+.top10-rank{
+
+font-size:24px;
+
+font-weight:700;
+
+margin-bottom:10px;
+
+}
+
+.top10-name{
+
+font-size:22px;
+
+font-weight:700;
+
+margin-bottom:8px;
+
+}
+
+.top10-team{
+
+color:#d8d8d8;
+
+margin-bottom:8px;
+
+}
+
+.top10-points{
 
 color:#FFD700;
 
-margin-bottom:15px;
+font-weight:700;
 
 font-size:22px;
 
 }
 
-.card .winner{
+.hall{
 
-font-size:24px;
+background:#152238;
 
-font-weight:bold;
+border-radius:20px;
 
-margin-bottom:10px;
+padding:30px;
 
-}
+text-align:center;
 
-.card .team{
+margin-top:40px;
 
-font-size:18px;
-
-margin-bottom:10px;
-
-color:#ddd;
+border:2px solid rgba(255,215,0,.15);
 
 }
 
-.card .score{
-
-font-size:20px;
-
-font-weight:bold;
+.hall h3{
 
 color:#FFD700;
+
+margin-bottom:18px;
+
+font-size:26px;
 
 }
 
@@ -240,17 +551,15 @@ color:#FFD700;
 
 display:inline-block;
 
-margin-top:35px;
+margin-top:40px;
 
-padding:12px 28px;
-
-background:rgba(255,255,255,.10);
-
-border:1px solid rgba(255,255,255,.15);
+padding:14px 32px;
 
 border-radius:30px;
 
 text-decoration:none;
+
+background:#20395D;
 
 color:white;
 
@@ -262,33 +571,71 @@ transition:.3s;
 
 .back:hover{
 
-background:rgba(255,255,255,.18);
+background:#FFD700;
+
+color:#222;
 
 }
 
-@media(max-width:600px){
+@media(max-width:768px){
 
 .header h1{
 
-font-size:34px;
+font-size:38px;
 
 }
 
 .hero{
 
-padding:22px;
+padding:30px 20px;
 
 }
 
 .hero .name{
 
+font-size:30px;
+
+}
+
+.hero h2{
+
 font-size:28px;
+
+}
+
+.hero .points{
+
+font-size:24px;
+
+}
+
+.category-title{
+
+font-size:22px;
+
+}
+
+.winner-name{
+
+font-size:24px;
 
 }
 
 .section-title{
 
-font-size:25px;
+font-size:28px;
+
+}
+
+.cards{
+
+grid-template-columns:1fr;
+
+}
+
+.top10-grid{
+
+grid-template-columns:1fr;
 
 }
 
@@ -306,31 +653,34 @@ font-size:25px;
 
 <h1>🏅 KALAPRATHIBHA</h1>
 
-<p>HIDAYA MINI MEET 2026</p>
+<p>AURA MINI MEET 2026</p>
 
 <div class="divider"></div>
 
 </div>
+<!-- ===================================================== -->
+<!-- OVERALL KALAPRATHIBHA -->
+<!-- ===================================================== -->
 
-<div class="hero">
+<div class="hero" id="overallHero">
 
 <div class="icon">👑</div>
 
 <h2>OVERALL KALAPRATHIBHA</h2>
 
-<div class="name">
+<div class="name" id="overallName">
 
 MUHAMMED ASHIF
 
 </div>
 
-<div class="team">
+<div class="team" id="overallTeam">
 
 TEAM A
 
 </div>
 
-<div class="points">
+<div class="points" id="overallPoints">
 
 🏅 82 POINTS
 
@@ -338,368 +688,583 @@ TEAM A
 
 <div class="medals">
 
-🥇 5 &nbsp;&nbsp; 🥈 2 &nbsp;&nbsp; 🥉 1
+<span id="overallGold">🥇 5</span>
+
+<span id="overallSilver">🥈 2</span>
+
+<span id="overallBronze">🥉 1</span>
 
 </div>
 
 </div>
+
+<!-- ===================================================== -->
+<!-- CATEGORY TOPPERS -->
+<!-- ===================================================== -->
 
 <h2 class="section-title">
 
-CATEGORY WINNERS
+🏆 CATEGORY TOPPERS
 
 </h2>
+<!-- ===================================================== -->
+<!-- SUB JUNIOR -->
+<!-- ===================================================== -->
 
 <div class="cards">
 
-<div class="card">
+<div class="category-card">
 
-<h3>🏆 SUB JUNIOR</h3>
+<div class="category-title">
 
-<div class="winner">
+🟢 SUB JUNIOR
+
+</div>
+
+<div class="winner-name" id="sjWinnerName">
 
 ASHIF
 
 </div>
 
-<div class="team">
+<div style="text-align:center;">
+
+<span class="team-badge" id="sjWinnerTeam">
 
 TEAM A
 
-</div>
-
-<div class="score">
-
-48 POINTS
+</span>
 
 </div>
 
+<div class="total-points" id="sjWinnerPoints">
+
+🏅 48 POINTS
+
 </div>
 
-<div class="card">
+<div class="medal-count">
 
-<h3>🏆 SENIOR</h3>
+<span id="sjGold">
 
-<div class="winner">
+🥇 3
+
+</span>
+
+<span id="sjSilver">
+
+🥈 1
+
+</span>
+
+<span id="sjBronze">
+
+🥉 0
+
+</span>
+
+</div>
+
+<div class="top3">
+
+<div class="top3-row">
+
+<div class="rank-name">
+
+🥇
+
+<span id="sjTop1Name">
+
+ASHIF
+
+</span>
+
+</div>
+
+<div class="rank-points" id="sjTop1Points">
+
+48 Points
+
+</div>
+
+</div>
+
+<div class="top3-row">
+
+<div class="rank-name">
+
+🥈
+
+<span id="sjTop2Name">
+
+RAYYAN
+
+</span>
+
+</div>
+
+<div class="rank-points" id="sjTop2Points">
+
+42 Points
+
+</div>
+
+</div>
+
+<div class="top3-row">
+
+<div class="rank-name">
+
+🥉
+
+<span id="sjTop3Name">
+
+SAFWAN
+
+</span>
+
+</div>
+
+<div class="rank-points" id="sjTop3Points">
+
+38 Points
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<!-- ===================================================== -->
+<!-- SENIOR -->
+<!-- ===================================================== -->
+
+<div class="category-card">
+
+<div class="category-title">
+
+🔵 SENIOR
+
+</div>
+
+<div class="winner-name" id="seniorWinnerName">
 
 ADIL
 
 </div>
 
-<div class="team">
+<div style="text-align:center;">
+
+<span class="team-badge" id="seniorWinnerTeam">
 
 TEAM B
 
-</div>
-
-<div class="score">
-
-63 POINTS
+</span>
 
 </div>
 
+<div class="total-points" id="seniorWinnerPoints">
+
+🏅 63 POINTS
+
 </div>
 
-<div class="card">
+<div class="medal-count">
 
-<h3>🏆 SUPER SENIOR</h3>
+<span id="seniorGold">
 
-<div class="winner">
+🥇 4
+
+</span>
+
+<span id="seniorSilver">
+
+🥈 1
+
+</span>
+
+<span id="seniorBronze">
+
+🥉 1
+
+</span>
+
+</div>
+
+<div class="top3">
+
+<div class="top3-row">
+
+<div class="rank-name">
+
+🥇
+
+<span id="seniorTop1Name">
+
+ADIL
+
+</span>
+
+</div>
+
+<div class="rank-points" id="seniorTop1Points">
+
+63 Points
+
+</div>
+
+</div>
+
+<div class="top3-row">
+
+<div class="rank-name">
+
+🥈
+
+<span id="seniorTop2Name">
+
+RIZWAN
+
+</span>
+
+</div>
+
+<div class="rank-points" id="seniorTop2Points">
+
+58 Points
+
+</div>
+
+</div>
+
+<div class="top3-row">
+
+<div class="rank-name">
+
+🥉
+
+<span id="seniorTop3Name">
+
+HADI
+
+</span>
+
+</div>
+
+<div class="rank-points" id="seniorTop3Points">
+
+55 Points
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<!-- ===================================================== -->
+<!-- SUPER SENIOR -->
+<!-- ===================================================== -->
+
+<div class="category-card">
+
+<div class="category-title">
+
+🟣 SUPER SENIOR
+
+</div>
+
+<div class="winner-name" id="ssWinnerName">
 
 SHAMIL
 
 </div>
 
-<div class="team">
+<div style="text-align:center;">
+
+<span class="team-badge" id="ssWinnerTeam">
 
 TEAM C
 
-</div>
-
-<div class="score">
-
-75 POINTS
+</span>
 
 </div>
 
+<div class="total-points" id="ssWinnerPoints">
+
+🏅 75 POINTS
+
 </div>
 
-<div class="card">
+<div class="medal-count">
 
-<h3>🏆 GENERAL</h3>
+<span id="ssGold">
 
-<div class="winner">
+🥇 5
+
+</span>
+
+<span id="ssSilver">
+
+🥈 2
+
+</span>
+
+<span id="ssBronze">
+
+🥉 1
+
+</span>
+
+</div>
+
+<div class="top3">
+
+<div class="top3-row">
+
+<div class="rank-name">
+
+🥇
+
+<span id="ssTop1Name">
+
+SHAMIL
+
+</span>
+
+</div>
+
+<div class="rank-points" id="ssTop1Points">
+
+75 Points
+
+</div>
+
+</div>
+
+<div class="top3-row">
+
+<div class="rank-name">
+
+🥈
+
+<span id="ssTop2Name">
 
 JOUHAR
 
-</div>
-
-<div class="team">
-
-TEAM A
+</span>
 
 </div>
 
-<div class="score">
+<div class="rank-points" id="ssTop2Points">
 
-68 POINTS
+69 Points
 
 </div>
 
 </div>
 
+<div class="top3-row">
+
+<div class="rank-name">
+
+🥉
+
+<span id="ssTop3Name">
+
+NIHAL
+
+</span>
+
 </div>
 
-<!-- PART 2 CONTINUES HERE -->
-  <h2 class="section-title">
+<div class="rank-points" id="ssTop3Points">
 
-🌟 TOP 10 PERFORMERS
+64 Points
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<!-- ===================================================== -->
+<!-- TOP 10 OVERALL -->
+<!-- ===================================================== -->
+
+<h2 class="section-title">
+
+🌟 TOP 10 OVERALL
 
 </h2>
 
-<div class="cards">
+<div class="top10-grid" id="top10Container">
 
-<div class="card">
+<div class="top10-card">
 
-<h3>🥇 Rank 1</h3>
+<div class="top10-rank">🥇 Rank 1</div>
 
-<div class="winner">
+<div class="top10-name" id="top1Name">
 
 MUHAMMED ASHIF
 
 </div>
 
-<div class="team">
+<div class="top10-team" id="top1Team">
 
 TEAM A
 
 </div>
 
-<div class="score">
+<div class="top10-points" id="top1Points">
 
-82 POINTS
-
-</div>
+82 Points
 
 </div>
 
-<div class="card">
+</div>
 
-<h3>🥈 Rank 2</h3>
+<div class="top10-card">
 
-<div class="winner">
+<div class="top10-rank">🥈 Rank 2</div>
+
+<div class="top10-name" id="top2Name">
 
 SHAMIL
 
 </div>
 
-<div class="team">
+<div class="top10-team" id="top2Team">
 
 TEAM C
 
 </div>
 
-<div class="score">
+<div class="top10-points" id="top2Points">
 
-78 POINTS
-
-</div>
+78 Points
 
 </div>
 
-<div class="card">
+</div>
 
-<h3>🥉 Rank 3</h3>
+<div class="top10-card">
 
-<div class="winner">
+<div class="top10-rank">🥉 Rank 3</div>
+
+<div class="top10-name" id="top3Name">
 
 JOUHAR
 
 </div>
 
-<div class="team">
+<div class="top10-team" id="top3Team">
 
 TEAM B
 
 </div>
 
-<div class="score">
+<div class="top10-points" id="top3Points">
 
-74 POINTS
-
-</div>
-
-</div>
-
-<div class="card">
-
-<h3>4th</h3>
-
-<div class="winner">
-
-Name
-
-</div>
-
-<div class="team">
-
-TEAM A
-
-</div>
-
-<div class="score">
-
-70 POINTS
+74 Points
 
 </div>
 
 </div>
 
-<div class="card">
+<div class="top10-card">
 
-<h3>5th</h3>
+<div class="top10-rank">4th</div>
 
-<div class="winner">
+<div class="top10-name" id="top4Name">Name</div>
 
-Name
+<div class="top10-team" id="top4Team">TEAM A</div>
 
-</div>
-
-<div class="team">
-
-TEAM C
+<div class="top10-points" id="top4Points">70 Points</div>
 
 </div>
 
-<div class="score">
+<div class="top10-card">
 
-68 POINTS
+<div class="top10-rank">5th</div>
 
-</div>
+<div class="top10-name" id="top5Name">Name</div>
 
-</div>
+<div class="top10-team" id="top5Team">TEAM B</div>
 
-<div class="card">
-
-<h3>6th</h3>
-
-<div class="winner">
-
-Name
+<div class="top10-points" id="top5Points">68 Points</div>
 
 </div>
 
-<div class="team">
+<div class="top10-card">
 
-TEAM B
+<div class="top10-rank">6th</div>
 
-</div>
+<div class="top10-name" id="top6Name">Name</div>
 
-<div class="score">
+<div class="top10-team" id="top6Team">TEAM C</div>
 
-65 POINTS
-
-</div>
+<div class="top10-points" id="top6Points">65 Points</div>
 
 </div>
 
-<div class="card">
+<div class="top10-card">
 
-<h3>7th</h3>
+<div class="top10-rank">7th</div>
 
-<div class="winner">
+<div class="top10-name" id="top7Name">Name</div>
 
-Name
+<div class="top10-team" id="top7Team">TEAM A</div>
 
-</div>
-
-<div class="team">
-
-TEAM A
+<div class="top10-points" id="top7Points">61 Points</div>
 
 </div>
 
-<div class="score">
+<div class="top10-card">
 
-61 POINTS
+<div class="top10-rank">8th</div>
 
-</div>
+<div class="top10-name" id="top8Name">Name</div>
 
-</div>
+<div class="top10-team" id="top8Team">TEAM B</div>
 
-<div class="card">
-
-<h3>8th</h3>
-
-<div class="winner">
-
-Name
+<div class="top10-points" id="top8Points">59 Points</div>
 
 </div>
 
-<div class="team">
+<div class="top10-card">
 
-TEAM C
+<div class="top10-rank">9th</div>
+
+<div class="top10-name" id="top9Name">Name</div>
+
+<div class="top10-team" id="top9Team">TEAM C</div>
+
+<div class="top10-points" id="top9Points">56 Points</div>
 
 </div>
 
-<div class="score">
+<div class="top10-card">
 
-59 POINTS
+<div class="top10-rank">10th</div>
+
+<div class="top10-name" id="top10Name">Name</div>
+
+<div class="top10-team" id="top10Team">TEAM A</div>
+
+<div class="top10-points" id="top10Points">54 Points</div>
 
 </div>
 
 </div>
 
-<div class="card">
-
-<h3>9th</h3>
-
-<div class="winner">
-
-Name
-
-</div>
-
-<div class="team">
-
-TEAM B
-
-</div>
-
-<div class="score">
-
-56 POINTS
-
-</div>
-
-</div>
-
-<div class="card">
-
-<h3>10th</h3>
-
-<div class="winner">
-
-Name
-
-</div>
-
-<div class="team">
-
-TEAM A
-
-</div>
-
-<div class="score">
-
-54 POINTS
-
-</div>
-
-</div>
-
-</div>
+<!-- ===================================================== -->
+<!-- HALL OF FAME -->
+<!-- ===================================================== -->
 
 <h2 class="section-title">
 
@@ -707,15 +1272,20 @@ TEAM A
 
 </h2>
 
-<div class="card">
+<div class="hall">
 
-<h3>EXCELLENCE IS EARNED THROUGH DEDICATION</h3>
+<h3>
 
-<div class="team">
+EXCELLENCE IS EARNED THROUGH DEDICATION
 
-Congratulations to all participants for your passion, dedication and outstanding performances.
+</h3>
 
-</div>
+<p>
+
+Congratulations to every participant for your passion,
+hard work and outstanding performances.
+
+</p>
 
 </div>
 
@@ -730,6 +1300,8 @@ Congratulations to all participants for your passion, dedication and outstanding
 </div>
 
 </div>
+
+<script src="kalaprathibha.js"></script>
 
 </body>
 
