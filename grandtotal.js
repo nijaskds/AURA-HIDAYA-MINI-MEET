@@ -1,7 +1,7 @@
 // ======================================================
 // HIDAYA MINI MEET 2026
 // GRAND TOTAL
-// FINAL VERSION 2.0
+// FINAL VERSION V2
 // ======================================================
 
 
@@ -13,7 +13,6 @@ const CSV_URL =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vQz8ipfKh59UBNMTnf6lrU1C_bNky3tUumYpuGAt4-d4G2O7Vs7wOFcBVcnGMDBQuHS5PtftsZ59G8b/pub?gid=776690482&single=true&output=csv";
 
 
-
 // ------------------------------------------------------
 // START
 // ------------------------------------------------------
@@ -23,7 +22,6 @@ document.addEventListener("DOMContentLoaded",()=>{
 loadResults();
 
 });
-
 
 
 // ------------------------------------------------------
@@ -46,6 +44,12 @@ cache:"no-store"
 
 );
 
+if(!response.ok){
+
+throw new Error("Unable to load CSV");
+
+}
+
 const csv = await response.text();
 
 const rows = parseCSV(csv);
@@ -58,12 +62,19 @@ renderTable(rows);
 
 }catch(error){
 
-console.error("Loading Error :",error);
+console.error(error);
+
+document.getElementById("champion").innerHTML="Unable to load.";
+
+document.getElementById("ranking").innerHTML=
+'<div class="waiting">Unable to load ranking.</div>';
+
+document.getElementById("pointTable").innerHTML=
+'<div class="waiting">Unable to load table.</div>';
 
 }
 
 }
-
 
 
 // ------------------------------------------------------
@@ -72,21 +83,23 @@ console.error("Loading Error :",error);
 
 function parseCSV(csv){
 
-const lines = csv.trim().split(/\r?\n/);
+const lines=csv.trim().split(/\r?\n/);
 
-const headers = lines[0].split(",");
+const headers=splitCSV(lines[0]);
 
 const data=[];
 
 for(let i=1;i<lines.length;i++){
 
-const values = lines[i].split(",");
+if(!lines[i].trim()) continue;
+
+const values=splitCSV(lines[i]);
 
 let row={};
 
 headers.forEach((header,index)=>{
 
-row[header.trim()] = values[index]
+row[header.trim()]=values[index]
 ? values[index].trim()
 : "";
 
@@ -99,11 +112,65 @@ data.push(row);
 return data;
 
 }
+
+
+// ------------------------------------------------------
+// SPLIT CSV
+// ------------------------------------------------------
+
+function splitCSV(line){
+
+const result=[];
+
+let value="";
+
+let insideQuotes=false;
+
+for(let i=0;i<line.length;i++){
+
+const char=line[i];
+
+if(char=='"'){
+
+insideQuotes=!insideQuotes;
+
+continue;
+
+}
+
+if(char=="," && !insideQuotes){
+
+result.push(value);
+
+value="";
+
+}else{
+
+value+=char;
+
+}
+
+}
+
+result.push(value);
+
+return result;
+
+}
 // ------------------------------------------------------
 // CHAMPION
 // ------------------------------------------------------
 
 function renderChampion(rows){
+
+if(rows.length===0){
+
+document.getElementById("champion").innerHTML=
+"🏆 No Data";
+
+return;
+
+}
 
 const champion=[...rows].sort((a,b)=>
 
@@ -113,20 +180,15 @@ Number(b.TOTAL)-Number(a.TOTAL)
 
 document.getElementById("champion").innerHTML=`
 
-🏆 OVERALL CHAMPION
+<h2>🏆 OVERALL CHAMPION</h2>
 
-<br><br>
+<h3>${champion.TEAM}</h3>
 
-🥇 ${champion.TEAM}
-
-<br>
-
-${champion.TOTAL} POINTS
+<p>${champion.TOTAL} POINTS</p>
 
 `;
 
 }
-
 
 
 // ------------------------------------------------------
@@ -134,6 +196,15 @@ ${champion.TOTAL} POINTS
 // ------------------------------------------------------
 
 function renderRanking(rows){
+
+if(rows.length===0){
+
+document.getElementById("ranking").innerHTML=
+'<div class="waiting">No ranking available.</div>';
+
+return;
+
+}
 
 const ranking=[...rows].sort((a,b)=>
 
@@ -170,6 +241,15 @@ document.getElementById("ranking").innerHTML=html;
 
 function renderTable(rows){
 
+if(rows.length===0){
+
+document.getElementById("pointTable").innerHTML=
+'<div class="waiting">No data available.</div>';
+
+return;
+
+}
+
 let html=`
 
 <table>
@@ -200,15 +280,15 @@ html+=`
 
 <td><b>${row.TEAM}</b></td>
 
-<td>${row["SUB JUNIOR"]}</td>
+<td>${row["SUB JUNIOR"] || 0}</td>
 
-<td>${row.SENIOR}</td>
+<td>${row.SENIOR || 0}</td>
 
-<td>${row["SUPER SENIOR"]}</td>
+<td>${row["SUPER SENIOR"] || 0}</td>
 
-<td>${row.GENERAL}</td>
+<td>${row.GENERAL || 0}</td>
 
-<td><b>${row.TOTAL}</b></td>
+<td><b>${row.TOTAL || 0}</b></td>
 
 </tr>
 
@@ -227,11 +307,8 @@ document.getElementById("pointTable").innerHTML=html;
 }
 
 
-
 // ------------------------------------------------------
 // AUTO REFRESH
 // ------------------------------------------------------
-
-// Auto refresh every 10 seconds
 
 setInterval(loadResults,10000);
