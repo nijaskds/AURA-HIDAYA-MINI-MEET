@@ -1,7 +1,7 @@
 // ======================================================
 // HIDAYA MINI MEET 2026
 // GRAND TOTAL
-// FINAL VERSION V2
+// FINAL VERSION V3
 // ======================================================
 
 
@@ -64,7 +64,8 @@ renderTable(rows);
 
 console.error(error);
 
-document.getElementById("champion").innerHTML="Unable to load.";
+document.getElementById("champion").innerHTML=
+"Unable to load.";
 
 document.getElementById("ranking").innerHTML=
 '<div class="waiting">Unable to load ranking.</div>';
@@ -163,28 +164,41 @@ return result;
 
 function renderChampion(rows){
 
-if(rows.length===0){
+const totalRow = rows.find(row=>
 
-document.getElementById("champion").innerHTML=
-"🏆 No Data";
+(row[""] || row.TEAM || "").trim().toUpperCase()=="TOTAL"
+
+);
+
+if(!totalRow){
+
+document.getElementById("champion").innerHTML="🏆 No Data";
 
 return;
 
 }
 
-const champion=[...rows].sort((a,b)=>
+const teams=[
 
-Number(b.TOTAL)-Number(a.TOTAL)
+{name:"A",points:Number(totalRow.A||0)},
 
-)[0];
+{name:"B",points:Number(totalRow.B||0)},
+
+{name:"C",points:Number(totalRow.C||0)}
+
+];
+
+teams.sort((a,b)=>b.points-a.points);
+
+const champion=teams[0];
 
 document.getElementById("champion").innerHTML=`
 
 <h2>🏆 OVERALL CHAMPION</h2>
 
-<h3>${champion.TEAM}</h3>
+<h3>TEAM ${champion.name}</h3>
 
-<p>${champion.TOTAL} POINTS</p>
+<p>${champion.points} POINTS</p>
 
 `;
 
@@ -197,7 +211,13 @@ document.getElementById("champion").innerHTML=`
 
 function renderRanking(rows){
 
-if(rows.length===0){
+const totalRow = rows.find(row=>
+
+(row[""] || row.TEAM || "").trim().toUpperCase()=="TOTAL"
+
+);
+
+if(!totalRow){
 
 document.getElementById("ranking").innerHTML=
 '<div class="waiting">No ranking available.</div>';
@@ -206,11 +226,15 @@ return;
 
 }
 
-const ranking=[...rows].sort((a,b)=>
+const ranking=[
 
-Number(b.TOTAL)-Number(a.TOTAL)
+{name:"A",points:Number(totalRow.A||0)},
 
-);
+{name:"B",points:Number(totalRow.B||0)},
+
+{name:"C",points:Number(totalRow.C||0)}
+
+].sort((a,b)=>b.points-a.points);
 
 const medals=["🥇","🥈","🥉"];
 
@@ -222,9 +246,9 @@ html+=`
 
 <div class="rank">
 
-<span>${medals[index] || "🏅"} ${team.TEAM}</span>
+<span>${medals[index]} TEAM ${team.name}</span>
 
-<span>${team.TOTAL}</span>
+<span>${team.points}</span>
 
 </div>
 
@@ -256,17 +280,13 @@ let html=`
 
 <tr>
 
-<th>TEAM</th>
+<th>Category</th>
 
-<th>SUB JUNIOR</th>
+<th>A</th>
 
-<th>SENIOR</th>
+<th>B</th>
 
-<th>SUPER SENIOR</th>
-
-<th>GENERAL</th>
-
-<th>TOTAL</th>
+<th>C</th>
 
 </tr>
 
@@ -274,21 +294,21 @@ let html=`
 
 rows.forEach(row=>{
 
+const category = row[""] || row.TEAM || "";
+
+const isTotal = category.trim().toUpperCase()=="TOTAL";
+
 html+=`
 
-<tr>
+<tr ${isTotal ? 'style="background:#FFF8E1;font-weight:bold;"' : ""}>
 
-<td><b>${row.TEAM}</b></td>
+<td><b>${category}</b></td>
 
-<td>${row["SUB JUNIOR"] || 0}</td>
+<td>${row.A || 0}</td>
 
-<td>${row.SENIOR || 0}</td>
+<td>${row.B || 0}</td>
 
-<td>${row["SUPER SENIOR"] || 0}</td>
-
-<td>${row.GENERAL || 0}</td>
-
-<td><b>${row.TOTAL || 0}</b></td>
+<td>${row.C || 0}</td>
 
 </tr>
 
