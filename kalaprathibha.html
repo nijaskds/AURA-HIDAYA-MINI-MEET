@@ -54,7 +54,7 @@ margin:auto;
 
 text-align:center;
 
-margin-bottom:40px;
+margin-bottom:45px;
 
 }
 
@@ -64,15 +64,17 @@ font-size:48px;
 
 font-weight:800;
 
-color:#FFD700;
-
 letter-spacing:2px;
 
-margin-bottom:8px;
+color:#FFD700;
+
+text-shadow:0 4px 20px rgba(255,215,0,.25);
 
 }
 
 .header p{
+
+margin-top:10px;
 
 font-size:18px;
 
@@ -86,31 +88,159 @@ width:120px;
 
 height:5px;
 
+margin:24px auto;
+
 background:#FFD700;
 
 border-radius:50px;
 
-margin:22px auto;
+box-shadow:0 0 20px rgba(255,215,0,.35);
 
 }
 
 .hero{
 
+position:relative;
+
+overflow:hidden;
+
 background:
 
 linear-gradient(135deg,#FFE48A,#FFD54F,#E6B800);
 
-color:#222;
+border-radius:32px;
 
-border-radius:30px;
-
-padding:45px 35px;
+padding:55px 35px;
 
 text-align:center;
 
-box-shadow:0 15px 45px rgba(255,215,0,.30);
+color:#222;
 
-margin-bottom:45px;
+box-shadow:
+
+0 20px 55px rgba(255,215,0,.35);
+
+margin-bottom:50px;
+
+}
+
+.hero::before{
+
+content:"";
+
+position:absolute;
+
+width:420px;
+
+height:420px;
+
+border-radius:50%;
+
+background:rgba(255,255,255,.12);
+
+top:-220px;
+
+right:-120px;
+
+}
+
+.hero::after{
+
+content:"";
+
+position:absolute;
+
+width:260px;
+
+height:260px;
+
+border-radius:50%;
+
+background:rgba(255,255,255,.08);
+
+bottom:-120px;
+
+left:-80px;
+
+}
+
+.hero>*{
+
+position:relative;
+
+z-index:2;
+
+}
+
+.hero .icon{
+
+font-size:90px;
+
+margin-bottom:15px;
+
+}
+
+.hero h2{
+
+font-size:36px;
+
+font-weight:800;
+
+margin-bottom:18px;
+
+}
+
+.hero .name{
+
+font-size:42px;
+
+font-weight:800;
+
+margin-bottom:14px;
+
+}
+
+.hero .team{
+
+display:inline-block;
+
+padding:10px 22px;
+
+border-radius:30px;
+
+background:#fff;
+
+font-weight:700;
+
+margin-bottom:18px;
+
+box-shadow:0 5px 15px rgba(0,0,0,.18);
+
+}
+
+.hero .points{
+
+font-size:30px;
+
+font-weight:800;
+
+margin-bottom:20px;
+
+}
+
+.hero .medals{
+
+display:flex;
+
+justify-content:center;
+
+gap:30px;
+
+flex-wrap:wrap;
+
+font-size:26px;
+
+font-weight:700;
 
 }
 
@@ -118,13 +248,15 @@ margin-bottom:45px;
 
 text-align:center;
 
-font-size:32px;
+font-size:34px;
 
-font-weight:700;
+font-weight:800;
 
-margin:50px 0 25px;
+margin:55px 0 30px;
 
 color:#FFD700;
+
+text-shadow:0 0 15px rgba(255,215,0,.25);
 
 }
 
@@ -138,95 +270,15 @@ gap:25px;
 
 }
 
-.category-card{
-
-background:#152238;
-
-border-radius:22px;
-
-padding:25px;
-
-border:2px solid rgba(255,215,0,.15);
-
-box-shadow:0 10px 25px rgba(0,0,0,.25);
-
-}
-
-.top10-grid{
-
-display:grid;
-
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-
-gap:20px;
-
-}
-
-.top10-card{
-
-background:#162742;
-
-border-radius:18px;
-
-padding:18px;
-
-border:1px solid rgba(255,255,255,.10);
-
-}
-
-.hall{
-
-background:#152238;
-
-border-radius:20px;
-
-padding:30px;
-
-text-align:center;
-
-margin-top:40px;
-
-border:2px solid rgba(255,215,0,.15);
-
-}
-
-.back{
-
-display:inline-block;
-
-margin-top:40px;
-
-padding:14px 32px;
-
-border-radius:30px;
-
-text-decoration:none;
-
-background:#20395D;
-
-color:white;
-
-font-weight:600;
-
-}
-
-.back:hover{
-
-background:#FFD700;
-
-color:#222;
-
-}
-
 .waiting{
 
 text-align:center;
 
-padding:30px;
+font-size:22px;
 
-font-size:20px;
+opacity:.8;
 
-color:#ccc;
+padding:25px;
 
 }
 
@@ -240,15 +292,35 @@ color:#ccc;
 
 <div class="header">
 
-<h1>🏅 KALAPRATHIBHA</h1>
+<h1>
 
-<p>AURA MINI MEET 2026</p>
+🏅 KALAPRATHIBHA
+
+</h1>
+
+<p>
+
+AURA MINI MEET 2026
+
+</p>
 
 <div class="divider"></div>
 
 </div>
 
 <div id="overallHero" class="hero">
+
+<div class="icon">
+
+👑
+
+</div>
+
+<h2>
+
+OVERALL KALAPRATHIBHA
+
+</h2>
 
 <div class="waiting">
 
@@ -273,6 +345,290 @@ Loading Category Winners...
 </div>
 
 </div>
+<style>
+
+/* ===========================
+   CATEGORY CARD PREMIUM
+=========================== */
+
+.category-card{
+
+position:relative;
+
+overflow:hidden;
+
+background:linear-gradient(145deg,#162742,#1E3559);
+
+border-radius:24px;
+
+padding:28px;
+
+border:1px solid rgba(255,215,0,.18);
+
+box-shadow:
+
+0 12px 30px rgba(0,0,0,.28);
+
+transition:.35s;
+
+}
+
+.category-card:hover{
+
+transform:translateY(-6px);
+
+border-color:#FFD700;
+
+box-shadow:
+
+0 18px 40px rgba(255,215,0,.20);
+
+}
+
+.category-card::before{
+
+content:"";
+
+position:absolute;
+
+width:180px;
+
+height:180px;
+
+border-radius:50%;
+
+background:rgba(255,255,255,.05);
+
+right:-70px;
+
+top:-70px;
+
+}
+
+.category-title{
+
+position:relative;
+
+font-size:28px;
+
+font-weight:800;
+
+text-align:center;
+
+color:#FFD700;
+
+margin-bottom:22px;
+
+}
+
+.winner-name{
+
+position:relative;
+
+font-size:30px;
+
+font-weight:700;
+
+text-align:center;
+
+margin-bottom:12px;
+
+}
+
+.team-badge{
+
+display:inline-block;
+
+padding:8px 18px;
+
+border-radius:30px;
+
+background:#27446F;
+
+font-weight:700;
+
+margin-bottom:18px;
+
+}
+
+.total-points{
+
+font-size:25px;
+
+font-weight:800;
+
+color:#FFD700;
+
+margin-bottom:20px;
+
+text-align:center;
+
+}
+
+.medal-count{
+
+display:flex;
+
+justify-content:center;
+
+gap:28px;
+
+flex-wrap:wrap;
+
+margin-bottom:20px;
+
+font-size:22px;
+
+font-weight:700;
+
+}
+
+.top3{
+
+border-top:1px solid rgba(255,255,255,.10);
+
+padding-top:18px;
+
+display:flex;
+
+flex-direction:column;
+
+gap:12px;
+
+}
+
+.top3-row{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:12px 15px;
+
+border-radius:12px;
+
+background:rgba(255,255,255,.05);
+
+}
+
+.top3-row:nth-child(1){
+
+background:rgba(255,215,0,.18);
+
+}
+
+.top3-row:nth-child(2){
+
+background:rgba(220,220,220,.10);
+
+}
+
+.top3-row:nth-child(3){
+
+background:rgba(205,127,50,.10);
+
+}
+
+.rank-name{
+
+display:flex;
+
+gap:8px;
+
+font-weight:700;
+
+}
+
+.rank-points{
+
+color:#FFD700;
+
+font-weight:700;
+
+}
+
+
+/* ===========================
+   TOP 10
+=========================== */
+
+.top10-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+
+gap:22px;
+
+}
+
+.top10-card{
+
+background:linear-gradient(145deg,#162742,#20395D);
+
+border-radius:20px;
+
+padding:22px;
+
+border:1px solid rgba(255,255,255,.08);
+
+transition:.35s;
+
+}
+
+.top10-card:hover{
+
+transform:translateY(-5px);
+
+border-color:#FFD700;
+
+box-shadow:0 12px 25px rgba(255,215,0,.18);
+
+}
+
+.top10-rank{
+
+font-size:26px;
+
+font-weight:800;
+
+margin-bottom:12px;
+
+}
+
+.top10-name{
+
+font-size:23px;
+
+font-weight:700;
+
+margin-bottom:8px;
+
+}
+
+.top10-team{
+
+color:#ddd;
+
+margin-bottom:10px;
+
+}
+
+.top10-points{
+
+font-size:24px;
+
+font-weight:800;
+
+color:#FFD700;
+
+}
+
+</style>
+
+
 <h2 class="section-title">
 
 🌟 TOP 10 OVERALL
@@ -311,6 +667,225 @@ hard work and outstanding performances.
 </p>
 
 </div>
+<style>
+
+/* ===========================
+   HALL OF FAME
+=========================== */
+
+.hall{
+
+background:linear-gradient(145deg,#152238,#1D3050);
+
+border-radius:24px;
+
+padding:35px;
+
+text-align:center;
+
+margin-top:45px;
+
+border:1px solid rgba(255,215,0,.15);
+
+box-shadow:0 12px 35px rgba(0,0,0,.25);
+
+}
+
+.hall h3{
+
+font-size:28px;
+
+color:#FFD700;
+
+margin-bottom:18px;
+
+font-weight:800;
+
+}
+
+.hall p{
+
+font-size:18px;
+
+line-height:1.8;
+
+color:#E5E5E5;
+
+}
+
+
+/* ===========================
+   HOME BUTTON
+=========================== */
+
+.back{
+
+display:inline-flex;
+
+align-items:center;
+
+justify-content:center;
+
+margin-top:45px;
+
+padding:15px 36px;
+
+border-radius:35px;
+
+background:linear-gradient(135deg,#20395D,#2D4E82);
+
+color:#fff;
+
+font-size:18px;
+
+font-weight:700;
+
+text-decoration:none;
+
+transition:.35s;
+
+box-shadow:0 10px 25px rgba(0,0,0,.25);
+
+}
+
+.back:hover{
+
+background:linear-gradient(135deg,#FFD54F,#E6B800);
+
+color:#222;
+
+transform:translateY(-3px);
+
+box-shadow:0 15px 35px rgba(255,215,0,.25);
+
+}
+
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media(max-width:768px){
+
+.header h1{
+
+font-size:38px;
+
+}
+
+.header p{
+
+font-size:16px;
+
+}
+
+.hero{
+
+padding:35px 20px;
+
+}
+
+.hero .icon{
+
+font-size:70px;
+
+}
+
+.hero h2{
+
+font-size:28px;
+
+}
+
+.hero .name{
+
+font-size:30px;
+
+}
+
+.hero .team{
+
+font-size:16px;
+
+}
+
+.hero .points{
+
+font-size:24px;
+
+}
+
+.hero .medals{
+
+gap:18px;
+
+font-size:22px;
+
+}
+
+.section-title{
+
+font-size:28px;
+
+}
+
+.cards{
+
+grid-template-columns:1fr;
+
+}
+
+.top10-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.category-title{
+
+font-size:24px;
+
+}
+
+.winner-name{
+
+font-size:26px;
+
+}
+
+.top10-name{
+
+font-size:21px;
+
+}
+
+.top10-points{
+
+font-size:22px;
+
+}
+
+.hall{
+
+padding:25px 20px;
+
+}
+
+.hall h3{
+
+font-size:22px;
+
+}
+
+.hall p{
+
+font-size:16px;
+
+}
+
+}
+
+</style>
 
 <div style="text-align:center;">
 
