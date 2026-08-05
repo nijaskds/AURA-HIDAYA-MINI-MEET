@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Results</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+
+background:linear-gradient(135deg,#081B33,#0D2D54,#17467D);
+
+color:#fff;
+
+padding:18px;
+
+}
+
+.container{
+
+max-width:900px;
+
+margin:auto;
+
+}
+
+.header{
+
+text-align:center;
+
+margin-bottom:25px;
+
+}
+
+.header h1{
+
+font-size:38px;
+
+letter-spacing:2px;
+
+}
+
+.header p{
+
+margin-top:8px;
+
+color:#dddddd;
+
+font-size:18px;
+
+}
+
+.rank-board{
+
+background:#ffffff;
+
+color:#222;
+
+border-radius:18px;
+
+padding:20px;
+
+margin-bottom:25px;
+
+box-shadow:0 8px 20px rgba(0,0,0,.25);
+
+}
+
+.rank-board h2{
+
+text-align:center;
+
+margin-bottom:20px;
+
+color:#0B5ED7;
+
+}
+
+.section-title{
+
+font-size:30px;
+
+margin:30px 0 20px;
+
+text-align:center;
+
+}
+
+.table-box{
+
+margin-top:35px;
+
+background:#fff;
+
+border-radius:18px;
+
+padding:20px;
+
+overflow-x:auto;
+
+color:#222;
+
+box-shadow:0 8px 20px rgba(0,0,0,.25);
+
+}
+
+.table-box h2{
+
+text-align:center;
+
+margin-bottom:20px;
+
+color:#0B5ED7;
+
+}
+
+.back{
+
+display:inline-flex;
+
+align-items:center;
+
+justify-content:center;
+
+margin-top:35px;
+
+padding:12px 26px;
+
+background:rgba(255,255,255,.12);
+
+border:1px solid rgba(255,255,255,.18);
+
+border-radius:30px;
+
+color:rgba(255,255,255,.9);
+
+text-decoration:none;
+
+font-size:17px;
+
+font-weight:600;
+
+backdrop-filter:blur(8px);
+
+-webkit-backdrop-filter:blur(8px);
+
+transition:.25s;
+
+}
+
+.back:hover{
+
+background:rgba(255,255,255,.20);
+
+color:#fff;
+
+border-color:rgba(255,255,255,.35);
+
+}
+
+.rank{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:15px;
+
+border-bottom:1px solid #ddd;
+
+font-size:22px;
+
+}
+
+.rank:last-child{
+
+border-bottom:none;
+
+}
+
+.event{
+
+background:#ffffff;
+
+color:#222;
+
+border-radius:15px;
+
+margin-bottom:18px;
+
+overflow:hidden;
+
+box-shadow:0 8px 20px rgba(0,0,0,.20);
+
+}
+
+.event summary{
+
+list-style:none;
+
+cursor:pointer;
+
+padding:18px;
+
+background:#0B5ED7;
+
+color:white;
+
+font-size:21px;
+
+font-weight:bold;
+
+}
+
+.event summary::-webkit-details-marker{
+
+display:none;
+
+}
+
+.result{
+
+padding:18px;
+
+font-size:18px;
+
+line-height:2;
+
+}
+
+.gold{
+
+color:#d4a017;
+
+font-weight:bold;
+
+}
+
+.silver{
+
+color:#777;
+
+font-weight:bold;
+
+}
+
+.bronze{
+
+color:#9a5a00;
+
+font-weight:bold;
+
+}
+
+.waiting{
+
+text-align:center;
+
+padding:20px;
+
+color:#888;
+
+font-style:italic;
+
+}
+
+table{
+
+width:100%;
+
+border-collapse:collapse;
+
+}
+
+th{
+
+background:#0B5ED7;
+
+color:#fff;
+
+padding:12px;
+
+}
+
+td{
+
+padding:11px;
+
+text-align:center;
+
+border-bottom:1px solid #ddd;
+
+}
+
+@media(max-width:700px){
+
+.header h1{
+
+font-size:30px;
+
+}
+
+.section-title{
+
+font-size:24px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+
+<h1 id="categoryTitle">
+
+🏆 RESULTS
+
+</h1>
+
+<p>
+
+AURA MINI MEET 2026
+
+</p>
+
+</div>
+
+<div class="rank-board">
+
+<h2>
+
+LIVE TEAM RANKING
+
+</h2>
+
+<div id="ranking">
+
+<div class="waiting">
+
+Loading ranking...
+
+</div>
+
+</div>
+
+</div>
+
+<h2 class="section-title">
+
+EVENT RESULTS
+
+</h2>
+
+<div id="events">
+
+<div class="waiting">
+
+Loading events...
+
+</div>
+
+</div>
+<div class="table-box">
+
+<h2>
+
+POINT TABLE
+
+</h2>
+
+<div id="pointTable">
+
+<div class="waiting">
+
+Loading point table...
+
+</div>
+
+</div>
+
+</div>
+
+<div style="text-align:center;">
+
+<a href="scoreboard.html" class="back">
+
+⌂ Scoreboard
+
+</a>
+
+</div>
+
+</div>
+
+<script src="results.js?v=1"></script>
+
+</body>
+
+</html>
