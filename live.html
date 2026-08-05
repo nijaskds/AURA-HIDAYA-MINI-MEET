@@ -1,21 +1,246 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<title>Live Results</title>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Live Results | AURA MINI MEET 2026</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
 body{
 
-font-family:Segoe UI;
-background:#eef4ff;
-padding:40px;
+font-family:'Poppins',sans-serif;
+
+background:
+linear-gradient(135deg,#050A17,#0D1F3A,#173763);
+
+color:#fff;
+
+min-height:100vh;
+
+padding:20px;
 
 }
 
-h1{
+.container{
+
+max-width:1200px;
+
+margin:auto;
+
+}
+
+.header{
 
 text-align:center;
+
+margin-bottom:35px;
+
+}
+
+.header h1{
+
+font-size:48px;
+
+font-weight:800;
+
+color:#FFD54F;
+
+letter-spacing:2px;
+
+}
+
+.header p{
+
+margin-top:8px;
+
+font-size:18px;
+
+color:#ddd;
+
+}
+
+.live-indicator{
+
+display:inline-flex;
+
+align-items:center;
+
+gap:10px;
+
+margin-top:18px;
+
+padding:10px 22px;
+
+border-radius:30px;
+
+background:rgba(255,255,255,.08);
+
+backdrop-filter:blur(8px);
+
+font-weight:700;
+
+color:#fff;
+
+}
+
+.dot{
+
+width:14px;
+
+height:14px;
+
+border-radius:50%;
+
+background:#ff2d55;
+
+animation:blink 1s infinite;
+
+}
+
+@keyframes blink{
+
+0%{opacity:1;}
+
+50%{opacity:.25;}
+
+100%{opacity:1;}
+
+}
+
+.section-title{
+
+font-size:30px;
+
+font-weight:700;
+
+margin:40px 0 25px;
+
+color:#FFD54F;
+
+text-align:center;
+
+}
+
+.live-container{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(330px,1fr));
+
+gap:22px;
+
+}
+
+.live-card{
+
+background:rgba(255,255,255,.08);
+
+backdrop-filter:blur(12px);
+
+border:1px solid rgba(255,255,255,.10);
+
+border-radius:24px;
+
+padding:22px;
+
+box-shadow:0 12px 30px rgba(0,0,0,.25);
+
+transition:.3s;
+
+}
+
+.live-card:hover{
+
+transform:translateY(-5px);
+
+border-color:#FFD54F;
+
+}
+
+.live-badge{
+
+display:inline-block;
+
+padding:6px 14px;
+
+border-radius:20px;
+
+background:#ff2d55;
+
+font-size:13px;
+
+font-weight:700;
+
+margin-bottom:16px;
+
+}
+
+.category{
+
+font-size:16px;
+
+font-weight:700;
+
+color:#FFD54F;
+
+margin-bottom:10px;
+
+}
+
+.event-name{
+
+font-size:26px;
+
+font-weight:700;
+
+margin-bottom:18px;
+
+}
+
+.result-row{
+
+display:flex;
+
+justify-content:space-between;
+
+padding:10px 0;
+
+border-bottom:1px solid rgba(255,255,255,.08);
+
+}
+
+.result-row:last-child{
+
+border-bottom:none;
+
+}
+
+.waiting{
+
+text-align:center;
+
+padding:40px;
+
+font-size:20px;
+
+color:#bbb;
 
 }
 
@@ -25,11 +250,403 @@ text-align:center;
 
 <body>
 
-<h1>📢 LIVE RESULTS</h1>
+<div class="container">
 
-<p style="text-align:center;">
-Live results will be published here.
+<div class="header">
+
+<h1>
+
+📢 LIVE RESULTS
+
+</h1>
+
+<p>
+
+AURA MINI MEET 2026
+
 </p>
+
+<div class="live-indicator">
+
+<div class="dot"></div>
+
+LIVE • Auto Refresh Every 10 Seconds
+
+</div>
+
+</div>
+
+<h2 class="section-title">
+
+🔴 LIVE NOW
+
+</h2>
+
+<div id="liveResults" class="live-container">
+
+<div class="waiting">
+
+Waiting for Live Results...
+
+</div>
+
+</div>
+<style>
+
+/* ===========================
+   CURRENT KALAPRATHIBHA
+=========================== */
+
+.info-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+
+gap:22px;
+
+margin-top:10px;
+
+}
+
+.info-card{
+
+background:linear-gradient(145deg,#162742,#20395D);
+
+border-radius:22px;
+
+padding:24px;
+
+text-align:center;
+
+border:1px solid rgba(255,255,255,.10);
+
+box-shadow:0 10px 25px rgba(0,0,0,.22);
+
+transition:.35s;
+
+}
+
+.info-card:hover{
+
+transform:translateY(-5px);
+
+border-color:#FFD54F;
+
+box-shadow:0 15px 35px rgba(255,215,0,.20);
+
+}
+
+.info-title{
+
+font-size:20px;
+
+font-weight:700;
+
+color:#FFD54F;
+
+margin-bottom:18px;
+
+}
+
+.info-name{
+
+font-size:26px;
+
+font-weight:700;
+
+margin-bottom:10px;
+
+}
+
+.info-points{
+
+font-size:22px;
+
+font-weight:700;
+
+color:#FFD54F;
+
+}
+
+
+/* ===========================
+   LIVE TEAM SCORE
+=========================== */
+
+.team-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+
+gap:22px;
+
+margin-top:10px;
+
+}
+
+.team-card{
+
+background:linear-gradient(145deg,#20395D,#162742);
+
+border-radius:22px;
+
+padding:25px;
+
+text-align:center;
+
+border:1px solid rgba(255,255,255,.10);
+
+transition:.35s;
+
+}
+
+.team-card:hover{
+
+transform:translateY(-5px);
+
+border-color:#FFD54F;
+
+}
+
+.team-name{
+
+font-size:28px;
+
+font-weight:800;
+
+margin-bottom:15px;
+
+}
+
+.team-score{
+
+font-size:34px;
+
+font-weight:800;
+
+color:#FFD54F;
+
+}
+
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media(max-width:768px){
+
+.header h1{
+
+font-size:38px;
+
+}
+
+.section-title{
+
+font-size:24px;
+
+}
+
+.live-container{
+
+grid-template-columns:1fr;
+
+}
+
+.info-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.team-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.event-name{
+
+font-size:22px;
+
+}
+
+.info-name{
+
+font-size:22px;
+
+}
+
+.team-score{
+
+font-size:28px;
+
+}
+
+}
+
+</style>
+
+
+<h2 class="section-title">
+
+🏅 CURRENT KALAPRATHIBHA
+
+</h2>
+
+<div id="kalaprathibhaContainer" class="info-grid">
+
+<div class="waiting">
+
+Loading...
+
+</div>
+
+</div>
+
+
+<h2 class="section-title">
+
+🏆 LIVE TEAM SCORE
+
+</h2>
+
+<div id="teamScoreContainer" class="team-grid">
+
+<div class="waiting">
+
+Loading...
+
+</div>
+
+</div>
+<h2 class="section-title">
+
+🏅 CURRENT KALAPRATHIBHA
+
+</h2>
+
+<div id="currentKalaprathibha" class="live-container">
+
+<div class="waiting">
+
+Loading Current Kalaprathibha...
+
+</div>
+
+</div>
+
+<h2 class="section-title">
+
+🏆 LIVE TEAM SCORE
+
+</h2>
+
+<div id="teamScore" class="live-container">
+
+<div class="waiting">
+
+Loading Team Score...
+
+</div>
+
+</div>
+
+<div style="text-align:center;">
+
+<a href="index.html" class="back">
+
+⌂ Home
+
+</a>
+
+</div>
+
+</div>
+
+<style>
+
+.back{
+
+display:inline-flex;
+
+align-items:center;
+
+justify-content:center;
+
+margin-top:45px;
+
+padding:14px 34px;
+
+border-radius:35px;
+
+text-decoration:none;
+
+font-size:18px;
+
+font-weight:700;
+
+background:rgba(255,255,255,.10);
+
+color:#fff;
+
+border:1px solid rgba(255,255,255,.12);
+
+backdrop-filter:blur(10px);
+
+transition:.3s;
+
+}
+
+.back:hover{
+
+background:#FFD54F;
+
+color:#222;
+
+transform:translateY(-3px);
+
+}
+
+@media(max-width:768px){
+
+.header h1{
+
+font-size:36px;
+
+}
+
+.section-title{
+
+font-size:26px;
+
+}
+
+.event-name{
+
+font-size:22px;
+
+}
+
+.live-container{
+
+grid-template-columns:1fr;
+
+}
+
+.result-row{
+
+font-size:15px;
+
+}
+
+}
+
+</style>
+
+<script src="live.js?v=1"></script>
 
 </body>
 
