@@ -1,7 +1,7 @@
 // ======================================================
-// HIDAYA MINI MEET 2026
+// AURA MINI MEET 2026
 // GRAND TOTAL
-// FINAL VERSION V3
+// PART 1
 // ======================================================
 
 
@@ -17,63 +17,60 @@ const CSV_URL =
 // START
 // ------------------------------------------------------
 
-document.addEventListener("DOMContentLoaded",()=>{
+document.addEventListener("DOMContentLoaded", () => {
 
-loadResults();
+    loadResults();
+
+    setInterval(loadResults, 10000);
 
 });
 
 
 // ------------------------------------------------------
-// LOAD DATA
+// LOAD CSV
 // ------------------------------------------------------
 
-async function loadResults(){
+async function loadResults() {
 
-try{
+    try {
 
-const response = await fetch(
+        const response = await fetch(
+            CSV_URL + "&t=" + Date.now(),
+            {
+                cache: "no-store"
+            }
+        );
 
-CSV_URL + "&t=" + Date.now(),
+        if (!response.ok) {
+            throw new Error("Unable to load CSV");
+        }
 
-{
+        const csv = await response.text();
 
-cache:"no-store"
+        const rows = parseCSV(csv);
 
-}
+        renderChampion(rows);
 
-);
+        renderRanking(rows);
 
-if(!response.ok){
+        renderTable(rows);
 
-throw new Error("Unable to load CSV");
+    }
 
-}
+    catch (error) {
 
-const csv = await response.text();
+        console.error(error);
 
-const rows = parseCSV(csv);
+        document.getElementById("champion").innerHTML =
+            "Unable to load.";
 
-renderChampion(rows);
+        document.getElementById("ranking").innerHTML =
+            '<div class="waiting">Unable to load ranking.</div>';
 
-renderRanking(rows);
+        document.getElementById("pointTable").innerHTML =
+            '<div class="waiting">Unable to load table.</div>';
 
-renderTable(rows);
-
-}catch(error){
-
-console.error(error);
-
-document.getElementById("champion").innerHTML=
-"Unable to load.";
-
-document.getElementById("ranking").innerHTML=
-'<div class="waiting">Unable to load ranking.</div>';
-
-document.getElementById("pointTable").innerHTML=
-'<div class="waiting">Unable to load table.</div>';
-
-}
+    }
 
 }
 
@@ -82,35 +79,23 @@ document.getElementById("pointTable").innerHTML=
 // CSV PARSER
 // ------------------------------------------------------
 
-function parseCSV(csv){
+function parseCSV(csv) {
 
-const lines=csv.trim().split(/\r?\n/);
+    const lines = csv.trim().split(/\r?\n/);
 
-const headers=splitCSV(lines[0]);
+    if (lines.length < 2) return [];
 
-const data=[];
+    const rows = [];
 
-for(let i=1;i<lines.length;i++){
+    for (let i = 0; i < lines.length; i++) {
 
-if(!lines[i].trim()) continue;
+        const values = splitCSV(lines[i]);
 
-const values=splitCSV(lines[i]);
+        rows.push(values);
 
-let row={};
+    }
 
-headers.forEach((header,index)=>{
-
-row[header.trim()]=values[index]
-? values[index].trim()
-: "";
-
-});
-
-data.push(row);
-
-}
-
-return data;
+    return rows;
 
 }
 
@@ -119,216 +104,256 @@ return data;
 // SPLIT CSV
 // ------------------------------------------------------
 
-function splitCSV(line){
+function splitCSV(line) {
 
-const result=[];
+    const result = [];
 
-let value="";
+    let current = "";
 
-let insideQuotes=false;
+    let insideQuotes = false;
 
-for(let i=0;i<line.length;i++){
+    for (let i = 0; i < line.length; i++) {
 
-const char=line[i];
+        const char = line[i];
 
-if(char=='"'){
+        if (char === '"') {
 
-insideQuotes=!insideQuotes;
+            insideQuotes = !insideQuotes;
 
-continue;
+            continue;
+
+        }
+
+        if (char === "," && !insideQuotes) {
+
+            result.push(current);
+
+            current = "";
+
+        }
+
+        else {
+
+            current += char;
+
+        }
+
+    }
+
+    result.push(current);
+
+    return result;
 
 }
 
-if(char=="," && !insideQuotes){
 
-result.push(value);
+// ------------------------------------------------------
+// GET TOTAL ROW
+// ------------------------------------------------------
 
-value="";
+function getTotalRow(rows) {
 
-}else{
+    for (let i = 1; i < rows.length; i++) {
 
-value+=char;
+        const category = (rows[i][0] || "").trim().toUpperCase();
 
-}
+        if (category === "TOTAL") {
 
-}
+            return rows[i];
 
-result.push(value);
+        }
 
-return result;
+    }
+
+    return null;
 
 }
 // ------------------------------------------------------
 // CHAMPION
 // ------------------------------------------------------
 
-function renderChampion(rows){
+function renderChampion(rows) {
 
-const totalRow = rows.find(row=>
+    const totalRow = getTotalRow(rows);
 
-(row[""] || row.TEAM || "").trim().toUpperCase()=="TOTAL"
+    if (!totalRow) {
 
-);
+        document.getElementById("champion").innerHTML =
+            "<h2>🏆 No Data</h2>";
 
-if(!totalRow){
+        return;
 
-document.getElementById("champion").innerHTML="🏆 No Data";
+    }
 
-return;
+    const header = rows[0];
+
+    const teams = [];
+
+    // Column 1 മുതൽ അവസാനത്തേതിന് മുമ്പ് വരെ
+    // (അവസാന column GRAND TOTAL ആണെങ്കിൽ അത് ഒഴിവാക്കും)
+
+    const lastTeamColumn = totalRow.length - 1;
+
+    for (let i = 1; i < lastTeamColumn; i++) {
+
+        teams.push({
+
+            name: (header[i] || ("TEAM " + i)).trim(),
+
+            points: Number(totalRow[i]) || 0
+
+        });
+
+    }
+
+    teams.sort((a, b) => b.points - a.points);
+
+    const champion = teams[0];
+
+    document.getElementById("champion").innerHTML = `
+
+        <h2>🏆 OVERALL CHAMPION</h2>
+
+        <h3>TEAM ${champion.name}</h3>
+
+        <p>${champion.points} POINTS</p>
+
+    `;
 
 }
 
-const teams=[
-
-{name:"A",points:Number(totalRow.A||0)},
-
-{name:"B",points:Number(totalRow.B||0)},
-
-{name:"C",points:Number(totalRow.C||0)}
-
-];
-
-teams.sort((a,b)=>b.points-a.points);
-
-const champion=teams[0];
-
-document.getElementById("champion").innerHTML=`
-
-<h2>🏆 OVERALL CHAMPION</h2>
-
-<h3>TEAM ${champion.name}</h3>
-
-<p>${champion.points} POINTS</p>
-
-`;
-
-}
 
 
 // ------------------------------------------------------
 // LIVE TEAM RANKING
 // ------------------------------------------------------
 
-function renderRanking(rows){
+function renderRanking(rows) {
 
-const totalRow = rows.find(row=>
+    const totalRow = getTotalRow(rows);
 
-(row[""] || row.TEAM || "").trim().toUpperCase()=="TOTAL"
+    if (!totalRow) {
 
-);
+        document.getElementById("ranking").innerHTML =
+            '<div class="waiting">No Ranking Available</div>';
 
-if(!totalRow){
+        return;
 
-document.getElementById("ranking").innerHTML=
-'<div class="waiting">No ranking available.</div>';
+    }
 
-return;
+    const header = rows[0];
 
-}
+    const ranking = [];
 
-const ranking=[
+    const lastTeamColumn = totalRow.length - 1;
 
-{name:"A",points:Number(totalRow.A||0)},
+    for (let i = 1; i < lastTeamColumn; i++) {
 
-{name:"B",points:Number(totalRow.B||0)},
+        ranking.push({
 
-{name:"C",points:Number(totalRow.C||0)}
+            name: (header[i] || ("TEAM " + i)).trim(),
 
-].sort((a,b)=>b.points-a.points);
+            points: Number(totalRow[i]) || 0
 
-const medals=["🥇","🥈","🥉"];
+        });
 
-let html="";
+    }
 
-ranking.forEach((team,index)=>{
+    ranking.sort((a, b) => b.points - a.points);
 
-html+=`
+    const medals = ["🥇", "🥈", "🥉"];
 
-<div class="rank">
+    let html = "";
 
-<span>${medals[index]} TEAM ${team.name}</span>
+    ranking.forEach((team, index) => {
 
-<span>${team.points}</span>
+        html += `
 
-</div>
+            <div class="rank">
 
-`;
+                <span>${medals[index]} TEAM ${team.name}</span>
 
-});
+                <span>${team.points}</span>
 
-document.getElementById("ranking").innerHTML=html;
+            </div>
+
+        `;
+
+    });
+
+    document.getElementById("ranking").innerHTML = html;
 
 }
 // ------------------------------------------------------
 // GRAND TOTAL TABLE
 // ------------------------------------------------------
 
-function renderTable(rows){
+function renderTable(rows) {
 
-if(rows.length===0){
+    if (rows.length < 2) {
 
-document.getElementById("pointTable").innerHTML=
-'<div class="waiting">No data available.</div>';
+        document.getElementById("pointTable").innerHTML =
+            '<div class="waiting">No data available.</div>';
 
-return;
+        return;
 
-}
+    }
 
-let html=`
+    const header = rows[0];
 
-<table>
+    let html = `
+        <table>
+            <tr>
+                <th>${header[0] || "Category"}</th>
+    `;
 
-<tr>
+    // അവസാന GRAND TOTAL column ഒഴിവാക്കി Team columns മാത്രം
+    const lastTeamColumn = header.length - 1;
 
-<th>Category</th>
+    for (let i = 1; i < lastTeamColumn; i++) {
 
-<th>A</th>
+        html += `<th>${header[i]}</th>`;
 
-<th>B</th>
+    }
 
-<th>C</th>
+    html += `
+            </tr>
+    `;
 
-</tr>
+    for (let r = 1; r < rows.length; r++) {
 
-`;
+        const row = rows[r];
 
-rows.forEach(row=>{
+        const category = (row[0] || "").trim();
 
-const category = row[""] || row.TEAM || "";
+        const isTotal = category.toUpperCase() === "TOTAL";
 
-const isTotal = category.trim().toUpperCase()=="TOTAL";
+        html += `
+            <tr ${isTotal ? 'style="background:#FFF8E1;font-weight:bold;"' : ""}>
+                <td><b>${category}</b></td>
+        `;
 
-html+=`
+        for (let c = 1; c < lastTeamColumn; c++) {
 
-<tr ${isTotal ? 'style="background:#FFF8E1;font-weight:bold;"' : ""}>
+            html += `<td>${row[c] || 0}</td>`;
 
-<td><b>${category}</b></td>
+        }
 
-<td>${row.A || 0}</td>
+        html += `
+            </tr>
+        `;
 
-<td>${row.B || 0}</td>
+    }
 
-<td>${row.C || 0}</td>
+    html += `
+        </table>
+    `;
 
-</tr>
-
-`;
-
-});
-
-html+=`
-
-</table>
-
-`;
-
-document.getElementById("pointTable").innerHTML=html;
+    document.getElementById("pointTable").innerHTML = html;
 
 }
 
 
 // ------------------------------------------------------
-// AUTO REFRESH
+// END
 // ------------------------------------------------------
-
-setInterval(loadResults,10000);
