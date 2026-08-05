@@ -6,7 +6,7 @@
 
 
 // ------------------------------------------------------
-// CSV URL
+// GOOGLE SHEET CSV
 // ------------------------------------------------------
 
 const CSV_URL =
@@ -14,21 +14,12 @@ const CSV_URL =
 
 
 // ------------------------------------------------------
-// GLOBAL
-// ------------------------------------------------------
-
-let contestants = [];
-
-
-// ------------------------------------------------------
 // START
 // ------------------------------------------------------
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded",()=>{
 
-    loadResults();
-
-    setInterval(loadResults,10000);
+loadResults();
 
 });
 
@@ -39,39 +30,76 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function loadResults(){
 
-    try{
+try{
 
-        const response = await fetch(
+const response=await fetch(
 
-            CSV_URL + "&t=" + Date.now(),
+CSV_URL+"&t="+Date.now(),
 
-            {
+{
 
-                cache:"no-store"
+cache:"no-store"
 
-            }
+}
 
-        );
+);
 
-        if(!response.ok){
+if(!response.ok){
 
-            throw new Error("Unable to load CSV");
+throw new Error("Unable to load CSV");
 
-        }
+}
 
-        const csv = await response.text();
+const csv=await response.text();
 
-        contestants = parseCSV(csv);
+const rows=parseCSV(csv);
 
-        prepareData();
+const contestants=rows
+.filter(r=>(r.NAME||"").trim()!="")
+.map(r=>({
 
-    }
+chest:r.CHEST,
 
-    catch(error){
+name:r.NAME,
 
-        console.error(error);
+team:r.TEAM,
 
-    }
+category:r.CATEGORY,
+
+gold:Number(r.GOLD||0),
+
+silver:Number(r.SILVER||0),
+
+bronze:Number(r.BRONZE||0),
+
+points:Number(r["TOTAL POINTS"]||0)
+
+}))
+.sort((a,b)=>b.points-a.points);
+
+renderOverall(contestants);
+
+renderCategory(contestants);
+
+renderTop10(contestants);
+
+}catch(error){
+
+console.error(error);
+
+document.getElementById("overallHero").innerHTML=
+
+'<div class="waiting">Unable to load.</div>';
+
+document.getElementById("categoryCards").innerHTML=
+
+'<div class="waiting">Unable to load.</div>';
+
+document.getElementById("top10Container").innerHTML=
+
+'<div class="waiting">Unable to load.</div>';
+
+}
 
 }
 
@@ -82,59 +110,35 @@ async function loadResults(){
 
 function parseCSV(csv){
 
-    const lines = csv.trim().split(/\r?\n/);
+const lines=csv.trim().split(/\r?\n/);
 
-    if(lines.length<=1){
+const headers=splitCSV(lines[0]);
 
-        return [];
+const data=[];
 
-    }
+for(let i=1;i<lines.length;i++){
 
-    const headers = splitCSV(lines[0]);
+if(!lines[i].trim()) continue;
 
-    const data=[];
+const values=splitCSV(lines[i]);
 
-    for(let i=1;i<lines.length;i++){
+let row={};
 
-        if(!lines[i].trim()){
+headers.forEach((header,index)=>{
 
-            continue;
+row[header.trim()]=values[index]
 
-        }
+? values[index].trim()
 
-        const values = splitCSV(lines[i]);
+: "";
 
-        let row={};
+});
 
-        headers.forEach((header,index)=>{
+data.push(row);
 
-            row[header.trim()] =
+}
 
-            values[index]
-
-            ? values[index].trim()
-
-            : "";
-
-        });
-
-        if(
-
-            row["CHEST"]==="" ||
-
-            row["NAME"]===""
-
-        ){
-
-            continue;
-
-        }
-
-        data.push(row);
-
-    }
-
-    return data;
+return data;
 
 }
 
@@ -145,419 +149,291 @@ function parseCSV(csv){
 
 function splitCSV(line){
 
-    const result=[];
+const result=[];
 
-    let value="";
+let value="";
 
-    let insideQuotes=false;
+let insideQuotes=false;
 
-    for(let i=0;i<line.length;i++){
+for(let i=0;i<line.length;i++){
 
-        const char=line[i];
+const char=line[i];
 
-        if(char=='"'){
+if(char=='"'){
 
-            insideQuotes=!insideQuotes;
+insideQuotes=!insideQuotes;
 
-            continue;
+continue;
 
-        }
+}
 
-        if(char=="," && !insideQuotes){
+if(char==","&&!insideQuotes){
 
-            result.push(value);
+result.push(value);
 
-            value="";
+value="";
 
-        }
+}else{
 
-        else{
+value+=char;
 
-            value+=char;
+}
 
-        }
+}
 
-    }
+result.push(value);
 
-    result.push(value);
+return result;
 
-    return result;
+}
+// ------------------------------------------------------
+// OVERALL KALAPRATHIBHA
+// ------------------------------------------------------
+
+function renderOverall(contestants){
+
+if(contestants.length===0){
+
+document.getElementById("overallHero").innerHTML=
+'<div class="waiting">No Data</div>';
+
+return;
+
+}
+
+const winner=contestants[0];
+
+document.getElementById("overallHero").innerHTML=`
+
+<div class="icon">👑</div>
+
+<h2>OVERALL KALAPRATHIBHA</h2>
+
+<div class="name">
+
+${winner.name}
+
+</div>
+
+<div class="team">
+
+TEAM ${winner.team}
+
+</div>
+
+<div class="points">
+
+🏅 ${winner.points} POINTS
+
+</div>
+
+<div class="medals">
+
+<span>🥇 ${winner.gold}</span>
+
+<span>🥈 ${winner.silver}</span>
+
+<span>🥉 ${winner.bronze}</span>
+
+</div>
+
+`;
 
 }
 
 
-// ------------------------------------------------------
-// NUMBER
-// ------------------------------------------------------
-
-function num(value){
-
-    return Number(value)||0;
-
-}
-
 
 // ------------------------------------------------------
-// SORT
+// CATEGORY TOPPERS
 // ------------------------------------------------------
 
-function sortByPoints(list){
+function renderCategory(contestants){
 
-    return list.sort((a,b)=>{
+const categories=[
 
-        return num(b["TOTAL POINTS"])
+"SUB JUNIOR",
 
-        -
+"SENIOR",
 
-        num(a["TOTAL POINTS"]);
+"SUPER SENIOR"
 
-    });
+];
 
-}
+let html="";
 
+categories.forEach(category=>{
 
-// ------------------------------------------------------
-// CATEGORY
-// ------------------------------------------------------
+const players=contestants
 
-function getCategory(category){
+.filter(c=>c.category===category)
 
-    return contestants.filter(row=>{
+.sort((a,b)=>b.points-a.points);
 
-        return (
+if(players.length===0) return;
 
-            row["CATEGORY"]
+const winner=players[0];
 
-            .trim()
+html+=`
 
-            .toUpperCase()
+<div class="category-card">
 
-            ===
+<div class="category-title">
 
-            category
+${category}
 
-        );
+</div>
 
-    });
+<div class="winner-name">
 
-}
+${winner.name}
 
+</div>
 
-// ------------------------------------------------------
-// NEXT PART
-// ------------------------------------------------------
+<div style="text-align:center;">
 
-function prepareData(){
+<span class="team-badge">
 
-    // PART 2
+TEAM ${winner.team}
 
-}
-// ------------------------------------------------------
-// PREPARE DATA
-// ------------------------------------------------------
+</span>
 
-function prepareData(){
+</div>
 
-    contestants = contestants.filter(row=>{
+<div class="total-points">
 
-        return num(row["TOTAL POINTS"])>0 ||
+🏅 ${winner.points} POINTS
 
-               num(row["GOLD"])>0 ||
+</div>
 
-               num(row["SILVER"])>0 ||
+<div class="medal-count">
 
-               num(row["BRONZE"])>0;
+<span>🥇 ${winner.gold}</span>
 
-    });
+<span>🥈 ${winner.silver}</span>
 
-    contestants = sortByPoints(contestants);
+<span>🥉 ${winner.bronze}</span>
 
-    renderOverall();
+</div>
 
-    renderCategory("SUB JUNIOR","sj");
+<div class="top3">
 
-    renderCategory("SENIOR","senior");
+`;
 
-    renderCategory("SUPER SENIOR","ss");
+players.slice(0,3).forEach((player,index)=>{
 
-    renderTop10();
+const medal=["🥇","🥈","🥉"];
 
-}
+html+=`
 
+<div class="top3-row">
 
-// ------------------------------------------------------
-// OVERALL HERO
-// ------------------------------------------------------
+<div class="rank-name">
 
-function renderOverall(){
+${medal[index]}
 
-    if(contestants.length===0){
+${player.name}
 
-        return;
+</div>
 
-    }
+<div class="rank-points">
 
-    const winner = contestants[0];
+${player.points} Points
 
-    document.getElementById("overallName").textContent =
-    winner["NAME"];
+</div>
 
-    document.getElementById("overallTeam").textContent =
-    "TEAM " + winner["TEAM"];
+</div>
 
-    document.getElementById("overallPoints").textContent =
-    "🏅 " + winner["TOTAL POINTS"] + " POINTS";
+`;
 
-    document.getElementById("overallGold").textContent =
-    "🥇 " + num(winner["GOLD"]);
+});
 
-    document.getElementById("overallSilver").textContent =
-    "🥈 " + num(winner["SILVER"]);
+html+=`
 
-    document.getElementById("overallBronze").textContent =
-    "🥉 " + num(winner["BRONZE"]);
+</div>
 
-}
+</div>
 
+`;
 
-// ------------------------------------------------------
-// CATEGORY
-// ------------------------------------------------------
+});
 
-function renderCategory(category,prefix){
-
-    let list = getCategory(category);
-
-    list = sortByPoints(list);
-
-    if(list.length===0){
-
-        return;
-
-    }
-
-    const winner = list[0];
-
-    document.getElementById(prefix+"WinnerName").textContent =
-    winner["NAME"];
-
-    document.getElementById(prefix+"WinnerTeam").textContent =
-    "TEAM " + winner["TEAM"];
-
-    document.getElementById(prefix+"WinnerPoints").textContent =
-    "🏅 " + winner["TOTAL POINTS"] + " POINTS";
-
-    document.getElementById(prefix+"Gold").textContent =
-    "🥇 " + num(winner["GOLD"]);
-
-    document.getElementById(prefix+"Silver").textContent =
-    "🥈 " + num(winner["SILVER"]);
-
-    document.getElementById(prefix+"Bronze").textContent =
-    "🥉 " + num(winner["BRONZE"]);
-
-    renderTop3(list,prefix);
-
-}// ------------------------------------------------------
-// CATEGORY TOP 3
-// ------------------------------------------------------
-
-function renderTop3(list,prefix){
-
-    for(let i=0;i<3;i++){
-
-        const item = list[i];
-
-        if(!item){
-
-            document.getElementById(prefix+"Top"+(i+1)+"Name").textContent="-";
-
-            document.getElementById(prefix+"Top"+(i+1)+"Points").textContent="0 Points";
-
-            continue;
-
-        }
-
-        document.getElementById(prefix+"Top"+(i+1)+"Name").textContent=
-        item["NAME"];
-
-        document.getElementById(prefix+"Top"+(i+1)+"Points").textContent=
-        item["TOTAL POINTS"]+" Points";
-
-    }
-
-}
-
-
-// ------------------------------------------------------
-// OVERALL TOP 10
-// ------------------------------------------------------
-
-function renderTop10(){
-
-    let list=[...contestants];
-
-    list=sortByPoints(list);
-
-    for(let i=0;i<10;i++){
-
-        const item=list[i];
-
-        if(!item){
-
-            document.getElementById("top"+(i+1)+"Name").textContent="-";
-
-            document.getElementById("top"+(i+1)+"Team").textContent="-";
-
-            document.getElementById("top"+(i+1)+"Points").textContent="0 Points";
-
-            continue;
-
-        }
-
-        document.getElementById("top"+(i+1)+"Name").textContent=
-        item["NAME"];
-
-        document.getElementById("top"+(i+1)+"Team").textContent=
-        "TEAM "+item["TEAM"];
-
-        document.getElementById("top"+(i+1)+"Points").textContent=
-        item["TOTAL POINTS"]+" Points";
-
-    }
+document.getElementById("categoryCards").innerHTML=html;
 
 }
 // ------------------------------------------------------
-// BETTER SORT
+// TOP 10 OVERALL
 // ------------------------------------------------------
 
-function sortByPoints(list){
+function renderTop10(contestants){
 
-    return list.sort((a,b)=>{
+const top10=contestants.slice(0,10);
 
-        const pointDiff =
-            num(b["TOTAL POINTS"]) -
-            num(a["TOTAL POINTS"]);
+let html="";
 
-        if(pointDiff!==0){
+top10.forEach((player,index)=>{
 
-            return pointDiff;
+let medal="";
 
-        }
+if(index===0){
 
-        const goldDiff =
-            num(b["GOLD"]) -
-            num(a["GOLD"]);
+medal="🥇";
 
-        if(goldDiff!==0){
+}else if(index===1){
 
-            return goldDiff;
+medal="🥈";
 
-        }
+}else if(index===2){
 
-        const silverDiff =
-            num(b["SILVER"]) -
-            num(a["SILVER"]);
+medal="🥉";
 
-        if(silverDiff!==0){
+}else{
 
-            return silverDiff;
-
-        }
-
-        const bronzeDiff =
-            num(b["BRONZE"]) -
-            num(a["BRONZE"]);
-
-        if(bronzeDiff!==0){
-
-            return bronzeDiff;
-
-        }
-
-        return String(a["NAME"]).localeCompare(String(b["NAME"]));
-
-    });
+medal=(index+1)+"th";
 
 }
 
+html+=`
 
-// ------------------------------------------------------
-// SAFE TEXT
-// ------------------------------------------------------
+<div class="top10-card">
 
-function setText(id,value){
+<div class="top10-rank">
 
-    const element=document.getElementById(id);
+${medal}
 
-    if(element){
+</div>
 
-        element.textContent=value;
+<div class="top10-name">
 
-    }
+${player.name}
 
-}
+</div>
 
+<div class="top10-team">
 
-// ------------------------------------------------------
-// SAFE HTML
-// ------------------------------------------------------
+TEAM ${player.team}
 
-function setHTML(id,value){
+</div>
 
-    const element=document.getElementById(id);
+<div class="top10-points">
 
-    if(element){
+🏅 ${player.points} POINTS
 
-        element.innerHTML=value;
+</div>
 
-    }
+</div>
 
-}
+`;
 
+});
 
-// ------------------------------------------------------
-// RELOAD
-// ------------------------------------------------------
-
-function reload(){
-
-    loadResults();
+document.getElementById("top10Container").innerHTML=html;
 
 }
+
 
 
 // ------------------------------------------------------
 // AUTO REFRESH
 // ------------------------------------------------------
 
-setInterval(reload,10000);
-
-
-// ------------------------------------------------------
-// WINDOW ERROR
-// ------------------------------------------------------
-
-window.addEventListener("error",function(error){
-
-    console.error(error);
-
-});
-
-
-// ------------------------------------------------------
-// UNHANDLED PROMISE
-// ------------------------------------------------------
-
-window.addEventListener("unhandledrejection",function(error){
-
-    console.error(error);
-
-});
-
-
-// ------------------------------------------------------
-// END
-// ------------------------------------------------------
-
-console.log("Kalaprathibha Loaded");
+setInterval(loadResults,10000);
