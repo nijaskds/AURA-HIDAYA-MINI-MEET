@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Committee | AURA MINI MEET 2026</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+
+background:
+linear-gradient(rgba(7,26,52,.94),rgba(13,59,114,.94)),
+url("background.jpg");
+
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
+
+min-height:100vh;
+
+padding:25px 18px 45px;
+
+color:white;
+
+}
+
+.container{
+
+width:100%;
+max-width:1200px;
+margin:auto;
+
+}
+
+.header{
+
+text-align:center;
+margin-bottom:35px;
+
+}
+
+.header h1{
+
+font-size:48px;
+letter-spacing:3px;
+color:#FFD54F;
+
+text-shadow:0 3px 12px rgba(0,0,0,.35);
+
+margin-bottom:10px;
+
+}
+
+.header p{
+
+font-size:18px;
+color:#ddd;
+
+}
+
+.divider{
+
+width:90px;
+height:4px;
+
+background:#FFD54F;
+
+border-radius:50px;
+
+margin:20px auto 0;
+
+box-shadow:0 0 15px rgba(255,215,79,.35);
+
+}
+
+
+/* =========================
+   COMMITTEE GRID
+========================= */
+
+.committee-grid{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:28px;
+
+}
+
+
+/* =========================
+   COMMITTEE CARD
+========================= */
+
+.committee-card{
+
+background:rgba(255,255,255,.07);
+
+border:1px solid rgba(255,255,255,.13);
+
+border-radius:24px;
+
+padding:12px;
+
+box-shadow:
+0 12px 35px rgba(0,0,0,.30),
+inset 0 1px 0 rgba(255,255,255,.08);
+
+backdrop-filter:blur(10px);
+
+transition:.35s;
+
+cursor:pointer;
+
+}
+
+.committee-card:hover{
+
+transform:translateY(-6px);
+
+border-color:#FFD54F;
+
+box-shadow:
+0 18px 40px rgba(0,0,0,.35),
+0 0 25px rgba(255,215,79,.12);
+
+}
+
+.committee-card img{
+
+display:block;
+
+width:100%;
+
+height:auto;
+
+border-radius:17px;
+
+}
+
+
+/* =========================
+   IMAGE VIEWER
+========================= */
+
+.viewer{
+
+display:none;
+
+position:fixed;
+
+z-index:9999;
+
+left:0;
+top:0;
+
+width:100%;
+height:100%;
+
+background:rgba(0,0,0,.92);
+
+align-items:center;
+justify-content:center;
+
+padding:20px;
+
+}
+
+.viewer img{
+
+max-width:95%;
+max-height:90vh;
+
+object-fit:contain;
+
+border-radius:12px;
+
+box-shadow:0 10px 50px rgba(0,0,0,.7);
+
+}
+
+.close{
+
+position:absolute;
+
+top:20px;
+right:25px;
+
+font-size:42px;
+
+color:white;
+
+cursor:pointer;
+
+font-weight:300;
+
+line-height:1;
+
+}
+
+.close:hover{
+
+color:#FFD54F;
+
+}
+
+
+/* =========================
+   HOME BUTTON
+========================= */
+
+.home-box{
+
+text-align:center;
+
+margin-top:40px;
+
+}
+
+.back{
+
+display:inline-flex;
+
+align-items:center;
+justify-content:center;
+
+padding:14px 34px;
+
+border-radius:35px;
+
+text-decoration:none;
+
+font-size:18px;
+
+font-weight:700;
+
+background:rgba(255,255,255,.10);
+
+color:white;
+
+border:1px solid rgba(255,255,255,.15);
+
+backdrop-filter:blur(10px);
+
+transition:.3s;
+
+}
+
+.back:hover{
+
+background:#FFD54F;
+
+color:#222;
+
+transform:translateY(-3px);
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:700px){
+
+body{
+
+padding:20px 12px 35px;
+
+}
+
+.header h1{
+
+font-size:36px;
+
+}
+
+.header p{
+
+font-size:16px;
+
+}
+
+.committee-grid{
+
+grid-template-columns:1fr;
+
+gap:22px;
+
+}
+
+.committee-card{
+
+padding:8px;
+
+border-radius:20px;
+
+}
+
+.committee-card img{
+
+border-radius:14px;
+
+}
+
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media(max-width:400px){
+
+.header h1{
+
+font-size:32px;
+
+}
+
+.back{
+
+font-size:16px;
+
+padding:13px 30px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<div class="header">
+
+<h1>👥 COMMITTEE</h1>
+
+<p>AURA MINI MEET 2026</p>
+
+<div class="divider"></div>
+
+</div>
+
+
+<!-- =========================
+     COMMITTEE PHOTOS
+========================= -->
+
+<div class="committee-grid">
+
+
+<!-- 1. ADVISORY -->
+
+<div class="committee-card"
+onclick="openViewer('advisory.jpeg')">
+
+<img
+src="advisory.jpeg"
+alt="Advisory Board">
+
+</div>
+
+
+<!-- 2. STAFF -->
+
+<div class="committee-card"
+onclick="openViewer('staff.jpeg')">
+
+<img
+src="staff.jpeg"
+alt="Staff Controllers">
+
+</div>
+
+
+<!-- 3. STUDENT -->
+
+<div class="committee-card"
+onclick="openViewer('student.jpeg')">
+
+<img
+src="student.jpeg"
+alt="Student Controllers">
+
+</div>
+
+
+<!-- 4. MEDIA -->
+
+<div class="committee-card"
+onclick="openViewer('media.jpeg')">
+
+<img
+src="media.jpeg"
+alt="Team Media">
+
+</div>
+
+
+</div>
+
+
+<!-- =========================
+     HOME
+========================= -->
+
+<div class="home-box">
+
+<a href="index.html" class="back">
+
+⌂ Home
+
+</a>
+
+</div>
+
+
+</div>
+
+
+<!-- =========================
+     IMAGE VIEWER
+========================= -->
+
+<div class="viewer"
+id="viewer"
+onclick="closeViewer()">
+
+<span class="close"
+onclick="closeViewer()">
+
+&times;
+
+</span>
+
+<img
+id="viewerImage"
+src=""
+alt="Committee">
+
+</div>
+
+
+<script>
+
+function openViewer(image){
+
+document.getElementById("viewerImage").src = image;
+
+document.getElementById("viewer").style.display = "flex";
+
+}
+
+
+function closeViewer(){
+
+document.getElementById("viewer").style.display = "none";
+
+document.getElementById("viewerImage").src = "";
+
+}
+
+
+document.addEventListener("keydown",function(event){
+
+if(event.key === "Escape"){
+
+closeViewer();
+
+}
+
+});
+
+</script>
+
+
+</body>
+
+</html>
