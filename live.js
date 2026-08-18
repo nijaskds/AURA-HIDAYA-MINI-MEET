@@ -501,7 +501,7 @@ document.getElementById("kalaprathibhaContainer").innerHTML = html;
 
 // ------------------------------------------------------
 // LIVE TEAM SCORE
-// NEW GRAND TOTAL STRUCTURE
+// GRAND TOTAL SHEET
 // ------------------------------------------------------
 
 function renderTeamScore(rows){
@@ -516,9 +516,9 @@ return;
 }
 
 
-// ----------------------------------------------
+// ------------------------------------------------------
 // FIND TOTAL ROW
-// ----------------------------------------------
+// ------------------------------------------------------
 
 const totalRow = rows.find(row => {
 
@@ -550,88 +550,147 @@ return;
 }
 
 
-// ----------------------------------------------
-// GET TEAM SCORES
-// ----------------------------------------------
+// ------------------------------------------------------
+// GET TEAM NAMES FROM CSV HEADER
+// ------------------------------------------------------
 //
-// New Sheet:
+// Sheet:
 //
-//        A    B    C
-// TOTAL  57   56   31
+// A1 = blank
+// B1 = A
+// C1 = B
+// D1 = C
+// E1 = D
 //
-// ----------------------------------------------
+// parseCSV creates:
+//
+// row["A"]
+// row["B"]
+// row["C"]
+// row["D"]
+//
+// ------------------------------------------------------
 
-const values = Object.values(totalRow);
-
-
-// Remove the "TOTAL" text
-
-const scoreValues = values.filter(value => {
-
-return String(value)
-.trim()
-.toUpperCase() !== "TOTAL";
-
-});
+const teamNames = [];
 
 
-// ----------------------------------------------
-// TEAM NAMES
-// ----------------------------------------------
+// Team A
 
-const teams = [
+if(totalRow["A"] !== undefined){
 
-{
+teamNames.push({
 
 name:"A",
 
-score:Number(scoreValues[0] || 0),
+score:Number(totalRow["A"]) || 0
 
-medal:"🥇"
-
-},
-
-{
-
-name:"B",
-
-score:Number(scoreValues[1] || 0),
-
-medal:"🥈"
-
-},
-
-{
-
-name:"C",
-
-score:Number(scoreValues[2] || 0),
-
-medal:"🥉"
+});
 
 }
 
-];
+
+// Team B
+
+if(totalRow["B"] !== undefined){
+
+teamNames.push({
+
+name:"B",
+
+score:Number(totalRow["B"]) || 0
+
+});
+
+}
 
 
-// ----------------------------------------------
+// Team C
+
+if(totalRow["C"] !== undefined){
+
+teamNames.push({
+
+name:"C",
+
+score:Number(totalRow["C"]) || 0
+
+});
+
+}
+
+
+// Team D
+
+if(totalRow["D"] !== undefined){
+
+teamNames.push({
+
+name:"D",
+
+score:Number(totalRow["D"]) || 0
+
+});
+
+}
+
+
+// ------------------------------------------------------
+// CHECK
+// ------------------------------------------------------
+
+if(teamNames.length === 0){
+
+container.innerHTML = `
+
+<div class="waiting">
+
+No Team Score Available
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+// ------------------------------------------------------
 // SORT BY SCORE
-// ----------------------------------------------
+// ------------------------------------------------------
 
-teams.sort((a,b) => {
+teamNames.sort((a,b)=>{
 
 return b.score - a.score;
 
 });
 
 
-// ----------------------------------------------
-// CREATE HTML
-// ----------------------------------------------
+// ------------------------------------------------------
+// MEDALS
+// ------------------------------------------------------
+
+const medals = [
+
+"🥇",
+
+"🥈",
+
+"🥉",
+
+"🏅"
+
+];
+
+
+// ------------------------------------------------------
+// CREATE SCOREBOARD
+// ------------------------------------------------------
 
 let html = "";
 
-teams.forEach(team => {
+
+teamNames.forEach((team,index)=>{
 
 html += `
 
@@ -642,7 +701,9 @@ font-size:20px;
 font-weight:700;
 ">
 
-${team.medal} TEAM ${team.name}
+${medals[index] || "🏅"}
+
+TEAM ${escapeHTML(team.name)}
 
 </span>
 
@@ -662,9 +723,9 @@ ${team.score}
 });
 
 
-// ----------------------------------------------
-// SHOW RESULT
-// ----------------------------------------------
+// ------------------------------------------------------
+// DISPLAY
+// ------------------------------------------------------
 
 container.innerHTML = html;
 
