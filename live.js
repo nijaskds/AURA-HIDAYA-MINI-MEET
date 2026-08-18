@@ -1,7 +1,7 @@
 // ======================================================
 // AURA MINI MEET 2026
 // LIVE RESULTS
-// PART 1
+// FINAL VERSION
 // ======================================================
 
 
@@ -23,7 +23,7 @@ const GRANDTOTAL_URL =
 // START
 // ------------------------------------------------------
 
-document.addEventListener("DOMContentLoaded",()=>{
+document.addEventListener("DOMContentLoaded", () => {
 
 loadLivePage();
 
@@ -38,25 +38,36 @@ async function loadLivePage(){
 
 try{
 
-const [
+const responses = await Promise.all([
 
-eventCsv,
-candidateCsv,
-grandCsv
+fetch(EVENT_URL + "&t=" + Date.now()),
 
-]=await Promise.all([
+fetch(CANDIDATE_URL + "&t=" + Date.now()),
 
-fetch(EVENT_URL).then(r=>r.text()),
-fetch(CANDIDATE_URL).then(r=>r.text()),
-fetch(GRANDTOTAL_URL).then(r=>r.text())
+fetch(GRANDTOTAL_URL + "&t=" + Date.now())
 
 ]);
 
-const events=parseCSV(eventCsv);
+if(!responses[0].ok || !responses[1].ok || !responses[2].ok){
 
-const candidates=parseCSV(candidateCsv);
+throw new Error("Google Sheet data could not be loaded.");
 
-const grand=parseCSV(grandCsv);
+}
+
+const eventCsv = await responses[0].text();
+
+const candidateCsv = await responses[1].text();
+
+const grandCsv = await responses[2].text();
+
+const events = parseCSV(eventCsv);
+
+const candidates = parseCSV(candidateCsv);
+
+const grand = parseCSV(grandCsv);
+
+
+// Render
 
 renderLiveResults(events);
 
@@ -64,9 +75,12 @@ renderKalaprathibha(candidates);
 
 renderTeamScore(grand);
 
+
 }catch(error){
 
-console.error(error);
+console.error("LIVE PAGE ERROR:", error);
+
+showError();
 
 }
 
@@ -79,21 +93,41 @@ console.error(error);
 
 function parseCSV(csv){
 
-const lines=csv.trim().split(/\r?\n/);
+if(!csv || !csv.trim()){
 
-const headers=splitCSV(lines[0]);
+return [];
 
-const data=[];
+}
 
-for(let i=1;i<lines.length;i++){
+const lines = csv
+.trim()
+.split(/\r?\n/)
+.filter(line => line.trim() !== "");
 
-const values=splitCSV(lines[i]);
+if(lines.length < 2){
 
-let row={};
+return [];
 
-headers.forEach((header,index)=>{
+}
 
-row[header.trim()]=values[index] ? values[index].trim() : "";
+const headers = splitCSV(lines[0]).map(header =>
+header.trim().replace(/^"|"$/g,"")
+);
+
+const data = [];
+
+for(let i = 1; i < lines.length; i++){
+
+const values = splitCSV(lines[i]);
+
+const row = {};
+
+headers.forEach((header,index) => {
+
+row[header] =
+values[index] !== undefined
+? values[index].trim()
+: "";
 
 });
 
@@ -107,38 +141,48 @@ return data;
 
 
 // ------------------------------------------------------
-// SPLIT CSV
+// SAFE CSV SPLITTER
 // ------------------------------------------------------
 
 function splitCSV(line){
 
-const result=[];
+const result = [];
 
-let value="";
+let value = "";
 
-let inside=false;
+let insideQuotes = false;
 
-for(let i=0;i<line.length;i++){
+for(let i = 0; i < line.length; i++){
 
-const char=line[i];
+const char = line[i];
 
-if(char=='"'){
+if(char === '"'){
 
-inside=!inside;
+if(insideQuotes && line[i + 1] === '"'){
 
-continue;
+value += '"';
 
-}
-
-if(char=="," && !inside){
-
-result.push(value);
-
-value="";
+i++;
 
 }else{
 
-value+=char;
+insideQuotes = !insideQuotes;
+
+}
+
+}
+
+else if(char === "," && !insideQuotes){
+
+result.push(value);
+
+value = "";
+
+}
+
+else{
+
+value += char;
 
 }
 
@@ -150,23 +194,53 @@ return result;
 
 }
 
+
+// ------------------------------------------------------
+// ESCAPE HTML
+// ------------------------------------------------------
+
+function escapeHTML(value){
+
+return String(value ?? "")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+
 // ------------------------------------------------------
 // LIVE RESULTS
 // ------------------------------------------------------
 
 function renderLiveResults(rows){
 
-const liveEvents=rows.filter(row=>
+const liveEvents = rows.filter(row => {
 
-(row.STATUS||"").trim()=="PUBLISHED" &&
+const status =
+(row.STATUS || "").trim().toUpperCase();
 
-(row.LIVE||"").trim().toUpperCase()=="LIVE"
+const live =
+(row.LIVE || "").trim().toUpperCase();
 
-);
+return status === "PUBLISHED" && live === "LIVE";
 
-if(liveEvents.length===0){
+});
 
-document.getElementById("liveResults").innerHTML=`
+
+// Latest events first
+
+const latestEvents = liveEvents
+.slice()
+.reverse()
+.slice(0,6);
+
+
+if(latestEvents.length === 0){
+
+document.getElementById("liveResults").innerHTML = `
 
 <div class="waiting">
 
@@ -180,11 +254,39 @@ return;
 
 }
 
-let html="";
 
-liveEvents.reverse().forEach(row=>{
+let html = "";
 
-html+=`
+
+latestEvents.forEach(row => {
+
+const category =
+escapeHTML(row.CATEGORY || "");
+
+const eventName =
+escapeHTML(row.EVENT_NAME || "Event");
+
+
+const firstName =
+escapeHTML(row.FIRST_NAME || "-");
+
+const firstTeam =
+escapeHTML(row.FIRST_TEAM || "");
+
+const secondName =
+escapeHTML(row.SECOND_NAME || "-");
+
+const secondTeam =
+escapeHTML(row.SECOND_TEAM || "");
+
+const thirdName =
+escapeHTML(row.THIRD_NAME || "-");
+
+const thirdTeam =
+escapeHTML(row.THIRD_TEAM || "");
+
+
+html += `
 
 <div class="live-card">
 
@@ -196,59 +298,62 @@ html+=`
 
 <div class="category">
 
-${row.CATEGORY}
+${category}
 
 </div>
 
 <div class="event-name">
 
-${row.EVENT_NAME}
+${eventName}
 
 </div>
+
 
 <div class="result-row">
 
 <span>
 
-🥇 ${row.FIRST_NAME}
+🥇 ${firstName}
 
 </span>
 
 <strong>
 
-${row.FIRST_TEAM}
+${firstTeam}
 
 </strong>
 
 </div>
 
+
 <div class="result-row">
 
 <span>
 
-🥈 ${row.SECOND_NAME}
+🥈 ${secondName}
 
 </span>
 
 <strong>
 
-${row.SECOND_TEAM}
+${secondTeam}
 
 </strong>
 
 </div>
 
+
 <div class="result-row">
 
 <span>
 
-🥉 ${row.THIRD_NAME}
+🥉 ${thirdName}
 
 </span>
 
 <strong>
 
-${row.THIRD_TEAM}
+${thirdTeam}
 
 </strong>
 
@@ -260,9 +365,11 @@ ${row.THIRD_TEAM}
 
 });
 
-document.getElementById("liveResults").innerHTML=html;
+
+document.getElementById("liveResults").innerHTML = html;
 
 }
+
 
 // ------------------------------------------------------
 // CURRENT KALAPRATHIBHA
@@ -270,7 +377,7 @@ document.getElementById("liveResults").innerHTML=html;
 
 function renderKalaprathibha(rows){
 
-const categories=[
+const categories = [
 
 "SUB JUNIOR",
 
@@ -280,21 +387,41 @@ const categories=[
 
 ];
 
-let html="";
 
-categories.forEach(category=>{
+let html = "";
 
-const players=rows
-.filter(r=>(r.CATEGORY||"").trim()==category)
-.sort((a,b)=>
-Number(b["TOTAL POINTS"]||0)-Number(a["TOTAL POINTS"]||0)
+
+categories.forEach(category => {
+
+
+const players = rows
+
+.filter(row =>
+
+(row.CATEGORY || "").trim().toUpperCase()
+=== category
+
+)
+
+.filter(row =>
+
+row.NAME &&
+!isNaN(Number(row["TOTAL POINTS"]))
+
+)
+
+.sort((a,b) =>
+
+Number(b["TOTAL POINTS"] || 0)
+-
+Number(a["TOTAL POINTS"] || 0)
+
 );
 
-if(players.length===0) return;
 
-const winner=players[0];
+if(players.length === 0){
 
-html+=`
+html += `
 
 <div class="info-card">
 
@@ -306,41 +433,9 @@ ${category}
 
 <div class="info-name">
 
-${winner.NAME}
+No Result
 
 </div>
-
-<div class="info-points">
-
-🏅 ${winner["TOTAL POINTS"]} Points
-
-</div>
-
-</div>
-
-`;
-
-});
-
-document.getElementById("kalaprathibhaContainer").innerHTML=html;
-
-}
-
-
-
-// ------------------------------------------------------
-// LIVE TEAM SCORE
-// ------------------------------------------------------
-
-function renderTeamScore(rows){
-
-if(rows.length===0){
-
-document.getElementById("teamScoreContainer").innerHTML=`
-
-<div class="waiting">
-
-No Team Score
 
 </div>
 
@@ -350,25 +445,157 @@ return;
 
 }
 
-let html="";
 
-const medals=["🥇","🥈","🥉"];
+const winner = players[0];
 
-rows.forEach((row,index)=>{
 
-html+=`
+const name =
+escapeHTML(winner.NAME);
+
+const team =
+escapeHTML(winner.TEAM || "");
+
+const points =
+Number(winner["TOTAL POINTS"] || 0);
+
+
+html += `
+
+<div class="info-card">
+
+<div class="info-title">
+
+${category}
+
+</div>
+
+<div class="info-name">
+
+${name}
+
+</div>
+
+<div style="margin-bottom:10px;font-size:16px;color:#ddd;font-weight:600;">
+
+TEAM ${team}
+
+</div>
+
+<div class="info-points">
+
+🏅 ${points} Points
+
+</div>
+
+</div>
+
+`;
+
+});
+
+
+document.getElementById("kalaprathibhaContainer").innerHTML = html;
+
+}
+
+
+// ------------------------------------------------------
+// LIVE TEAM SCORE
+// ------------------------------------------------------
+
+function renderTeamScore(rows){
+
+if(!rows || rows.length === 0){
+
+document.getElementById("teamScoreContainer").innerHTML = `
+
+<div class="waiting">
+
+No Team Score Available
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+const teams = rows
+
+.filter(row =>
+
+row.TEAM &&
+!isNaN(Number(row.TOTAL))
+
+)
+
+.sort((a,b) =>
+
+Number(b.TOTAL || 0)
+-
+Number(a.TOTAL || 0)
+
+);
+
+
+if(teams.length === 0){
+
+document.getElementById("teamScoreContainer").innerHTML = `
+
+<div class="waiting">
+
+No Team Score Available
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+const medals = [
+
+"🥇",
+
+"🥈",
+
+"🥉"
+
+];
+
+
+let html = "";
+
+
+teams.slice(0,3).forEach((row,index) => {
+
+
+const team =
+escapeHTML(row.TEAM);
+
+const total =
+Number(row.TOTAL || 0);
+
+
+html += `
 
 <div class="result-row">
 
-<span>
+<span style="font-size:20px;font-weight:700;">
 
-${medals[index]||"🏅"} TEAM ${row.TEAM}
+${medals[index] || "🏅"}
+
+TEAM ${team}
 
 </span>
 
-<strong>
+<strong style="font-size:24px;color:#FFD54F;">
 
-${row.TOTAL}
+${total}
 
 </strong>
 
@@ -378,14 +605,41 @@ ${row.TOTAL}
 
 });
 
-document.getElementById("teamScoreContainer").innerHTML=html;
+
+document.getElementById("teamScoreContainer").innerHTML = html;
 
 }
 
+
+// ------------------------------------------------------
+// ERROR MESSAGE
+// ------------------------------------------------------
+
+function showError(){
+
+document.getElementById("liveResults").innerHTML = `
+
+<div class="waiting">
+
+⚠️ Unable to load Live Results
+
+<br><br>
+
+Please try again shortly.
+
+</div>
+
+`;
+
+}
 
 
 // ------------------------------------------------------
 // AUTO REFRESH
 // ------------------------------------------------------
 
-setInterval(loadLivePage,10000);
+setInterval(() => {
+
+loadLivePage();
+
+},10000);
