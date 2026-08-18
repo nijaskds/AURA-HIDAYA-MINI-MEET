@@ -501,7 +501,7 @@ document.getElementById("kalaprathibhaContainer").innerHTML = html;
 
 // ------------------------------------------------------
 // LIVE TEAM SCORE
-// GRAND TOTAL SHEET
+// TEAM D EXCLUDED
 // ------------------------------------------------------
 
 function renderTeamScore(rows){
@@ -509,11 +509,7 @@ function renderTeamScore(rows){
 const container =
 document.getElementById("teamScoreContainer");
 
-if(!container){
-
-return;
-
-}
+if(!container) return;
 
 
 // ------------------------------------------------------
@@ -551,115 +547,50 @@ return;
 
 
 // ------------------------------------------------------
-// GET TEAM NAMES FROM CSV HEADER
+// GRAND TOTAL STRUCTURE
 // ------------------------------------------------------
 //
-// Sheet:
+// A = Category / TOTAL
+// B = Team A
+// C = Team B
+// D = Team C
+// E = Team D
 //
-// A1 = blank
-// B1 = A
-// C1 = B
-// D1 = C
-// E1 = D
-//
-// parseCSV creates:
-//
-// row["A"]
-// row["B"]
-// row["C"]
-// row["D"]
-//
+// Team D is intentionally excluded.
 // ------------------------------------------------------
 
-const teamNames = [];
+const values = Object.values(totalRow);
 
 
-// Team A
+// ------------------------------------------------------
+// ONLY TEAM A, B, C
+// ------------------------------------------------------
 
-if(totalRow["A"] !== undefined){
+const teams = [
 
-teamNames.push({
-
+{
 name:"A",
+score:Number(values[1]) || 0
+},
 
-score:Number(totalRow["A"]) || 0
-
-});
-
-}
-
-
-// Team B
-
-if(totalRow["B"] !== undefined){
-
-teamNames.push({
-
+{
 name:"B",
+score:Number(values[2]) || 0
+},
 
-score:Number(totalRow["B"]) || 0
-
-});
-
-}
-
-
-// Team C
-
-if(totalRow["C"] !== undefined){
-
-teamNames.push({
-
+{
 name:"C",
-
-score:Number(totalRow["C"]) || 0
-
-});
-
+score:Number(values[3]) || 0
 }
 
-
-// Team D
-
-if(totalRow["D"] !== undefined){
-
-teamNames.push({
-
-name:"D",
-
-score:Number(totalRow["D"]) || 0
-
-});
-
-}
-
-
-// ------------------------------------------------------
-// CHECK
-// ------------------------------------------------------
-
-if(teamNames.length === 0){
-
-container.innerHTML = `
-
-<div class="waiting">
-
-No Team Score Available
-
-</div>
-
-`;
-
-return;
-
-}
+];
 
 
 // ------------------------------------------------------
 // SORT BY SCORE
 // ------------------------------------------------------
 
-teamNames.sort((a,b)=>{
+teams.sort((a,b) => {
 
 return b.score - a.score;
 
@@ -673,12 +604,8 @@ return b.score - a.score;
 const medals = [
 
 "🥇",
-
 "🥈",
-
-"🥉",
-
-"🏅"
+"🥉"
 
 ];
 
@@ -689,8 +616,7 @@ const medals = [
 
 let html = "";
 
-
-teamNames.forEach((team,index)=>{
+teams.forEach((team,index) => {
 
 html += `
 
@@ -701,7 +627,7 @@ font-size:20px;
 font-weight:700;
 ">
 
-${medals[index] || "🏅"}
+${medals[index]}
 
 TEAM ${escapeHTML(team.name)}
 
