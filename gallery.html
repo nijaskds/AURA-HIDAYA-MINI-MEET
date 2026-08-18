@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Gallery | AURA MINI MEET 2026</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+<style>
+
+*{
+
+margin:0;
+padding:0;
+box-sizing:border-box;
+
+}
+
+body{
+
+font-family:'Poppins',sans-serif;
+
+min-height:100vh;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+padding:25px;
+
+color:white;
+
+background:
+linear-gradient(
+135deg,
+rgba(5,10,23,.96),
+rgba(13,31,58,.96),
+rgba(23,55,99,.96)
+);
+
+overflow:hidden;
+
+}
+
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.container{
+
+width:100%;
+
+max-width:900px;
+
+text-align:center;
+
+}
+
+
+/* =========================
+   ICON
+========================= */
+
+.gallery-icon{
+
+width:110px;
+
+height:110px;
+
+margin:0 auto 25px;
+
+border-radius:50%;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:52px;
+
+background:
+linear-gradient(
+145deg,
+rgba(255,215,79,.20),
+rgba(255,255,255,.06)
+);
+
+border:1px solid rgba(255,215,79,.35);
+
+box-shadow:
+
+0 0 45px rgba(255,215,79,.18),
+
+inset 0 0 25px rgba(255,255,255,.05);
+
+animation:float 3s ease-in-out infinite;
+
+}
+
+
+/* =========================
+   HEADING
+========================= */
+
+h1{
+
+font-size:48px;
+
+font-weight:800;
+
+letter-spacing:3px;
+
+color:#FFD54F;
+
+text-shadow:
+
+0 3px 15px rgba(0,0,0,.45);
+
+margin-bottom:12px;
+
+}
+
+
+.subtitle{
+
+font-size:18px;
+
+color:#d8d8d8;
+
+margin-bottom:30px;
+
+}
+
+
+.divider{
+
+width:90px;
+
+height:4px;
+
+background:#FFD54F;
+
+border-radius:50px;
+
+margin:0 auto 35px;
+
+box-shadow:
+
+0 0 15px rgba(255,215,79,.4);
+
+}
+
+
+/* =========================
+   MESSAGE CARD
+========================= */
+
+.message-card{
+
+position:relative;
+
+padding:50px 35px;
+
+border-radius:30px;
+
+background:
+
+linear-gradient(
+145deg,
+rgba(255,255,255,.10),
+rgba(255,255,255,.035)
+);
+
+border:1px solid rgba(255,255,255,.13);
+
+backdrop-filter:blur(15px);
+
+box-shadow:
+
+0 20px 60px rgba(0,0,0,.35),
+
+inset 0 1px 0 rgba(255,255,255,.08);
+
+overflow:hidden;
+
+}
+
+
+/* decorative glow */
+
+.message-card::before{
+
+content:"";
+
+position:absolute;
+
+width:250px;
+
+height:250px;
+
+border-radius:50%;
+
+background:rgba(255,215,79,.08);
+
+top:-140px;
+
+right:-100px;
+
+}
+
+.message-card::after{
+
+content:"";
+
+position:absolute;
+
+width:200px;
+
+height:200px;
+
+border-radius:50%;
+
+background:rgba(0,184,148,.06);
+
+bottom:-120px;
+
+left:-80px;
+
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+.message{
+
+position:relative;
+
+z-index:2;
+
+font-size:30px;
+
+font-weight:600;
+
+line-height:1.6;
+
+color:#fff;
+
+}
+
+
+.highlight{
+
+color:#FFD54F;
+
+font-weight:800;
+
+}
+
+
+/* =========================
+   SMALL TEXT
+========================= */
+
+.coming{
+
+position:relative;
+
+z-index:2;
+
+margin-top:22px;
+
+font-size:16px;
+
+color:#bfc7d4;
+
+letter-spacing:1px;
+
+}
+
+
+/* =========================
+   HOME BUTTON
+========================= */
+
+.back{
+
+display:inline-flex;
+
+align-items:center;
+
+justify-content:center;
+
+margin-top:35px;
+
+padding:14px 34px;
+
+border-radius:35px;
+
+text-decoration:none;
+
+font-size:18px;
+
+font-weight:700;
+
+background:rgba(255,255,255,.10);
+
+color:white;
+
+border:1px solid rgba(255,255,255,.15);
+
+backdrop-filter:blur(10px);
+
+transition:.3s;
+
+}
+
+.back:hover{
+
+background:#FFD54F;
+
+color:#222;
+
+transform:translateY(-3px);
+
+}
+
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes float{
+
+0%,100%{
+
+transform:translateY(0);
+
+}
+
+50%{
+
+transform:translateY(-8px);
+
+}
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:600px){
+
+body{
+
+padding:20px;
+
+}
+
+.gallery-icon{
+
+width:90px;
+
+height:90px;
+
+font-size:42px;
+
+margin-bottom:20px;
+
+}
+
+h1{
+
+font-size:36px;
+
+letter-spacing:2px;
+
+}
+
+.subtitle{
+
+font-size:16px;
+
+}
+
+.message-card{
+
+padding:40px 22px;
+
+border-radius:25px;
+
+}
+
+.message{
+
+font-size:23px;
+
+line-height:1.55;
+
+}
+
+.coming{
+
+font-size:14px;
+
+}
+
+.back{
+
+font-size:17px;
+
+padding:13px 30px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<div class="gallery-icon">
+
+📸
+
+</div>
+
+
+<h1>
+
+GALLERY
+
+</h1>
+
+
+<div class="subtitle">
+
+AURA MINI MEET 2026
+
+</div>
+
+
+<div class="divider"></div>
+
+
+<div class="message-card">
+
+
+<div class="message">
+
+Your beautiful memories are
+
+<span class="highlight">
+
+coming soon...
+
+</span>
+
+</div>
+
+
+<div class="coming">
+
+✨ Stay tuned. Something beautiful is on the way.
+
+</div>
+
+
+</div>
+
+
+<a href="index.html" class="back">
+
+⌂ Home
+
+</a>
+
+
+</div>
+
+
+</body>
+
+</html>
