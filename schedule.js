@@ -1,6 +1,7 @@
 // ======================================================
 // AURA MINI MEET 2026
 // SCHEDULE
+// FINAL VERSION
 // ======================================================
 
 
@@ -32,25 +33,43 @@ async function loadSchedule(){
 try{
 
 const response =
-await fetch(SCHEDULE_URL + "&t=" + Date.now());
+await fetch(
+SCHEDULE_URL + "&t=" + Date.now()
+);
 
 if(!response.ok){
 
-throw new Error("Schedule could not be loaded.");
+throw new Error(
+"Schedule could not be loaded."
+);
 
 }
 
-const csv = await response.text();
+const csv =
+await response.text();
 
-const rows = parseCSV(csv);
+const rows =
+parseCSV(csv);
 
 renderSchedule(rows);
 
-}catch(error){
+}
 
-console.error("SCHEDULE ERROR:",error);
+catch(error){
 
-document.getElementById("scheduleContainer").innerHTML = `
+console.error(
+"SCHEDULE ERROR:",
+error
+);
+
+const container =
+document.getElementById(
+"scheduleContainer"
+);
+
+if(container){
+
+container.innerHTML = `
 
 <div class="empty">
 
@@ -63,6 +82,8 @@ Please try again shortly.
 </div>
 
 `;
+
+}
 
 }
 
@@ -81,10 +102,14 @@ return [];
 
 }
 
+
 const lines =
-csv.trim()
+csv
+.trim()
 .split(/\r?\n/)
-.filter(line => line.trim() !== "");
+.filter(
+line => line.trim() !== ""
+);
 
 
 if(lines.length < 2){
@@ -95,9 +120,11 @@ return [];
 
 
 const headers =
-splitCSV(lines[0]).map(header =>
+splitCSV(lines[0])
+.map(header =>
 
-header.trim()
+header
+.trim()
 .replace(/^"|"$/g,"")
 
 );
@@ -106,21 +133,28 @@ header.trim()
 const data = [];
 
 
-for(let i = 1; i < lines.length; i++){
+for(
+let i = 1;
+i < lines.length;
+i++
+){
 
-const values = splitCSV(lines[i]);
+const values =
+splitCSV(lines[i]);
 
 const row = {};
 
 
-headers.forEach((header,index) => {
+headers.forEach(
+(header,index) => {
 
 row[header] =
 values[index] !== undefined
 ? values[index].trim()
 : "";
 
-});
+}
+);
 
 
 data.push(row);
@@ -146,9 +180,14 @@ let value = "";
 let insideQuotes = false;
 
 
-for(let i = 0; i < line.length; i++){
+for(
+let i = 0;
+i < line.length;
+i++
+){
 
-const char = line[i];
+const char =
+line[i];
 
 
 if(char === '"'){
@@ -162,9 +201,12 @@ value += '"';
 
 i++;
 
-}else{
+}
 
-insideQuotes = !insideQuotes;
+else{
+
+insideQuotes =
+!insideQuotes;
 
 }
 
@@ -205,17 +247,34 @@ return result;
 
 function escapeHTML(value){
 
-return String(value ?? "")
+return String(
+value ?? ""
+)
 
-.replace(/&/g,"&amp;")
+.replace(
+/&/g,
+"&amp;"
+)
 
-.replace(/</g,"&lt;")
+.replace(
+/</g,
+"&lt;"
+)
 
-.replace(/>/g,"&gt;")
+.replace(
+/>/g,
+"&gt;"
+)
 
-.replace(/"/g,"&quot;")
+.replace(
+/"/g,
+"&quot;"
+)
 
-.replace(/'/g,"&#039;");
+.replace(
+/'/g,
+"&#039;"
+);
 
 }
 
@@ -262,14 +321,20 @@ const period =
 match[3];
 
 
-if(period === "PM" && hour !== 12){
+if(
+period === "PM" &&
+hour !== 12
+){
 
 hour += 12;
 
 }
 
 
-if(period === "AM" && hour === 12){
+if(
+period === "AM" &&
+hour === 12
+){
 
 hour = 0;
 
@@ -277,15 +342,28 @@ hour = 0;
 
 
 return {
-hour:hour,
-minute:minute
+
+hour: hour,
+
+minute: minute
+
 };
 
 }
 
 
 // ------------------------------------------------------
-// CREATE EVENT DATETIME
+// CREATE EVENT DATE
+// ------------------------------------------------------
+//
+// Expected:
+//
+// DD-MM-YYYY
+//
+// Example:
+//
+// 24-08-2026
+//
 // ------------------------------------------------------
 
 function getEventDate(row){
@@ -297,7 +375,10 @@ const timeString =
 (row.TIME || "").trim();
 
 
-if(!dateString || !timeString){
+if(
+!dateString ||
+!timeString
+){
 
 return null;
 
@@ -314,8 +395,6 @@ return null;
 
 }
 
-
-// Supports DD-MM-YYYY
 
 const parts =
 dateString.split("-");
@@ -340,17 +419,29 @@ Number(parts[2]);
 
 const date =
 new Date(
+
 year,
+
 month,
+
 day,
+
 time.hour,
+
 time.minute,
+
 0,
+
 0
+
 );
 
 
-if(isNaN(date.getTime())){
+if(
+isNaN(
+date.getTime()
+)
+){
 
 return null;
 
@@ -363,79 +454,185 @@ return date;
 
 
 // ------------------------------------------------------
-// STATUS
+// FORMAT DATE FOR DISPLAY
 // ------------------------------------------------------
 
-function getStatus(eventDate,index,events){
+function formatDate(date){
+
+const day =
+String(
+date.getDate()
+).padStart(2,"0");
+
+const month =
+String(
+date.getMonth() + 1
+).padStart(2,"0");
+
+const year =
+date.getFullYear();
+
+
+return `${day}-${month}-${year}`;
+
+}
+
+
+// ------------------------------------------------------
+// PREPARE EVENTS
+// ------------------------------------------------------
+
+function prepareEvents(rows){
+
+return rows
+
+.map(row => {
+
+return {
+
+row: row,
+
+date: getEventDate(row)
+
+};
+
+})
+
+.filter(item => item.date)
+
+.sort(
+(a,b) =>
+a.date - b.date
+);
+
+}
+
+
+// ------------------------------------------------------
+// FIND CURRENT LIVE EVENTS
+// ------------------------------------------------------
+//
+// IMPORTANT:
+//
+// If two or more programs have exactly
+// the same start time, they are ALL LIVE.
+//
+// Example:
+//
+// 10:00 AM Stage I
+// 10:00 AM Stage II
+//
+// Both will show LIVE NOW.
+//
+// ------------------------------------------------------
+
+function findLiveEvents(events){
 
 const now =
 new Date();
 
 
-if(!eventDate){
+// Find all events that have already started
 
-return "UPCOMING";
+const started =
+events.filter(
+item =>
+item.date <= now
+);
+
+
+if(started.length === 0){
+
+return [];
 
 }
 
 
-const eventEnd =
-new Date(eventDate.getTime());
+// Find the latest start time
+
+const latestStart =
+started[started.length - 1].date;
+
+
+// All events having that same
+// start time are LIVE.
+
+return events.filter(
+item =>
+item.date.getTime()
+===
+latestStart.getTime()
+);
+
+}
 
 
 // ------------------------------------------------------
-// IMPORTANT
+// FIND NEXT EVENTS
 // ------------------------------------------------------
-// Since Sheet has only TIME and no END_TIME,
-// an event is considered LIVE until the next event starts.
+//
+// The NEXT event means:
+//
+// The earliest event time AFTER NOW.
+//
+// If multiple programs happen at that exact
+// next time, all of them are NEXT.
+//
 // ------------------------------------------------------
 
-const nextEvent =
-events[index + 1];
+function findNextEvents(events){
+
+const now =
+new Date();
 
 
-if(nextEvent){
+// Future events only
 
-const nextDate =
-getEventDate(nextEvent);
+const future =
+events.filter(
+item =>
+item.date > now
+);
 
 
-if(
-nextDate &&
-now >= eventDate &&
-now < nextDate
+if(future.length === 0){
+
+return [];
+
+}
+
+
+// Earliest future time
+
+const nextTime =
+future[0].date;
+
+
+// All events at that same time
+
+return future.filter(
+item =>
+item.date.getTime()
+===
+nextTime.getTime()
+);
+
+}
+
+
+// ------------------------------------------------------
+// RENDER NEXT / LIVE CARD
+// ------------------------------------------------------
+
+function renderTopCard(
+liveEvents,
+nextEvents
 ){
 
-return "LIVE";
-
-}
-
-}
-
-
-if(now < eventDate){
-
-return "UPCOMING";
-
-}
-
-
-return "COMPLETED";
-
-}
-
-
-// ------------------------------------------------------
-// RENDER SCHEDULE
-// ------------------------------------------------------
-
-function renderSchedule(rows){
-
 const container =
-document.getElementById("scheduleContainer");
-
-const nextContainer =
-document.getElementById("nextEvent");
+document.getElementById(
+"nextEvent"
+);
 
 
 if(!container){
@@ -446,36 +643,225 @@ return;
 
 
 // ------------------------------------------------------
-// PREPARE EVENTS
+// LIVE
 // ------------------------------------------------------
 
-const events =
-rows
+if(liveEvents.length > 0){
 
-.map(row => {
+let html = `
 
-return {
+<div class="next-card">
 
-row:row,
+<div class="next-label">
 
-date:getEventDate(row)
+🔴 LIVE NOW
 
-};
+</div>
 
-})
+`;
 
-.filter(item => item.date)
 
-.sort((a,b) =>
+liveEvents.forEach(
+item => {
 
-a.date - b.date
+const row =
+item.row;
 
+
+html += `
+
+<div class="next-event">
+
+${escapeHTML(
+row.EVENT_NAME
+)}
+
+</div>
+
+<div class="next-details">
+
+${escapeHTML(
+row.TIME
+)}
+
+&nbsp; • &nbsp;
+
+${escapeHTML(
+row.STAGE
+)}
+
+&nbsp; • &nbsp;
+
+${escapeHTML(
+row.CATEGORY
+)}
+
+</div>
+
+`;
+
+}
 );
 
 
+html += `
+
+</div>
+
+`;
+
+
+container.innerHTML =
+html;
+
+return;
+
+}
+
+
 // ------------------------------------------------------
-// NO EVENTS
+// NEXT EVENT
 // ------------------------------------------------------
+
+if(nextEvents.length > 0){
+
+let html = `
+
+<div class="next-card">
+
+<div class="next-label">
+
+🟡 NEXT EVENT
+
+</div>
+
+`;
+
+
+nextEvents.forEach(
+item => {
+
+const row =
+item.row;
+
+
+html += `
+
+<div class="next-event">
+
+${escapeHTML(
+row.EVENT_NAME
+)}
+
+</div>
+
+<div class="next-details">
+
+${escapeHTML(
+row.DATE
+)}
+
+&nbsp; • &nbsp;
+
+${escapeHTML(
+row.TIME
+)}
+
+&nbsp; • &nbsp;
+
+${escapeHTML(
+row.STAGE
+)}
+
+&nbsp; • &nbsp;
+
+${escapeHTML(
+row.CATEGORY
+)}
+
+</div>
+
+`;
+
+}
+);
+
+
+html += `
+
+</div>
+
+`;
+
+
+container.innerHTML =
+html;
+
+return;
+
+}
+
+
+// ------------------------------------------------------
+// ALL COMPLETED
+// ------------------------------------------------------
+
+container.innerHTML = `
+
+<div class="next-card">
+
+<div class="next-label">
+
+🏁 SCHEDULE COMPLETE
+
+</div>
+
+<div class="next-event">
+
+All Events Completed
+
+</div>
+
+<div class="next-details">
+
+Thank you for being part of
+AURA MINI MEET 2026
+
+</div>
+
+</div>
+
+`;
+
+}
+
+
+// ------------------------------------------------------
+// RENDER FULL SCHEDULE
+// ------------------------------------------------------
+
+function renderSchedule(rows){
+
+const container =
+document.getElementById(
+"scheduleContainer"
+);
+
+
+if(!container){
+
+return;
+
+}
+
+
+// Prepare
+
+const events =
+prepareEvents(rows);
+
+
+// No schedule
 
 if(events.length === 0){
 
@@ -495,165 +881,154 @@ return;
 
 
 // ------------------------------------------------------
-// FIND NEXT / LIVE
+// FIND LIVE
+// ------------------------------------------------------
+
+const liveEvents =
+findLiveEvents(events);
+
+
+// ------------------------------------------------------
+// FIND NEXT
+// ------------------------------------------------------
+
+const nextEvents =
+findNextEvents(events);
+
+
+// ------------------------------------------------------
+// TOP CARD
+// ------------------------------------------------------
+
+renderTopCard(
+liveEvents,
+nextEvents
+);
+
+
+// ------------------------------------------------------
+// CURRENT TIME
 // ------------------------------------------------------
 
 const now =
 new Date();
 
 
-let liveEvent = null;
+// ------------------------------------------------------
+// CREATE IDENTIFIERS
+// ------------------------------------------------------
 
-let nextEvent = null;
-
-
-events.forEach((item,index) => {
-
-const status =
-getStatus(
-item.date,
-index,
-events.map(e => e.row)
+const liveSet =
+new Set(
+liveEvents.map(
+item =>
+item.date.getTime()
++ "|" +
+item.row.EVENT_NAME
++ "|" +
+item.row.STAGE
+)
 );
 
 
-if(status === "LIVE" && !liveEvent){
-
-liveEvent = item;
-
-}
-
-
-if(
-status === "UPCOMING" &&
-!nextEvent
-){
-
-nextEvent = item;
-
-}
-
-});
+const nextSet =
+new Set(
+nextEvents.map(
+item =>
+item.date.getTime()
++ "|" +
+item.row.EVENT_NAME
++ "|" +
+item.row.STAGE
+)
+);
 
 
 // ------------------------------------------------------
-// NEXT EVENT CARD
+// SEPARATE EVENTS
 // ------------------------------------------------------
 
-if(nextContainer){
+const completedEvents = [];
 
-if(liveEvent){
+const upcomingEvents = [];
 
-const row =
-liveEvent.row;
 
-nextContainer.innerHTML = `
+// Everything after current live time
 
-<div class="next-card">
+// but excluding NEXT
 
-<div class="next-label">
+events.forEach(
+item => {
 
-🔴 LIVE NOW
+const key =
+item.date.getTime()
++ "|" +
+item.row.EVENT_NAME
++ "|" +
+item.row.STAGE;
 
-</div>
 
-<div class="next-event">
+if(liveSet.has(key)){
 
-${escapeHTML(row.EVENT_NAME)}
-
-</div>
-
-<div class="next-details">
-
-${escapeHTML(row.TIME)}
-&nbsp; • &nbsp;
-${escapeHTML(row.STAGE)}
-&nbsp; • &nbsp;
-${escapeHTML(row.CATEGORY)}
-
-</div>
-
-</div>
-
-`;
+return;
 
 }
 
-else if(nextEvent){
 
-const row =
-nextEvent.row;
+if(nextSet.has(key)){
 
-nextContainer.innerHTML = `
+return;
 
-<div class="next-card">
+}
 
-<div class="next-label">
 
-⏳ NEXT EVENT
+if(item.date > now){
 
-</div>
-
-<div class="next-event">
-
-${escapeHTML(row.EVENT_NAME)}
-
-</div>
-
-<div class="next-details">
-
-${escapeHTML(row.TIME)}
-&nbsp; • &nbsp;
-${escapeHTML(row.STAGE)}
-&nbsp; • &nbsp;
-${escapeHTML(row.CATEGORY)}
-
-</div>
-
-</div>
-
-`;
+upcomingEvents.push(item);
 
 }
 
 else{
 
-nextContainer.innerHTML = `
-
-<div class="next-card">
-
-<div class="next-label">
-
-🏁 SCHEDULE COMPLETE
-
-</div>
-
-<div class="next-event">
-
-All Events Completed
-
-</div>
-
-<div class="next-details">
-
-Thank you for being part of AURA MINI MEET 2026
-
-</div>
-
-</div>
-
-`;
+completedEvents.push(item);
 
 }
 
 }
+);
 
 
 // ------------------------------------------------------
-// GROUP BY DATE
+// FINAL DISPLAY ORDER
+// ------------------------------------------------------
+//
+// 1. LIVE
+// 2. NEXT
+// 3. UPCOMING
+// 4. COMPLETED
+//
+// ------------------------------------------------------
+
+const displayEvents = [
+
+...liveEvents,
+
+...nextEvents,
+
+...upcomingEvents,
+
+...completedEvents
+
+];
+
+
+// ------------------------------------------------------
+// BUILD HTML
 // ------------------------------------------------------
 
 let html = "";
+
+let currentSection = "";
 
 let currentDate = "";
 
@@ -662,36 +1037,103 @@ let currentDate = "";
 // DISPLAY EVENTS
 // ------------------------------------------------------
 
-events.forEach((item,index) => {
+displayEvents.forEach(
+item => {
 
 const row =
 item.row;
 
-const status =
-getStatus(
-item.date,
-index,
-events.map(e => e.row)
-);
+
+const key =
+item.date.getTime()
++ "|" +
+row.EVENT_NAME
++ "|" +
+row.STAGE;
 
 
-// Date heading
-
-const dateKey =
-row.DATE + "|" + row.DAY;
+let status = "COMPLETED";
 
 
-if(dateKey !== currentDate){
+if(liveSet.has(key)){
 
-currentDate = dateKey;
+status = "LIVE";
+
+}
+
+else if(nextSet.has(key)){
+
+status = "NEXT";
+
+}
+
+else if(
+item.date > now
+){
+
+status = "UPCOMING";
+
+}
+
+else{
+
+status = "COMPLETED";
+
+}
+
+
+// ------------------------------------------------------
+// SECTION TITLE
+// ------------------------------------------------------
+
+let sectionTitle = "";
+
+
+if(status === "LIVE"){
+
+sectionTitle =
+"🔴 LIVE NOW";
+
+}
+
+else if(status === "NEXT"){
+
+sectionTitle =
+"🟡 NEXT EVENT";
+
+}
+
+else if(status === "UPCOMING"){
+
+sectionTitle =
+"📅 UPCOMING EVENTS";
+
+}
+
+else{
+
+sectionTitle =
+"✓ COMPLETED EVENTS";
+
+}
+
+
+if(
+sectionTitle !==
+currentSection
+){
+
+currentSection =
+sectionTitle;
+
+currentDate = "";
+
 
 html += `
 
-<div class="date-header">
+<div class="section-title">
 
-📅 ${escapeHTML(row.DAY)}
-&nbsp; • &nbsp;
-${escapeHTML(row.DATE)}
+${sectionTitle}
 
 </div>
 
@@ -700,7 +1142,60 @@ ${escapeHTML(row.DATE)}
 }
 
 
-// Status
+// ------------------------------------------------------
+// DATE HEADER
+// ------------------------------------------------------
+//
+// For upcoming/completed events,
+// show date grouping.
+//
+// LIVE and NEXT already have
+// their important information inside
+// the card.
+// ------------------------------------------------------
+
+const dateKey =
+(row.DATE || "")
++
+"|"
++
+(row.DAY || "");
+
+
+if(
+status !== "LIVE" &&
+status !== "NEXT" &&
+dateKey !== currentDate
+){
+
+currentDate =
+dateKey;
+
+
+html += `
+
+<div class="date-header">
+
+📅 ${escapeHTML(
+row.DAY
+)}
+
+&nbsp; • &nbsp;
+
+${escapeHTML(
+row.DATE
+)}
+
+</div>
+
+`;
+
+}
+
+
+// ------------------------------------------------------
+// STATUS BADGE
+// ------------------------------------------------------
 
 let statusHTML = "";
 
@@ -712,6 +1207,20 @@ statusHTML = `
 <div class="status status-live">
 
 🔴 LIVE NOW
+
+</div>
+
+`;
+
+}
+
+else if(status === "NEXT"){
+
+statusHTML = `
+
+<div class="status status-next">
+
+🟡 NEXT EVENT
 
 </div>
 
@@ -748,7 +1257,9 @@ statusHTML = `
 }
 
 
-// Card
+// ------------------------------------------------------
+// EVENT CARD
+// ------------------------------------------------------
 
 html += `
 
@@ -756,7 +1267,9 @@ html += `
 
 <div class="time">
 
-${escapeHTML(row.TIME)}
+${escapeHTML(
+row.TIME
+)}
 
 </div>
 
@@ -765,35 +1278,51 @@ ${escapeHTML(row.TIME)}
 
 <div class="event-name">
 
-${escapeHTML(row.EVENT_NAME)}
+${escapeHTML(
+row.EVENT_NAME
+)}
 
 </div>
+
 
 <div class="event-meta">
 
-${escapeHTML(row.CATEGORY)}
+${escapeHTML(
+row.CATEGORY
+)}
 
 </div>
 
+
 ${statusHTML}
+
 
 </div>
 
 
 <div class="stage">
 
-${escapeHTML(row.STAGE)}
+${escapeHTML(
+row.STAGE
+)}
 
 </div>
+
 
 </div>
 
 `;
 
-});
+}
+);
 
 
-container.innerHTML = html;
+// ------------------------------------------------------
+// DISPLAY
+// ------------------------------------------------------
+
+container.innerHTML =
+html;
 
 }
 
@@ -802,8 +1331,11 @@ container.innerHTML = html;
 // AUTO REFRESH
 // ------------------------------------------------------
 
-setInterval(() => {
+setInterval(
+() => {
 
 loadSchedule();
 
-},10000);
+},
+10000
+);
