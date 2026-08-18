@@ -501,48 +501,41 @@ document.getElementById("kalaprathibhaContainer").innerHTML = html;
 
 // ------------------------------------------------------
 // LIVE TEAM SCORE
+// NEW GRAND TOTAL STRUCTURE
 // ------------------------------------------------------
 
 function renderTeamScore(rows){
 
-if(!rows || rows.length === 0){
+const container =
+document.getElementById("teamScoreContainer");
 
-document.getElementById("teamScoreContainer").innerHTML = `
-
-<div class="waiting">
-
-No Team Score Available
-
-</div>
-
-`;
+if(!container){
 
 return;
 
 }
 
 
-const teams = rows
+// ----------------------------------------------
+// FIND TOTAL ROW
+// ----------------------------------------------
 
-.filter(row =>
+const totalRow = rows.find(row => {
 
-row.TEAM &&
-!isNaN(Number(row.TOTAL))
+return Object.values(row).some(value =>
 
-)
-
-.sort((a,b) =>
-
-Number(b.TOTAL || 0)
--
-Number(a.TOTAL || 0)
+String(value)
+.trim()
+.toUpperCase() === "TOTAL"
 
 );
 
+});
 
-if(teams.length === 0){
 
-document.getElementById("teamScoreContainer").innerHTML = `
+if(!totalRow){
+
+container.innerHTML = `
 
 <div class="waiting">
 
@@ -557,45 +550,108 @@ return;
 }
 
 
-const medals = [
+// ----------------------------------------------
+// GET TEAM SCORES
+// ----------------------------------------------
+//
+// New Sheet:
+//
+//        A    B    C
+// TOTAL  57   56   31
+//
+// ----------------------------------------------
 
-"🥇",
+const values = Object.values(totalRow);
 
-"🥈",
 
-"🥉"
+// Remove the "TOTAL" text
+
+const scoreValues = values.filter(value => {
+
+return String(value)
+.trim()
+.toUpperCase() !== "TOTAL";
+
+});
+
+
+// ----------------------------------------------
+// TEAM NAMES
+// ----------------------------------------------
+
+const teams = [
+
+{
+
+name:"A",
+
+score:Number(scoreValues[0] || 0),
+
+medal:"🥇"
+
+},
+
+{
+
+name:"B",
+
+score:Number(scoreValues[1] || 0),
+
+medal:"🥈"
+
+},
+
+{
+
+name:"C",
+
+score:Number(scoreValues[2] || 0),
+
+medal:"🥉"
+
+}
 
 ];
 
 
+// ----------------------------------------------
+// SORT BY SCORE
+// ----------------------------------------------
+
+teams.sort((a,b) => {
+
+return b.score - a.score;
+
+});
+
+
+// ----------------------------------------------
+// CREATE HTML
+// ----------------------------------------------
+
 let html = "";
 
-
-teams.slice(0,3).forEach((row,index) => {
-
-
-const team =
-escapeHTML(row.TEAM);
-
-const total =
-Number(row.TOTAL || 0);
-
+teams.forEach(team => {
 
 html += `
 
 <div class="result-row">
 
-<span style="font-size:20px;font-weight:700;">
+<span style="
+font-size:20px;
+font-weight:700;
+">
 
-${medals[index] || "🏅"}
-
-TEAM ${team}
+${team.medal} TEAM ${team.name}
 
 </span>
 
-<strong style="font-size:24px;color:#FFD54F;">
+<strong style="
+font-size:24px;
+color:#FFD54F;
+">
 
-${total}
+${team.score}
 
 </strong>
 
@@ -606,7 +662,11 @@ ${total}
 });
 
 
-document.getElementById("teamScoreContainer").innerHTML = html;
+// ----------------------------------------------
+// SHOW RESULT
+// ----------------------------------------------
+
+container.innerHTML = html;
 
 }
 
