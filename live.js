@@ -211,6 +211,7 @@ return String(value ?? "")
 }
 
 
+
 // ------------------------------------------------------
 // LIVE RESULTS
 // ------------------------------------------------------
@@ -230,7 +231,9 @@ return status === "PUBLISHED" && live === "LIVE";
 });
 
 
-// Latest events first
+// ------------------------------------------------------
+// LATEST 6 EVENTS
+// ------------------------------------------------------
 
 const latestEvents = liveEvents
 .slice()
@@ -260,6 +263,11 @@ let html = "";
 
 latestEvents.forEach(row => {
 
+
+// ------------------------------------------------------
+// EVENT DETAILS
+// ------------------------------------------------------
+
 const category =
 escapeHTML(row.CATEGORY || "");
 
@@ -267,11 +275,26 @@ const eventName =
 escapeHTML(row.EVENT_NAME || "Event");
 
 
+// ------------------------------------------------------
+// FIRST
+// ------------------------------------------------------
+
 const firstName =
 escapeHTML(row.FIRST_NAME || "-");
 
 const firstTeam =
 escapeHTML(row.FIRST_TEAM || "");
+
+const firstGrade =
+escapeHTML(row.FIRST_GRADE || "");
+
+const firstPoint =
+escapeHTML(row.FIRST_POINT || "");
+
+
+// ------------------------------------------------------
+// SECOND
+// ------------------------------------------------------
 
 const secondName =
 escapeHTML(row.SECOND_NAME || "-");
@@ -279,16 +302,38 @@ escapeHTML(row.SECOND_NAME || "-");
 const secondTeam =
 escapeHTML(row.SECOND_TEAM || "");
 
+const secondGrade =
+escapeHTML(row.SECOND_GRADE || "");
+
+const secondPoint =
+escapeHTML(row.SECOND_POINT || "");
+
+
+// ------------------------------------------------------
+// THIRD
+// ------------------------------------------------------
+
 const thirdName =
 escapeHTML(row.THIRD_NAME || "-");
 
 const thirdTeam =
 escapeHTML(row.THIRD_TEAM || "");
 
+const thirdGrade =
+escapeHTML(row.THIRD_GRADE || "");
+
+const thirdPoint =
+escapeHTML(row.THIRD_POINT || "");
+
+
+// ------------------------------------------------------
+// CARD
+// ------------------------------------------------------
 
 html += `
 
 <div class="live-card">
+
 
 <div class="live-badge">
 
@@ -296,11 +341,13 @@ html += `
 
 </div>
 
+
 <div class="category">
 
 ${category}
 
 </div>
+
 
 <div class="event-name">
 
@@ -309,55 +356,125 @@ ${eventName}
 </div>
 
 
+<!-- FIRST PLACE -->
+
 <div class="result-row">
 
-<span>
+<div>
+
+<div style="
+font-weight:700;
+font-size:17px;
+">
 
 🥇 ${firstName}
 
-</span>
+</div>
+
+<div style="
+font-size:13px;
+color:#bbb;
+margin-top:4px;
+">
+
+TEAM ${firstTeam}
+
+&nbsp; • &nbsp;
+
+${firstGrade} GRADE
+
+</div>
+
+</div>
 
 <strong>
 
-${firstTeam}
+${firstPoint}
 
 </strong>
 
 </div>
 
 
+<!-- SECOND PLACE -->
+
 <div class="result-row">
 
-<span>
+<div>
+
+<div style="
+font-weight:700;
+font-size:17px;
+">
 
 🥈 ${secondName}
 
-</span>
+</div>
+
+<div style="
+font-size:13px;
+color:#bbb;
+margin-top:4px;
+">
+
+TEAM ${secondTeam}
+
+&nbsp; • &nbsp;
+
+${secondGrade} GRADE
+
+</div>
+
+</div>
 
 <strong>
 
-${secondTeam}
+${secondPoint}
 
 </strong>
 
 </div>
 
+
+<!-- THIRD PLACE -->
 
 <div class="result-row">
 
-<span>
+<div>
+
+<div style="
+font-weight:700;
+font-size:17px;
+">
 
 🥉 ${thirdName}
 
-</span>
+</div>
+
+<div style="
+font-size:13px;
+color:#bbb;
+margin-top:4px;
+">
+
+TEAM ${thirdTeam}
+
+&nbsp; • &nbsp;
+
+${thirdGrade} GRADE
+
+</div>
+
+</div>
 
 <strong>
 
-${thirdTeam}
+${thirdPoint}
 
 </strong>
 
 </div>
+
 
 </div>
 
@@ -366,10 +483,11 @@ ${thirdTeam}
 });
 
 
-document.getElementById("liveResults").innerHTML = html;
+document.getElementById(
+"liveResults"
+).innerHTML = html;
 
 }
-
 
 // ------------------------------------------------------
 // CURRENT KALAPRATHIBHA
