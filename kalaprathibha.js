@@ -1,7 +1,7 @@
 // ======================================================
 // AURA MINI MEET 2026
 // KALAPRATHIBHA
-// PART 1
+// PHOTO ENABLED VERSION
 // ======================================================
 
 
@@ -14,14 +14,40 @@ const CSV_URL =
 
 
 // ------------------------------------------------------
+// PHOTO FOLDER
+// ------------------------------------------------------
+
+const PHOTO_FOLDER = "candidate_avatar/";
+
+
+// ------------------------------------------------------
 // START
 // ------------------------------------------------------
 
-document.addEventListener("DOMContentLoaded",()=>{
+document.addEventListener("DOMContentLoaded", () => {
 
 loadResults();
 
 });
+
+
+// ------------------------------------------------------
+// PHOTO URL
+// ------------------------------------------------------
+
+function getPhoto(chest){
+
+const value = String(chest || "").trim();
+
+if(!value){
+
+return "";
+
+}
+
+return PHOTO_FOLDER + encodeURIComponent(value) + ".jpg";
+
+}
 
 
 // ------------------------------------------------------
@@ -32,9 +58,9 @@ async function loadResults(){
 
 try{
 
-const response=await fetch(
+const response = await fetch(
 
-CSV_URL+"&t="+Date.now(),
+CSV_URL + "&t=" + Date.now(),
 
 {
 
@@ -50,32 +76,37 @@ throw new Error("Unable to load CSV");
 
 }
 
-const csv=await response.text();
+const csv = await response.text();
 
-const rows=parseCSV(csv);
+const rows = parseCSV(csv);
 
-const contestants=rows
-.filter(r=>(r.NAME||"").trim()!="")
-.map(r=>({
 
-chest:r.CHEST,
+const contestants = rows
 
-name:r.NAME,
+.filter(r => (r.NAME || "").trim() !== "")
 
-team:r.TEAM,
+.map(r => ({
 
-category:r.CATEGORY,
+chest: r.CHEST,
 
-gold:Number(r.GOLD||0),
+name: r.NAME,
 
-silver:Number(r.SILVER||0),
+team: r.TEAM,
 
-bronze:Number(r.BRONZE||0),
+category: r.CATEGORY,
 
-points:Number(r["TOTAL POINTS"]||0)
+gold: Number(r.GOLD || 0),
+
+silver: Number(r.SILVER || 0),
+
+bronze: Number(r.BRONZE || 0),
+
+points: Number(r["TOTAL POINTS"] || 0)
 
 }))
-.sort((a,b)=>b.points-a.points);
+
+.sort((a,b) => b.points - a.points);
+
 
 renderOverall(contestants);
 
@@ -83,19 +114,23 @@ renderCategory(contestants);
 
 renderTop10(contestants);
 
+
 }catch(error){
 
-console.error(error);
+console.error("KALAPRATHIBHA ERROR:", error);
 
-document.getElementById("overallHero").innerHTML=
 
-'<div class="waiting">Unable to load.</div>';
-
-document.getElementById("categoryCards").innerHTML=
+document.getElementById("overallHero").innerHTML =
 
 '<div class="waiting">Unable to load.</div>';
 
-document.getElementById("top10Container").innerHTML=
+
+document.getElementById("categoryCards").innerHTML =
+
+'<div class="waiting">Unable to load.</div>';
+
+
+document.getElementById("top10Container").innerHTML =
 
 '<div class="waiting">Unable to load.</div>';
 
@@ -110,23 +145,47 @@ document.getElementById("top10Container").innerHTML=
 
 function parseCSV(csv){
 
-const lines=csv.trim().split(/\r?\n/);
+if(!csv || !csv.trim()){
 
-const headers=splitCSV(lines[0]);
+return [];
 
-const data=[];
+}
 
-for(let i=1;i<lines.length;i++){
 
-if(!lines[i].trim()) continue;
+const lines = csv
 
-const values=splitCSV(lines[i]);
+.trim()
 
-let row={};
+.split(/\r?\n')
 
-headers.forEach((header,index)=>{
+.filter(line => line.trim() !== "");
 
-row[header.trim()]=values[index]
+
+if(lines.length < 2){
+
+return [];
+
+}
+
+
+const headers = splitCSV(lines[0]);
+
+
+const data = [];
+
+
+for(let i = 1; i < lines.length; i++){
+
+const values = splitCSV(lines[i]);
+
+const row = {};
+
+
+headers.forEach((header,index) => {
+
+row[header.trim()] =
+
+values[index] !== undefined
 
 ? values[index].trim()
 
@@ -134,9 +193,11 @@ row[header.trim()]=values[index]
 
 });
 
+
 data.push(row);
 
 }
+
 
 return data;
 
@@ -144,88 +205,199 @@ return data;
 
 
 // ------------------------------------------------------
-// SPLIT CSV
+// SAFE CSV SPLITTER
 // ------------------------------------------------------
 
 function splitCSV(line){
 
-const result=[];
+const result = [];
 
-let value="";
+let value = "";
 
-let insideQuotes=false;
+let insideQuotes = false;
 
-for(let i=0;i<line.length;i++){
 
-const char=line[i];
+for(let i = 0; i < line.length; i++){
 
-if(char=='"'){
+const char = line[i];
 
-insideQuotes=!insideQuotes;
 
-continue;
+if(char === '"'){
 
-}
+if(
 
-if(char==","&&!insideQuotes){
+insideQuotes &&
 
-result.push(value);
+line[i + 1] === '"'
 
-value="";
+){
+
+value += '"';
+
+i++;
 
 }else{
 
-value+=char;
+insideQuotes = !insideQuotes;
 
 }
 
 }
+
+
+else if(
+
+char === "," &&
+
+!insideQuotes
+
+){
+
+result.push(value);
+
+value = "";
+
+}
+
+
+else{
+
+value += char;
+
+}
+
+}
+
 
 result.push(value);
 
 return result;
 
 }
+
+
+// ------------------------------------------------------
+// ESCAPE HTML
+// ------------------------------------------------------
+
+function escapeHTML(value){
+
+return String(value ?? "")
+
+.replace(/&/g,"&amp;")
+
+.replace(/</g,"&lt;")
+
+.replace(/>/g,"&gt;")
+
+.replace(/"/g,"&quot;")
+
+.replace(/'/g,"&#039;");
+
+}
+
+
 // ------------------------------------------------------
 // OVERALL KALAPRATHIBHA
 // ------------------------------------------------------
 
 function renderOverall(contestants){
 
-if(contestants.length===0){
+const container =
 
-document.getElementById("overallHero").innerHTML=
+document.getElementById("overallHero");
+
+
+if(!container){
+
+return;
+
+}
+
+
+if(contestants.length === 0){
+
+container.innerHTML =
+
 '<div class="waiting">No Data</div>';
 
 return;
 
 }
 
-const winner=contestants[0];
 
-document.getElementById("overallHero").innerHTML=`
+const winner = contestants[0];
 
-<div class="icon">👑</div>
 
-<h2>OVERALL KALAPRATHIBHA</h2>
+const photo = getPhoto(winner.chest);
+
+
+container.innerHTML = `
+
+<div class="overall-photo-wrap">
+
+<img
+
+src="${photo}"
+
+alt="${escapeHTML(winner.name)}"
+
+class="overall-photo"
+
+onerror="this.src='';this.classList.add('photo-missing');"
+
+>
+
+<div class="photo-placeholder">
+
+👤
+
+</div>
+
+</div>
+
+
+<div class="icon">
+
+👑
+
+</div>
+
+
+<h2>
+
+OVERALL KALAPRATHIBHA
+
+</h2>
+
 
 <div class="name">
 
-${winner.name}
+${escapeHTML(winner.name)}
 
 </div>
+
+
+<div class="chest">
+
+CHEST NO. ${escapeHTML(winner.chest)}
+
+</div>
+
 
 <div class="team">
 
-TEAM ${winner.team}
+TEAM ${escapeHTML(winner.team)}
 
 </div>
+
 
 <div class="points">
 
 🏅 ${winner.points} POINTS
 
 </div>
+
 
 <div class="medals">
 
@@ -242,14 +414,13 @@ TEAM ${winner.team}
 }
 
 
-
 // ------------------------------------------------------
 // CATEGORY TOPPERS
 // ------------------------------------------------------
 
 function renderCategory(contestants){
 
-const categories=[
+const categories = [
 
 "SUB JUNIOR",
 
@@ -259,51 +430,103 @@ const categories=[
 
 ];
 
-let html="";
 
-categories.forEach(category=>{
+let html = "";
 
-const players=contestants
 
-.filter(c=>c.category===category)
+categories.forEach(category => {
 
-.sort((a,b)=>b.points-a.points);
 
-if(players.length===0) return;
+const players = contestants
 
-const winner=players[0];
+.filter(c =>
 
-html+=`
+(c.category || "").trim().toUpperCase() === category
+
+)
+
+.sort((a,b) => b.points - a.points);
+
+
+if(players.length === 0){
+
+return;
+
+}
+
+
+const winner = players[0];
+
+const second = players[1];
+
+const third = players[2];
+
+
+html += `
 
 <div class="category-card">
 
+
 <div class="category-title">
 
-${category}
+${escapeHTML(category)}
 
 </div>
+
+
+<!-- FIRST -->
+
+<div class="category-winner">
+
+
+<div class="category-photo-large">
+
+<img
+
+src="${getPhoto(winner.chest)}"
+
+alt="${escapeHTML(winner.name)}"
+
+onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+
+>
+
+<div class="photo-placeholder-small">
+
+👤
+
+</div>
+
+</div>
+
 
 <div class="winner-name">
 
-${winner.name}
+🥇 ${escapeHTML(winner.name)}
 
 </div>
 
-<div style="text-align:center;">
 
-<span class="team-badge">
+<div class="winner-chest">
 
-TEAM ${winner.team}
-
-</span>
+CHEST ${escapeHTML(winner.chest)}
 
 </div>
+
+
+<div class="team-badge">
+
+TEAM ${escapeHTML(winner.team)}
+
+</div>
+
 
 <div class="total-points">
 
 🏅 ${winner.points} POINTS
 
 </div>
+
 
 <div class="medal-count">
 
@@ -315,25 +538,160 @@ TEAM ${winner.team}
 
 </div>
 
+
+</div>
+
+
+<!-- SECOND + THIRD -->
+
+<div class="category-runners">
+
+
+${second ? `
+
+<div class="runner-card">
+
+<div class="runner-photo">
+
+<img
+
+src="${getPhoto(second.chest)}"
+
+alt="${escapeHTML(second.name)}"
+
+onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+
+>
+
+<div class="photo-placeholder-small">
+
+👤
+
+</div>
+
+</div>
+
+
+<div class="runner-rank">
+
+🥈 2ND
+
+</div>
+
+
+<div class="runner-name">
+
+${escapeHTML(second.name)}
+
+</div>
+
+
+<div class="runner-info">
+
+CHEST ${escapeHTML(second.chest)}
+
+<br>
+
+TEAM ${escapeHTML(second.team)}
+
+</div>
+
+
+<div class="runner-points">
+
+${second.points} POINTS
+
+</div>
+
+</div>
+
+` : ""}
+
+
+${third ? `
+
+<div class="runner-card">
+
+<div class="runner-photo">
+
+<img
+
+src="${getPhoto(third.chest)}"
+
+alt="${escapeHTML(third.name)}"
+
+onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+
+>
+
+<div class="photo-placeholder-small">
+
+👤
+
+</div>
+
+</div>
+
+
+<div class="runner-rank">
+
+🥉 3RD
+
+</div>
+
+
+<div class="runner-name">
+
+${escapeHTML(third.name)}
+
+</div>
+
+
+<div class="runner-info">
+
+CHEST ${escapeHTML(third.chest)}
+
+<br>
+
+TEAM ${escapeHTML(third.team)}
+
+</div>
+
+
+<div class="runner-points">
+
+${third.points} POINTS
+
+</div>
+
+</div>
+
+` : ""}
+
+
+</div>
+
+
+<!-- CATEGORY TOP 3 -->
+
 <div class="top3">
 
-`;
+${players.slice(0,3).map((player,index) => {
 
-players.slice(0,3).forEach((player,index)=>{
+const medals = ["🥇","🥈","🥉"];
 
-const medal=["🥇","🥈","🥉"];
-
-html+=`
+return `
 
 <div class="top3-row">
 
 <div class="rank-name">
 
-${medal[index]}
+${medals[index]}
 
-${player.name}
+${escapeHTML(player.name)}
 
 </div>
+
 
 <div class="rank-points">
 
@@ -345,11 +703,10 @@ ${player.points} Points
 
 `;
 
-});
-
-html+=`
+}).join("")}
 
 </div>
+
 
 </div>
 
@@ -357,68 +714,121 @@ html+=`
 
 });
 
-document.getElementById("categoryCards").innerHTML=html;
+
+document.getElementById("categoryCards").innerHTML = html;
 
 }
+
+
 // ------------------------------------------------------
-// TOP 10 OVERALL
+// TOP 10
 // ------------------------------------------------------
 
 function renderTop10(contestants){
 
-const top10=contestants.slice(0,10);
+const top10 = contestants.slice(0,10);
 
-let html="";
 
-top10.forEach((player,index)=>{
+let html = "";
 
-let medal="";
 
-if(index===0){
+top10.forEach((player,index) => {
 
-medal="🥇";
 
-}else if(index===1){
+let rank = "";
 
-medal="🥈";
 
-}else if(index===2){
+if(index === 0){
 
-medal="🥉";
-
-}else{
-
-medal=(index+1)+"th";
+rank = "🥇";
 
 }
 
-html+=`
+else if(index === 1){
+
+rank = "🥈";
+
+}
+
+else if(index === 2){
+
+rank = "🥉";
+
+}
+
+else{
+
+rank = (index + 1) + "th";
+
+}
+
+
+html += `
 
 <div class="top10-card">
 
-<div class="top10-rank">
 
-${medal}
+<div class="top10-photo">
+
+<img
+
+src="${getPhoto(player.chest)}"
+
+alt="${escapeHTML(player.name)}"
+
+onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+
+>
+
+<div class="photo-placeholder-top10">
+
+👤
 
 </div>
+
+</div>
+
+
+<div class="top10-details">
+
+
+<div class="top10-rank">
+
+${rank}
+
+</div>
+
+
+<div class="top10-chest">
+
+CHEST ${escapeHTML(player.chest)}
+
+</div>
+
 
 <div class="top10-name">
 
-${player.name}
+${escapeHTML(player.name)}
 
 </div>
+
 
 <div class="top10-team">
 
-TEAM ${player.team}
+TEAM ${escapeHTML(player.team)}
 
 </div>
+
 
 <div class="top10-points">
 
-🏅 ${player.points} POINTS
+🏅 ${player.points}
 
 </div>
+
+
+</div>
+
 
 </div>
 
@@ -426,14 +836,18 @@ TEAM ${player.team}
 
 });
 
-document.getElementById("top10Container").innerHTML=html;
+
+document.getElementById("top10Container").innerHTML = html;
 
 }
-
 
 
 // ------------------------------------------------------
 // AUTO REFRESH
 // ------------------------------------------------------
 
-setInterval(loadResults,10000);
+setInterval(() => {
+
+loadResults();
+
+},10000);
