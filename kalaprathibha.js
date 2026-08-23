@@ -83,7 +83,11 @@ const rows = parseCSV(csv);
 
 const contestants = rows
 
-.filter(r => (r.NAME || "").trim() !== "")
+.filter(r =>
+
+(r.NAME || "").trim() !== ""
+
+)
 
 .map(r => ({
 
@@ -105,8 +109,16 @@ points: Number(r["TOTAL POINTS"] || 0)
 
 }))
 
-.sort((a,b) => b.points - a.points);
+.sort((a,b) =>
 
+b.points - a.points
+
+);
+
+
+// ------------------------------------------------------
+// RENDER
+// ------------------------------------------------------
 
 renderOverall(contestants);
 
@@ -117,20 +129,32 @@ renderTop10(contestants);
 
 }catch(error){
 
-console.error("KALAPRATHIBHA ERROR:", error);
+console.error(
+
+"KALAPRATHIBHA ERROR:",
+
+error
+
+);
 
 
-document.getElementById("overallHero").innerHTML =
+document.getElementById(
+"overallHero"
+).innerHTML =
 
 '<div class="waiting">Unable to load.</div>';
 
 
-document.getElementById("categoryCards").innerHTML =
+document.getElementById(
+"categoryCards"
+).innerHTML =
 
 '<div class="waiting">Unable to load.</div>';
 
 
-document.getElementById("top10Container").innerHTML =
+document.getElementById(
+"top10Container"
+).innerHTML =
 
 '<div class="waiting">Unable to load.</div>';
 
@@ -158,7 +182,11 @@ const lines = csv
 
 .split(/\r?\n/)
 
-.filter(line => line.trim() !== "");
+.filter(line =>
+
+line.trim() !== ""
+
+);
 
 
 if(lines.length < 2){
@@ -305,7 +333,9 @@ function renderOverall(contestants){
 
 const container =
 
-document.getElementById("overallHero");
+document.getElementById(
+"overallHero"
+);
 
 
 if(!container){
@@ -328,8 +358,9 @@ return;
 
 const winner = contestants[0];
 
-
-const photo = getPhoto(winner.chest);
+const photo = getPhoto(
+winner.chest
+);
 
 
 container.innerHTML = `
@@ -344,11 +375,17 @@ alt="${escapeHTML(winner.name)}"
 
 class="overall-photo"
 
-onerror="this.src='';this.classList.add('photo-missing');"
+onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
 
 >
 
-<div class="photo-placeholder">
+<div
+
+class="photo-placeholder"
+
+style="display:none;"
+
+>
 
 👤
 
@@ -401,11 +438,23 @@ TEAM ${escapeHTML(winner.team)}
 
 <div class="medals">
 
-<span>🥇 ${winner.gold}</span>
+<span>
 
-<span>🥈 ${winner.silver}</span>
+🥇 ${winner.gold}
 
-<span>🥉 ${winner.bronze}</span>
+</span>
+
+<span>
+
+🥈 ${winner.silver}
+
+</span>
+
+<span>
+
+🥉 ${winner.bronze}
+
+</span>
 
 </div>
 
@@ -441,11 +490,18 @@ const players = contestants
 
 .filter(c =>
 
-(c.category || "").trim().toUpperCase() === category
+(c.category || "")
+.trim()
+.toUpperCase()
+=== category
 
 )
 
-.sort((a,b) => b.points - a.points);
+.sort((a,b) =>
+
+b.points - a.points
+
+);
 
 
 if(players.length === 0){
@@ -474,7 +530,9 @@ ${escapeHTML(category)}
 </div>
 
 
-<!-- FIRST -->
+<!-- ========================================= -->
+<!-- FIRST PLACE -->
+<!-- ========================================= -->
 
 <div class="category-winner">
 
@@ -491,7 +549,13 @@ onerror="this.style.display='none';this.nextElementSibling.style.display='flex';
 
 >
 
-<div class="photo-placeholder-small">
+<div
+
+class="photo-placeholder-small"
+
+style="display:none;"
+
+>
 
 👤
 
@@ -530,11 +594,23 @@ TEAM ${escapeHTML(winner.team)}
 
 <div class="medal-count">
 
-<span>🥇 ${winner.gold}</span>
+<span>
 
-<span>🥈 ${winner.silver}</span>
+🥇 ${winner.gold}
 
-<span>🥉 ${winner.bronze}</span>
+</span>
+
+<span>
+
+🥈 ${winner.silver}
+
+</span>
+
+<span>
+
+🥉 ${winner.bronze}
+
+</span>
 
 </div>
 
@@ -542,7 +618,9 @@ TEAM ${escapeHTML(winner.team)}
 </div>
 
 
+<!-- ========================================= -->
 <!-- SECOND + THIRD -->
+<!-- ========================================= -->
 
 <div class="category-runners">
 
@@ -550,6 +628,7 @@ TEAM ${escapeHTML(winner.team)}
 ${second ? `
 
 <div class="runner-card">
+
 
 <div class="runner-photo">
 
@@ -563,7 +642,13 @@ onerror="this.style.display='none';this.nextElementSibling.style.display='flex';
 
 >
 
-<div class="photo-placeholder-small">
+<div
+
+class="photo-placeholder-small"
+
+style="display:none;"
+
+>
 
 👤
 
@@ -603,6 +688,7 @@ ${second.points} POINTS
 
 </div>
 
+
 </div>
 
 ` : ""}
@@ -611,6 +697,7 @@ ${second.points} POINTS
 ${third ? `
 
 <div class="runner-card">
+
 
 <div class="runner-photo">
 
@@ -624,7 +711,13 @@ onerror="this.style.display='none';this.nextElementSibling.style.display='flex';
 
 >
 
-<div class="photo-placeholder-small">
+<div
+
+class="photo-placeholder-small"
+
+style="display:none;"
+
+>
 
 👤
 
@@ -664,46 +757,11 @@ ${third.points} POINTS
 
 </div>
 
+
 </div>
 
 ` : ""}
 
-
-</div>
-
-
-<!-- CATEGORY TOP 3 -->
-
-<div class="top3">
-
-${players.slice(0,3).map((player,index) => {
-
-const medals = ["🥇","🥈","🥉"];
-
-return `
-
-<div class="top3-row">
-
-<div class="rank-name">
-
-${medals[index]}
-
-${escapeHTML(player.name)}
-
-</div>
-
-
-<div class="rank-points">
-
-${player.points} Points
-
-</div>
-
-</div>
-
-`;
-
-}).join("")}
 
 </div>
 
@@ -715,13 +773,15 @@ ${player.points} Points
 });
 
 
-document.getElementById("categoryCards").innerHTML = html;
+document.getElementById(
+"categoryCards"
+).innerHTML = html;
 
 }
 
 
 // ------------------------------------------------------
-// TOP 10
+// TOP 10 OVERALL
 // ------------------------------------------------------
 
 function renderTop10(contestants){
@@ -780,7 +840,13 @@ onerror="this.style.display='none';this.nextElementSibling.style.display='flex';
 
 >
 
-<div class="photo-placeholder-top10">
+<div
+
+class="photo-placeholder-top10"
+
+style="display:none;"
+
+>
 
 👤
 
@@ -837,7 +903,9 @@ TEAM ${escapeHTML(player.team)}
 });
 
 
-document.getElementById("top10Container").innerHTML = html;
+document.getElementById(
+"top10Container"
+).innerHTML = html;
 
 }
 
