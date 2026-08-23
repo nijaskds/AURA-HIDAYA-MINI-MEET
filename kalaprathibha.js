@@ -156,7 +156,7 @@ const lines = csv
 
 .trim()
 
-.split(/\r?\n')
+.split(/\r?\n/)
 
 .filter(line => line.trim() !== "");
 
